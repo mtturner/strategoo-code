@@ -10,11 +10,12 @@ public:
 
 	Menu();
 	~Menu();
+
 	void load();
 
 private:
 
-	Sprite image;
+	Sprite* menuImage;
 
 };
 

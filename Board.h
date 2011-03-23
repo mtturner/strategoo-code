@@ -10,6 +10,7 @@ public:
 
 	Board();
 	~Board();
+
 	bool addPiece();
 	void clearPiece();
 	void clearPieces();
@@ -17,8 +18,8 @@ public:
 
 private:
 
-	Piece pieces;
-	Sprite image;
+	//Piece pieces;
+	Sprite* boardImage;
 
 };
 

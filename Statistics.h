@@ -10,18 +10,19 @@ public:
 
 	Statistics();
 	~Statistics();
-	//void loadPlayerStatistics() const;
+
+	void load();
 	void display() const;
 
 private:
 
-	int gamesPlayed,
-		gamesWon,
-		gamesLost,
-		flagsCaptured,
-		capturedFlags,
-		timesExtinct,
-		genocide;
+	int gamesPlayed_,
+		gamesWon_,
+		gamesLost_,
+		flagsCaptured_,
+		capturedFlags_,
+		timesExtinct_,
+		genocide_;
 
 };
 

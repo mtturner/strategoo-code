@@ -1,13 +1,13 @@
 //These are the function definitions for the Player class
-
+#include<string>
+#include"Statistics.h"
 #include "Player.h"
 
 Player::Player()
 {
 
 	name = " ";
-	pieces.load( NULL );
-	stats.load();
+	//pieces.load( NULL );
 
 }
 
@@ -21,6 +21,12 @@ Player::~Player()
 }
 
 //*******************************************************************
+void Player::clearPiece()
+{
+	//clear a single piece
+}
+
+//*******************************************************************
 
 void Player::clearPieces()
 {
@@ -31,7 +37,7 @@ void Player::clearPieces()
 
 //*******************************************************************
 
-void Player::loadPlayerStatistics()
+void Player::loadStatistics()
 {
 
 	//load stats
@@ -43,8 +49,6 @@ void Player::loadPlayerStatistics()
 void Player::displayStatistics() const
 {
 
-	stats.display();
+	stats->display();
 
 }
-
-//*******************************************************************

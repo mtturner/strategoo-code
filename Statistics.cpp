@@ -20,12 +20,12 @@ Statistics::~Statistics()
 
 //*******************************************************************
 
-/*void Statistics::loadPlayerStatistics()
+void Statistics::load()
 {
 
 	//load statistics
 
-}*/
+}
 
 //*******************************************************************
 
@@ -35,5 +35,3 @@ void Statistics::display() const
 	//display stats
 
 }
-
-//*******************************************************************

@@ -1,12 +1,14 @@
 //These are the function definitions for the Board class
 
+#include"SDL.h"
+#include<string>
+#include"Sprite.h"
 #include "Board.h"
 
 Board::Board()
 {
 
-	image.load( "Board.png" );
-	pieces.load( NULL );
+	boardImage->load( "board.png" );
 
 }
 
@@ -25,6 +27,8 @@ bool Board::addPiece()
 {
 
 	//add pieces
+
+	return true;
 
 }
 
@@ -54,5 +58,3 @@ void Board::render() const
 	//render the board
 
 }
-
-//*******************************************************************

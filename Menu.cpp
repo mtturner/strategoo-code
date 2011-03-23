@@ -1,11 +1,14 @@
 //These are the function definitions for the Menu class
 
+#include"SDL.h"
+#include<string>
+#include"Sprite.h"
 #include "Menu.h"
 
 Menu::Menu()
 {
 
-	image.load( "menu.png" );
+	menuImage->load( "menu.png" );
 
 }
 
@@ -26,5 +29,3 @@ void Menu::load()
 	//loads menu
 
 }
-
-//*******************************************************************

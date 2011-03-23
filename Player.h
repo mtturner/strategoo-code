@@ -10,15 +10,17 @@ public:
 
 	Player();
 	~Player();
+
+	void clearPiece();
 	void clearPieces();
-	void loadPlayerStatistics();
+	void loadStatistics();
 	void displayStatistics() const;
 
 private:
 
 	std::string name;
-	Piece pieces;
-	Statistics stats;
+	//Piece pieces;
+	Statistics* stats;
 
 };
 
