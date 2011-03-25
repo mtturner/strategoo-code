@@ -1,6 +1,8 @@
 //These are the function definitions for the Player class
 #include<string>
+#include<vector>
 #include"Statistics.h"
+#include "Piece.h"
 #include "Player.h"
 
 Player::Player()

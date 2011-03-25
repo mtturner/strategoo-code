@@ -26,4 +26,4 @@ private:
 
 };
 
-#endif STATISTICS_H
+#endif

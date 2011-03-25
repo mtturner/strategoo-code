@@ -1,8 +1,10 @@
 //These are the function definitions for the Board class
 
-#include"SDL.h"
+#include "SDL.h"
 #include<string>
-#include"Sprite.h"
+#include<vector>
+#include "Sprite.h"
+#include "Piece.h"
 #include "Board.h"
 
 Board::Board()

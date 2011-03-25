@@ -20,7 +20,8 @@ private:
 
 	//Piece pieces;
 	Sprite* boardImage;
+	std::vector<Piece*> pieces;
 
 };
 
-#endif BOARD_H
+#endif

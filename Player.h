@@ -21,7 +21,8 @@ private:
 	std::string name;
 	//Piece pieces;
 	Statistics* stats;
+	std::vector<Piece*> pieces;
 
 };
 
-#endif PLAYER_H
+#endif
