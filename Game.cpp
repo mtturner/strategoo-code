@@ -1,9 +1,9 @@
 #include "SDL.h"
-#include <string>
+#include<string>
+#include"Piece.h"
+#include<vector>
 #include"Sprite.h"
 #include "Game.h"
-
-using namespace std;
 
 Game::Game() : screen(0)
 {
@@ -42,7 +42,7 @@ void Game::startGame()
 {
 }
 
-string Game::promptName()
+std::string Game::promptName()
 {
 	return "placeholder";
 }
@@ -78,7 +78,7 @@ void Game::addPiece()
 {
 }
 
-string Game::getPieceName() const
+std::string Game::getPieceName() const
 {
 	return "placeholder";
 }

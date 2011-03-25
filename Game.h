@@ -63,6 +63,9 @@ private:
 	
 	int gameState_;
 
+	//game's collection of pieces
+	std::vector<Piece*> pieces;
+
 	//Player* gPlayer;
 	//Computer* gComputer;
 
