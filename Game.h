@@ -1,16 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 
-// This is the main controller class header file
-
-//class Piece;
-//class Player;
+// This is the controller class header file
 
 class Game
 {
-
 public:
-
 	Game();
 	~Game();
 	void login();
@@ -26,7 +21,7 @@ public:
 	std::string getPieceName() const;
 	void loadMenu();
 	SDL_Rect* getMouseCoords();
-	//Piece getNewLocationPiece() const;
+	//Piece* getNewLocationPiece() const;
 	void displayStatistics() const;
 	void displayResults() const;
 	void clearPieces();
@@ -49,6 +44,8 @@ public:
 	void handleStartSelectorInput();
 
 private:
+	//game's collection of pieces
+	std::vector<Piece*> pieces;
 
 	Sprite* introBG;
 	Sprite* loginBG;
@@ -62,13 +59,6 @@ private:
 	SDL_Surface* screen;
 	
 	int gameState_;
-
-	//game's collection of pieces
-	std::vector<Piece*> pieces;
-
-	//Player* gPlayer;
-	//Computer* gComputer;
-
 };
 
 //******************************************
@@ -83,4 +73,4 @@ SDL_Surface* Game::getScreen() const
 	return screen;
 }
 
-#endif GAME_H
+#endif

@@ -5,9 +5,7 @@
 
 class Player
 {
-
 public:
-
 	Player();
 	~Player();
 
@@ -17,12 +15,9 @@ public:
 	void displayStatistics() const;
 
 private:
-
 	std::string name;
-	//Piece pieces;
 	Statistics* stats;
 	std::vector<Piece*> pieces;
-
 };
 
 #endif

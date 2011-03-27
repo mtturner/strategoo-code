@@ -5,9 +5,7 @@
 
 class Board
 {
-
 public:
-
 	Board();
 	~Board();
 
@@ -17,11 +15,8 @@ public:
 	void render() const;
 
 private:
-
-	//Piece pieces;
 	Sprite* boardImage;
 	std::vector<Piece*> pieces;
-
 };
 
 #endif

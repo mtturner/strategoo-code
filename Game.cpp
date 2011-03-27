@@ -1,9 +1,9 @@
-#include "SDL.h"
+#include"SDL.h"
 #include<string>
-#include"Piece.h"
 #include<vector>
 #include"Sprite.h"
-#include "Game.h"
+#include"Piece.h"
+#include"Game.h"
 
 Game::Game() : screen(0)
 {
@@ -53,17 +53,17 @@ void Game::resetGame()
 
 bool Game::findPiece() const
 {
-	return 0;
+	return false;
 }
 
 bool Game::setPiece()
 {
-	return 0;
+	return false;
 }
 
 bool Game::movePiece()
 {
-	return 0;
+	return false;
 }
 
 void Game::swapLocation()
@@ -94,7 +94,7 @@ SDL_Rect* Game::getMouseCoords()
 	return rect;
 }
 
-/*Piece Game::getNewLocationPiece() const
+/*Piece* Game::getNewLocationPiece() const
 {
 }*/
 
@@ -249,7 +249,7 @@ bool Game::render() const
 void Game::setScreen(SDL_Surface* s)
 {
 	//delete old screen
-	delete screen;
+	SDL_FreeSurface(screen);
 
 	if(s != NULL)
 	{
