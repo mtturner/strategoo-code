@@ -5,30 +5,61 @@
 class Piece
 {
       public:
-             Piece(int, int, int, int, int, Sprite*);
+		     Piece();
+             Piece(int xPos, int yPos, int boardSpace, int rank, int owner, Sprite* image);
              ~Piece();
              bool move();
              void namePiece();
-             void render();
-             int getRank() const;
-             int getXPos() const;
-             int getYPos() const;
-             int getBoardSpace() const;
-             int getOwner() const;
-             Sprite* getPieceImage() const;
+             void render() const;
+             inline int getRank() const;
+             inline int getXPos() const;
+             inline int getYPos() const;
+             inline int getBoardSpace() const;
+             inline int getOwner() const;
+             inline Sprite* getPieceImage() const;
+			 void setRank(int rank);
+             void setXPos(int xPos);
+             void setYPos(int yPos);
+             void setBoardSpace(int boardSpace);
+             void setOwner(int owner);
+             void setPieceImage(Sprite* image);
+
       private:
-              int xPos,
-                  yPos,
-                  boardSpace,
-                  rank,
-                  owner;
+			  int boardSpace_,
+                  rank_,
+                  owner_;
               Sprite* pieceImage;
-              void setRank(int);
-              void setXPos(int);
-              void setYPos(int);
-              void setBoardSpace(int);
-              void setOwner(int);
-              void setPieceImage(Sprite*);
 };
+
+//*********************************
+inline int Piece::getRank() const
+{
+	return rank_;
+}
+//*********************************
+inline int Piece::getXPos() const
+{
+	return pieceImage->getXPos();
+}
+//*********************************
+inline int Piece::getYPos() const
+{
+	return pieceImage->getYPos();
+}
+//*********************************
+inline int Piece::getBoardSpace() const
+{
+	return boardSpace_;
+}
+//*********************************
+inline int Piece::getOwner() const
+{
+	return owner_;
+}
+//*********************************
+inline Sprite* Piece::getPieceImage() const
+{
+	return pieceImage;
+}
 
 #endif
