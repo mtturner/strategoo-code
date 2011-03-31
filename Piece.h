@@ -24,10 +24,10 @@ class Piece
              void setOwner(int owner);
              void setPieceImage(Sprite* image);
 		
-	     inline bool operator ==(const Piece&) const;
-	     inline bool operator !=(const Piece&) const;
-	     inline bool operator <(const Piece&) const;
-	     inline bool operator >(const Piece&) const;
+			inline bool operator ==(const Piece&) const;
+			inline bool operator !=(const Piece&) const;
+			inline bool operator <(const Piece&) const;
+			inline bool operator >(const Piece&) const;
 
       private:
 			  int boardSpace_,
