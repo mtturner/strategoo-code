@@ -1,7 +1,7 @@
+//This is the class defining the visual components of the game
+
 #ifndef SPRITE_H
 #define SPRITE_H
-
-//Sprite class header file
 
 class Sprite
 {

@@ -1,7 +1,7 @@
+//This is the controller class header file
+
 #ifndef GAME_H
 #define GAME_H
-
-// This is the controller class header file
 
 class Game
 {
