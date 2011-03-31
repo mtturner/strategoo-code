@@ -5,35 +5,36 @@
 class Piece
 {
       public:
-		     Piece();
-             Piece(int xPos, int yPos, int boardSpace, int rank, int owner, Sprite* image);
-             ~Piece();
-             bool move();
-             void namePiece();
-             void render() const;
-             inline int getRank() const;
-             inline int getXPos() const;
-             inline int getYPos() const;
-             inline int getBoardSpace() const;
-             inline int getOwner() const;
-             inline Sprite* getPieceImage() const;
-			 void setRank(int rank);
-             void setXPos(int xPos);
-             void setYPos(int yPos);
-             void setBoardSpace(int boardSpace);
-             void setOwner(int owner);
-             void setPieceImage(Sprite* image);
+	Piece();
+        Piece(int xPos, int yPos, int boardSpace, int rank, int owner, Sprite* image);
+        ~Piece();
+
+        bool move();
+        void namePiece();
+        void render() const;
+        inline int getRank() const;
+        inline int getXPos() const;
+        inline int getYPos() const;
+        inline int getBoardSpace() const;
+        inline int getOwner() const;
+        inline Sprite* getPieceImage() const;
+	void setRank(int rank);
+        void setXPos(int xPos);
+        void setYPos(int yPos);
+        void setBoardSpace(int boardSpace);
+        void setOwner(int owner);
+        void setPieceImage(Sprite* image);
 		
-			inline bool operator ==(const Piece&) const;
-			inline bool operator !=(const Piece&) const;
-			inline bool operator <(const Piece&) const;
-			inline bool operator >(const Piece&) const;
+	inline bool operator ==(const Piece&) const;
+	inline bool operator !=(const Piece&) const;
+	inline bool operator <(const Piece&) const;
+	inline bool operator >(const Piece&) const;
 
       private:
-			  int boardSpace_,
-                  rank_,
-                  owner_;
-              Sprite* pieceImage;
+	int boardSpace_,
+            rank_,
+            owner_;
+        Sprite* pieceImage;
 };
 
 //*********************************
