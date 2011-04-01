@@ -1,4 +1,4 @@
-#include"SDL.h"
+#include"SDL/SDL.h"
 #include<string>
 #include<vector>
 #include"Sprite.h"
@@ -122,42 +122,42 @@ bool Game::initialize()
 	SDL_WM_SetCaption("strategOO", "strategOO");
 
 	//load images
-	if(!introBG->load("intro.png"))
+	if(!introBG->load("intro.bmp"))
 	{
 		return false;
 	}
 
-	if(!loginBG->load("login.png"))
+	if(!loginBG->load("login.bmp"))
 	{
 		return false;
 	}
 
-	if(!startMenuBG->load("startMenu.png"))
+	if(!startMenuBG->load("startMenu.bmp"))
 	{
 		return false;
 	}
 
-	if(!setPieceBG->load("setPiece.png"))
+	if(!setPieceBG->load("setPiece.bmp"))
 	{
 		return false;
 	}
 
-	if(!playGameBG->load("playGame.png"))
+	if(!playGameBG->load("playGame.bmp"))
 	{
 		return false;
 	}
 
-	if(!endGameBG->load("endGame.png"))
+	if(!endGameBG->load("endGame.bmp"))
 	{
 		return false;
 	}
 
-	if(!menuBG->load("menu.png"))
+	if(!menuBG->load("menu.bmp"))
 	{
 		return false;
 	}
 
-	if(!statisticsBG->load("statistics.png"))
+	if(!statisticsBG->load("statistics.bmp"))
 	{
 		return false;
 	}

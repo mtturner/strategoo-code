@@ -1,8 +1,6 @@
-#include"SDL.h"
-#include<string>
+//Computer.cpp
+
 #include<vector>
-#include"Statistics.h"
-#include"Sprite.h"
 #include"Piece.h"
 #include"Computer.h"
 

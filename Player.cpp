@@ -1,9 +1,7 @@
 //These are the function definitions for the Player class
-#include"SDL.h"
 #include<string>
 #include<vector>
 #include"Statistics.h"
-#include"Sprite.h"
 #include"Piece.h"
 #include"Player.h"
 

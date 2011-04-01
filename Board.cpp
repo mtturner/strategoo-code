@@ -1,7 +1,5 @@
 //These are the function definitions for the Board class
 
-#include "SDL.h"
-#include<string>
 #include<vector>
 #include "Sprite.h"
 #include "Piece.h"

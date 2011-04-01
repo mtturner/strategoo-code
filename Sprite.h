@@ -3,6 +3,9 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
+#include <string>
+class SDL_Surface;
+
 class Sprite
 {
 public:

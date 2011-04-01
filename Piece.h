@@ -3,6 +3,8 @@
 #ifndef PIECE_H
 #define PIECE_H
 
+class Sprite;
+
 class Piece
 {
 public:
@@ -25,12 +27,12 @@ public:
 	void setBoardSpace(int boardSpace);
 	void setOwner(int owner);
 	void setPieceImage(Sprite* image);
-		
+/*		
 	inline bool operator ==(const Piece&) const;
 	inline bool operator !=(const Piece&) const;
 	inline bool operator <(const Piece&) const;
 	inline bool operator >(const Piece&) const;
-
+*/
 private:
 	int boardSpace_,
         rank_,
@@ -69,6 +71,7 @@ inline Sprite* Piece::getPieceImage() const
 	return pieceImage;
 }
 //*********************************
+/*
 inline bool operator ==(const Piece& piece) const;
 {
 	return getRank() == piece.getRank();
@@ -88,5 +91,5 @@ inline bool operator >(const Piece& piece) const;
 {
 	return !(*this < piece);
 }
-
+*/
 #endif

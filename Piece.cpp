@@ -1,6 +1,4 @@
 //Piece.cpp
-#include"SDL.h"
-#include<string>
 #include"Sprite.h"
 #include"Piece.h"
 

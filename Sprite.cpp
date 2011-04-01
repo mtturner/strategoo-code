@@ -1,6 +1,4 @@
-#include"SDL.h"
-#include"SDL_image.h"
-#include<string>
+#include"SDL/SDL.h"
 #include"Sprite.h"
 
 Sprite::Sprite() : image(0)

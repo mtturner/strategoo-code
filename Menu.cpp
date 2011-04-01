@@ -1,7 +1,5 @@
 //These are the function definitions for the Menu class
 
-#include"SDL.h"
-#include<string>
 #include"Sprite.h"
 #include "Menu.h"
 
