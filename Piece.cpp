@@ -5,7 +5,6 @@
 	class.
 ******************************************************/
 
-#include "Sprite.h"
 #include "Piece.h"
 
 Piece::Piece()

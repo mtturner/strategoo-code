@@ -5,8 +5,6 @@
 	class.
 ******************************************************/
 
-#include "Sprite.h"
-#include "Piece.h"
 #include "Sergeant.h"
 
 Sergeant::Sergeant() : Piece()

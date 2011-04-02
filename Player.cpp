@@ -5,10 +5,6 @@
 	class.
 ******************************************************/
 
-#include <string>
-#include <vector>
-#include "Statistics.h"
-#include "Piece.h"
 #include "Player.h"
 
 Player::Player()

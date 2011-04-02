@@ -5,8 +5,6 @@
 	Lieutenant class.
 ******************************************************/
 
-#include "Sprite.h"
-#include "Piece.h"
 #include "Lieutenant.h"
 
 Lieutenant::Lieutenant() : Piece()

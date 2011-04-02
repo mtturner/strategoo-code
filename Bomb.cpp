@@ -5,8 +5,6 @@
 	class.
 ******************************************************/
 
-#include "Sprite.h"
-#include "Piece.h"
 #include "Bomb.h"
 
 Bomb::Bomb() : Piece()

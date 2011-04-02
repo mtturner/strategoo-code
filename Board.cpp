@@ -5,9 +5,6 @@
 	class.
 ******************************************************/
 
-#include <vector>
-#include "Sprite.h"
-#include "Piece.h"
 #include "Board.h"
 
 Board::Board()

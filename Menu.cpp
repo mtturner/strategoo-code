@@ -5,7 +5,6 @@
 	class.
 ******************************************************/
 
-#include "Sprite.h"
 #include "Menu.h"
 
 Menu::Menu()

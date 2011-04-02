@@ -5,8 +5,6 @@
 	class.
 ******************************************************/
 
-#include "Sprite.h"
-#include "Piece.h"
 #include "Scout.h"
 
 Scout::Scout() : Piece()

@@ -5,8 +5,6 @@
 	class.
 ******************************************************/
 
-#include "Sprite.h"
-#include "Piece.h"
 #include "Marshal.h"
 
 Marshal::Marshal() : Piece()

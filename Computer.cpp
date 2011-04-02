@@ -5,8 +5,6 @@
 	class.
 ******************************************************/
 
-#include <vector>
-#include "Piece.h"
 #include "Computer.h"
 
 Computer::Computer()
