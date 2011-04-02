@@ -13,7 +13,8 @@ public:
     Statistics();
     ~Statistics();
 
-    void load();
+    bool save();
+	bool load();
     void display() const;
 
 private:
@@ -24,6 +25,16 @@ private:
 	capturedFlags_,
 	timesExtinct_,
 	genocide_;
+
+	//Sprites to display each stat
+	Sprite* statisticsScreen_
+	gamesPlayedLine_,
+	gamesWonLine_,
+	gamesLostLine_,
+	flagsCapturedLine_,
+	capturedFlagsLine_,
+	timesExtinctLine_,
+	genocideLine_;
 };
 
 #endif
