@@ -25,8 +25,8 @@ public:
 
 private:
 	std::string name;
-	Statistics* stats;
 	std::vector<Piece*> pieces;
+	Statistics* stats;
 };
 
 #endif

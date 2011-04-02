@@ -110,7 +110,7 @@ void Game::loadMenu()
 //******************************************
 SDL_Rect* Game::getMouseCoords()
 {
-	SDL_Rect* rect = NULL;
+	SDL_Rect* rect = 0;
 
 	return rect;
 }
@@ -187,7 +187,7 @@ bool Game::initialize()
 		return false;
 	}
 
-	if(getScreen() == NULL)
+	if(getScreen() == 0)
 	{
 		return false;
 	}
@@ -276,7 +276,7 @@ void Game::setScreen(SDL_Surface* s)
 	//delete old screen
 	SDL_FreeSurface(screen);
 
-	if(s != NULL)
+	if(s != 0)
 	{
 		screen = s;
 	}

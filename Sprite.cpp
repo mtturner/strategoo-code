@@ -35,7 +35,7 @@ Sprite::~Sprite()
 bool Sprite::load(std::string filename)
 {
 	//temporary SDL surfaces
-	SDL_Surface* loaded = NULL;
+	SDL_Surface* loaded = 0;
 	//load bool
 	bool success = false;
 
@@ -51,7 +51,7 @@ bool Sprite::load(std::string filename)
 
 		SDL_FreeSurface(loaded);
 
-		if(image != NULL)
+		if(image != 0)
 		{
 			return true;
 		}
