@@ -20,7 +20,7 @@ public:
     void clearPieces();
     
 private:
-    std::vector<Piece*> computerPieces;
+    std::vector<Piece*> pieces;
 };
 
 #endif
