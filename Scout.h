@@ -14,9 +14,9 @@ class Scout: public Piece
 public:
 	Scout();
 	Scout(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    ~Scout();
+    virtual ~Scout();
 
-    bool move();   
+    virtual bool move();   
 };
 
 #endif

@@ -23,3 +23,9 @@ Colonel::~Colonel()
 {
 }
 
+//****************************************
+bool Colonel::move()
+{
+	return true;
+}
+

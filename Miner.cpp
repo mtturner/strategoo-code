@@ -22,3 +22,9 @@ Miner::Miner(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pi
 Miner::~Miner()
 {
 }
+
+//****************************************
+bool Miner::move()
+{
+	return true;
+}

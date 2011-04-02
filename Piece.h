@@ -14,9 +14,9 @@ class Piece
 public:
 	Piece();
     Piece(int xPos, int yPos, int boardSpace, int rank, int owner, Sprite* image);
-    ~Piece();
+    virtual ~Piece();
 
-	virtual bool move();
+	virtual bool move() = 0;
 	void namePiece();
 	void render() const;
 	inline int getRank() const;

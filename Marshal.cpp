@@ -22,3 +22,9 @@ Marshal::Marshal(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite
 Marshal::~Marshal()
 {
 }
+
+//****************************************
+bool Marshal::move()
+{
+	return true;
+}

@@ -14,7 +14,9 @@ class Lieutenant : public Piece
 public:
 	Lieutenant();
     Lieutenant(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    ~Lieutenant();     
+    virtual ~Lieutenant(); 
+
+	virtual bool move();
 };
 
 #endif

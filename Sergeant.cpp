@@ -22,3 +22,9 @@ Sergeant::Sergeant(int xPos, int yPos, int rank, int owner, int boardSpace, Spri
 Sergeant::~Sergeant()
 {
 }
+
+//****************************************
+bool Sergeant::move()
+{
+	return true;
+}

@@ -37,12 +37,6 @@ Piece::~Piece()
 }
 
 //*********************************
-bool Piece::move()
-{
-	return true;
-}
-
-//*********************************
 void Piece::namePiece()
 {
 }

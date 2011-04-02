@@ -14,7 +14,9 @@ class Spy : public Piece
 public:
 	Spy();
     Spy(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    ~Spy();     
+    virtual ~Spy();  
+
+	virtual bool move();
 };
 
 #endif

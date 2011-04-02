@@ -22,3 +22,9 @@ Major::Major(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pi
 Major::~Major()
 {
 }
+
+//****************************************
+bool Major::move()
+{
+	return true;
+}

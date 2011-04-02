@@ -22,3 +22,9 @@ Lieutenant::Lieutenant(int xPos, int yPos, int rank, int owner, int boardSpace, 
 Lieutenant::~Lieutenant()
 {
 }
+
+//****************************************
+bool Lieutenant::move()
+{
+	return true;
+}

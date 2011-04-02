@@ -14,9 +14,9 @@ class EmptySpace : public Piece
 public:
 	EmptySpace();
     EmptySpace(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    ~EmptySpace();
+    virtual ~EmptySpace();
 
-    bool move();     
+    virtual bool move();
 };
 
 #endif

@@ -14,7 +14,9 @@ class Major : public Piece
 public:
 	Major();
     Major(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    ~Major();     
+    virtual ~Major();     
+
+	virtual bool move();
 };
 
 #endif

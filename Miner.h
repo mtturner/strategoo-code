@@ -14,7 +14,9 @@ class Miner : public Piece
 public:
 	Miner();
     Miner(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    ~Miner();     
+    virtual ~Miner();     
+
+	virtual bool move();
 };
 
 #endif

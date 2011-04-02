@@ -14,7 +14,9 @@ class Marshal : public Piece
 public:
 	Marshal();
     Marshal(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    ~Marshal();     
+    virtual ~Marshal();  
+
+	virtual bool move();
 };
 
 #endif

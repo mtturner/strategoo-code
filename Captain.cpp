@@ -22,3 +22,9 @@ Captain::Captain(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite
 Captain::~Captain()
 {
 }
+
+//****************************************
+bool Captain::move()
+{
+	return true;
+}

@@ -22,3 +22,9 @@ General::General(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite
 General::~General()
 {
 }
+
+//****************************************
+bool General::move()
+{
+	return true;
+}

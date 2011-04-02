@@ -14,9 +14,9 @@ class Flag : public Piece
 public:
 	Flag();
 	Flag(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    ~Flag();
+    virtual ~Flag();
 
-    bool move();     
+    virtual bool move();   
 };
 
 #endif

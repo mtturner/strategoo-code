@@ -14,7 +14,9 @@ class Sergeant : public Piece
 public:
 	Sergeant();
     Sergeant(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    ~Sergeant();     
+    virtual ~Sergeant();     
+
+	virtual bool move();
 };
 
 #endif

@@ -14,9 +14,9 @@ class Bomb : public Piece
 public:
 	Bomb();
     Bomb(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    ~Bomb();
+    virtual ~Bomb();
 
-    bool move();    
+    virtual bool move();    
 };
 
 #endif

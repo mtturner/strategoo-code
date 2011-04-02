@@ -22,3 +22,9 @@ Spy::Spy(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceI
 Spy::~Spy()
 {
 }
+
+//****************************************
+bool Spy::move()
+{
+	return true;
+}
