@@ -106,17 +106,18 @@ int main(int argc, char* args[])
 					//set next state to exit
 					controller.setState(STATE_EXIT);
 				}
-				//else if the user has hit the enter key
-				else if(gEvent.type == SDL_KEYDOWN)
+				
+				//handle start menu selector input
+				controller.handleSelectorInput();
+
+				//if the user has hit the enter key
+				if(gEvent.type == SDL_KEYDOWN)
 				{
 					if(gEvent.key.keysym.sym == SDLK_RETURN)
 					{
 						controller.setState(STATE_SETPIECE);
 					}
 				}
-				
-				//handle start menu selector input
-				controller.handleStartSelectorInput();
 			}
 
 			//apply the start menu image to the screen
@@ -249,7 +250,7 @@ int main(int argc, char* args[])
 				}
 
 				//handle in-game menu selector input
-				controller.handleMenuSelectorInput();
+				controller.handleSelectorInput();
 			}
 
 			//apply the in-game menu image to the screen

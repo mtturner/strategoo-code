@@ -24,6 +24,15 @@ Sprite::Sprite(int x, int y, std::string filename)
 }
 
 //******************************************
+Sprite::Sprite(int x, int y, SDL_Surface* surface)
+{
+	setSurface(surface);
+
+	setXPos(x);
+	setYPos(y);
+}
+
+//******************************************
 Sprite::~Sprite()
 {
 	SDL_FreeSurface(image);
@@ -85,5 +94,14 @@ void Sprite::setYPos(int yPos)
 	if(yPos > -1 && yPos < 600)
 	{
 		yPos_ = yPos;
+	}
+}
+
+//******************************************
+void Sprite::setSurface(SDL_Surface* surface)
+{
+	if(surface != 0)
+	{
+		image = surface;
 	}
 }

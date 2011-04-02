@@ -15,6 +15,8 @@ class Sprite
 public:
 	Sprite();
 	Sprite(int x, int y, std::string filename);
+	//constructor for message surfaces
+	Sprite(int x, int y, SDL_Surface* surface);
 	~Sprite();
 
 	bool load(std::string filename);
@@ -23,6 +25,7 @@ public:
 	inline int getYPos() const;
 	void setXPos(int xPos);
 	void setYPos(int yPos);
+	void setSurface(SDL_Surface* surface);
 
 private:
 	SDL_Surface* image;

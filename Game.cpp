@@ -278,11 +278,6 @@ void Game::setScreen(SDL_Surface* s)
 }
 
 //******************************************
-void Game::handleStartSelectorInput()
-{
-}
-
-//******************************************
-void Game::handleMenuSelectorInput()
+void Game::handleSelectorInput()
 {
 }

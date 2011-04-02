@@ -51,8 +51,7 @@ public:
 	bool render() const;
 	inline SDL_Surface* getScreen() const;
 	void setScreen(SDL_Surface* s);
-	void handleMenuSelectorInput();
-	void handleStartSelectorInput();
+	void handleSelectorInput();
 
 private:
 	//game's collection of pieces
