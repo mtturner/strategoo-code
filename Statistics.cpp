@@ -49,11 +49,23 @@ bool Statistics::save()
 
 	statsFile.open("statistics.txt", ios::ate);
 
-	while( statsFile >> playerName )
+	while(statsFile >> playerName)
 	{
 
-		if( playerName == Player.getName
-	
+		if( playerName == Player.getName)
+		{
+		}
+	}
+}
+
+//*******************************************************************
+bool Statistics::save()
+{
+	//declaring local variables
+	fstream statsFile;
+	std::string playerName;
+
+	statsFile.open("statistics.txt", ios::ate);
 }
 
 //*******************************************************************
