@@ -1,4 +1,8 @@
-//This is the class that defines the stored statistics of the game
+/******************************************************
+	Statistics.h
+
+	This is the header file for the Statistics class.
+******************************************************/
 
 #ifndef STATISTICS_H
 #define STATISTICS_H

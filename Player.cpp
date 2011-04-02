@@ -1,25 +1,26 @@
-//These are the function definitions for the Player class
-#include<string>
-#include<vector>
-#include"Statistics.h"
-#include"Piece.h"
-#include"Player.h"
+/******************************************************
+	Player.cpp
+
+	This is the implementation file for the Player 
+	class.
+******************************************************/
+
+#include <string>
+#include <vector>
+#include "Statistics.h"
+#include "Piece.h"
+#include "Player.h"
 
 Player::Player()
 {
-
 	name = " ";
-	//pieces.load( NULL );
-
+	//pieces.load(0);
 }
 
 //*******************************************************************
-
 Player::~Player()
 {
-
 	//deallocate memory
-
 }
 
 //*******************************************************************
@@ -29,28 +30,19 @@ void Player::clearPiece()
 }
 
 //*******************************************************************
-
 void Player::clearPieces()
 {
-
 	//clear players pieces
-
 }
 
 //*******************************************************************
-
 void Player::loadStatistics()
 {
-
 	//load stats
-
 }
 
 //*******************************************************************
-
 void Player::displayStatistics() const
 {
-
 	stats->display();
-
 }

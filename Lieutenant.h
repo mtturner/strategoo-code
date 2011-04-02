@@ -1,13 +1,20 @@
-//Lieutenant.h
+/******************************************************
+	Lieutenant.h
+
+	This is the header file for the Lieutenant class.
+******************************************************/
+
 #ifndef LIEUTENANT_H
 #define LIEUTENANT_H
 
-class Lieutenant: public Piece
+#include"Piece.h"
+
+class Lieutenant : public Piece
 {
-      public:
-             Lieutenant();
-             Lieutenant(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-             ~Lieutenant();     
+public:
+	Lieutenant();
+    Lieutenant(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
+    ~Lieutenant();     
 };
 
 #endif

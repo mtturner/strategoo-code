@@ -1,4 +1,8 @@
-//This is the class defining the inherited pieces of the game
+/******************************************************
+	Piece.h
+
+	This is the header file for the Piece class.
+******************************************************/
 
 #ifndef PIECE_H
 #define PIECE_H

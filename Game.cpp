@@ -1,9 +1,16 @@
-#include"SDL.h"
-#include<string>
-#include<vector>
-#include"Sprite.h"
-#include"Piece.h"
-#include"Game.h"
+/******************************************************
+	Game.cpp
+
+	This is the implementation file for the Game 
+	class.
+******************************************************/
+
+#include "SDL.h"
+#include <string>
+#include <vector>
+#include "Sprite.h"
+#include "Piece.h"
+#include "Game.h"
 
 Game::Game() : screen(0)
 {
@@ -21,6 +28,7 @@ Game::Game() : screen(0)
 	statisticsBG = new Sprite();
 }
 
+//******************************************
 Game::~Game()
 {
 	//delete dynamically allocated sprites
@@ -34,59 +42,72 @@ Game::~Game()
 	delete statisticsBG;
 }
 
+//******************************************
 void Game::login()
 {
 }
 
+//******************************************
 void Game::startGame()
 {
 }
 
+//******************************************
 std::string Game::promptName()
 {
 	return "placeholder";
 }
 
+//******************************************
 void Game::resetGame()
 {
 }
 
+//******************************************
 bool Game::findPiece() const
 {
 	return false;
 }
 
+//******************************************
 bool Game::setPiece()
 {
 	return false;
 }
 
+//******************************************
 bool Game::movePiece()
 {
 	return false;
 }
 
+//******************************************
 void Game::swapLocation()
 {
 }
 
+//******************************************
 void Game::namePiece()
 {
 }
 
+//******************************************
 void Game::addPiece()
 {
 }
 
+//******************************************
 std::string Game::getPieceName() const
 {
 	return "placeholder";
 }
 
+//******************************************
 void Game::loadMenu()
 {
 }
 
+//******************************************
 SDL_Rect* Game::getMouseCoords()
 {
 	SDL_Rect* rect = NULL;
@@ -94,18 +115,22 @@ SDL_Rect* Game::getMouseCoords()
 	return rect;
 }
 
+//******************************************
 /*Piece* Game::getNewLocationPiece() const
 {
 }*/
 
+//******************************************
 void Game::displayStatistics() const
 {
 }
 
+//******************************************
 void Game::displayResults() const
 {
 }
 
+//******************************************
 void Game::clearPieces()
 {
 }

@@ -1,4 +1,8 @@
-//This is the class defining the in-game menu of the game
+/******************************************************
+	Menu.h
+
+	This is the header file for the Menu class.
+******************************************************/
 
 #ifndef MENU_H
 #define MENU_H

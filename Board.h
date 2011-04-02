@@ -1,4 +1,8 @@
-//This is the class defining the board of the game
+/******************************************************
+	Board.h
+
+	This is the header file for the Board class.
+******************************************************/
 
 #ifndef BOARD_H
 #define BOARD_H

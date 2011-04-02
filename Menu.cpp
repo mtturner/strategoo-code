@@ -1,29 +1,26 @@
-//These are the function definitions for the Menu class
+/******************************************************
+	Menu.cpp
 
-#include"Sprite.h"
+	This is the implementation file for the Menu 
+	class.
+******************************************************/
+
+#include "Sprite.h"
 #include "Menu.h"
 
 Menu::Menu()
 {
-
-	menuImage->load( "menu.png" );
-
+	menuImage->load("menu.png");
 }
 
 //*******************************************************************
-
 Menu::~Menu()
 {
-
 	//deallocate memory
-
 }
 
 //*******************************************************************
-
 void Menu::load()
 {
-
 	//loads menu
-
 }

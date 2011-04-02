@@ -1,6 +1,12 @@
-//Piece.cpp
-#include"Sprite.h"
-#include"Piece.h"
+/******************************************************
+	Piece.cpp
+
+	This is the implementation file for the Piece 
+	class.
+******************************************************/
+
+#include "Sprite.h"
+#include "Piece.h"
 
 Piece::Piece()
 {
@@ -23,49 +29,59 @@ Piece::Piece(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pi
 	setOwner(owner);
 	setBoardSpace(boardSpace);
 }
+
 //*********************************
 Piece::~Piece()
 {
 	delete pieceImage;
 }
+
 //*********************************
 bool Piece::move()
 {
 	return true;
 }
+
 //*********************************
 void Piece::namePiece()
 {
 }
+
 //*********************************       
 void Piece::render() const
 {
 }
+
 //*********************************
 void Piece::setRank(int rank)
 {
      rank_ = rank;
 }
+
 //*********************************
 void Piece::setXPos(int xPos)
 {
 	pieceImage->setXPos(xPos);
 }
+
 //*********************************
 void Piece::setYPos(int yPos)
 {
 	pieceImage->setYPos(yPos);
 }
+
 //*********************************
 void Piece::setBoardSpace(int boardSpace)
 {
 	boardSpace_ = boardSpace;
 }
+
 //*********************************
 void Piece::setOwner(int owner)
 {
 	owner_ = owner;
 }
+
 //*********************************
 void Piece::setPieceImage(Sprite* image)
 {

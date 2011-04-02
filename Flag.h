@@ -1,14 +1,22 @@
-//Flag.h
+/******************************************************
+	Flag.h
+
+	This is the header file for the Flag class.
+******************************************************/
+
 #ifndef FLAG_H
 #define FLAG_H
 
-class Flag: public Piece
+#include"Piece.h"
+
+class Flag : public Piece
 {
-      public:
-             Flag();
-             Flag(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-             ~Flag();
-             bool move();     
+public:
+	Flag();
+	Flag(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
+    ~Flag();
+
+    bool move();     
 };
 
 #endif

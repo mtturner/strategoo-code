@@ -1,4 +1,8 @@
-//This is the class defining the AI player of the game
+/******************************************************
+	Computer.h
+
+	This is the header file for the Computer class.
+******************************************************/
 
 #ifndef COMPUTER_H
 #define COMPUTER_H

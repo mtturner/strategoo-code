@@ -1,7 +1,14 @@
-#include"SDL.h"
-#include"SDL_image.h"
-#include<string>
-#include"Sprite.h"
+/******************************************************
+	Sprite.cpp
+
+	This is the implementation file for the Sprite 
+	class.
+******************************************************/
+
+#include "SDL.h"
+#include "SDL_image.h"
+#include <string>
+#include "Sprite.h"
 
 Sprite::Sprite() : image(0)
 {

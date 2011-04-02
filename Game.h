@@ -1,4 +1,8 @@
-//This is the controller class header file
+/******************************************************
+	Game.h
+
+	This is the header file for the Game class.
+******************************************************/
 
 #ifndef GAME_H
 #define GAME_H
@@ -14,6 +18,7 @@ class Game
 public:
 	Game();
 	~Game();
+
 	void login();
 	void startGame();
 	std::string promptName();

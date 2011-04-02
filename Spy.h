@@ -1,13 +1,20 @@
-//Spy.h
+/******************************************************
+	Spy.h
+
+	This is the header file for the Spy class.
+******************************************************/
+
 #ifndef SPY_H
 #define SPY_H
 
-class Spy: public Piece
+#include"Piece.h"
+
+class Spy : public Piece
 {
-      public:
-             Spy();
-             Spy(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-             ~Spy();     
+public:
+	Spy();
+    Spy(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
+    ~Spy();     
 };
 
 #endif

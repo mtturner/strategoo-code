@@ -1,13 +1,20 @@
-//Major.h
+/******************************************************
+	Major.h
+
+	This is the header file for the Major class.
+******************************************************/
+
 #ifndef MAJOR_H
 #define MAJOR_H
 
-class Major: public Piece
+#include"Piece.h"
+
+class Major : public Piece
 {
-      public:
-             Major();
-             Major(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-             ~Major();     
+public:
+	Major();
+    Major(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
+    ~Major();     
 };
 
 #endif

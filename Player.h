@@ -1,4 +1,8 @@
-//This is the class that defines the human player of the game
+/******************************************************
+	Player.h
+
+	This is the header file for the Player class.
+******************************************************/
 
 #ifndef PLAYER_H
 #define PLAYER_H
