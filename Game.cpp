@@ -182,6 +182,9 @@ bool Game::initialize()
 		return false;
 	}
 
+	//create selector
+	gSelector = new Selector();
+
 	if(getScreen() == 0)
 	{
 		return false;
@@ -278,6 +281,19 @@ void Game::setScreen(SDL_Surface* s)
 }
 
 //******************************************
-void Game::handleSelectorInput()
+void Game::handleSelectorInput(SDL_Event& gEvent)
 {
+	gSelector->handleInput(gEvent);
+}
+
+//******************************************
+void Game::moveSelector() const
+{
+	gSelector->move();
+}
+
+//******************************************
+void Game::showSelector() const
+{
+	gSelector->show(screen);
 }

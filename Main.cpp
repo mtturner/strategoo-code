@@ -108,20 +108,31 @@ int main(int argc, char* args[])
 				}
 				
 				//handle start menu selector input
-				controller.handleSelectorInput();
+				controller.handleSelectorInput(gEvent);
 
 				//if the user has hit the enter key
 				if(gEvent.type == SDL_KEYDOWN)
 				{
 					if(gEvent.key.keysym.sym == SDLK_RETURN)
 					{
-						controller.setState(STATE_SETPIECE);
+						if(controller.getSelectorChoice() == 0)
+						{
+							controller.setState(STATE_SETPIECE);
+						}
+						else if(controller.getSelectorChoice() == 1)
+						{
+							controller.setState(STATE_STATISTICS);
+						}
 					}
 				}
 			}
 
-			//apply the start menu image to the screen
+			//move the selector
+			controller.moveSelector();
+
+			//apply the start menu image and selector image to the screen
 			controller.showStartMenu();
+			controller.showSelector();
 
 			//render to the screen
 			//if rendering was unsuccessfull
@@ -250,7 +261,7 @@ int main(int argc, char* args[])
 				}
 
 				//handle in-game menu selector input
-				controller.handleSelectorInput();
+				controller.handleSelectorInput(gEvent);
 			}
 
 			//apply the in-game menu image to the screen

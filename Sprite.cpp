@@ -59,6 +59,10 @@ bool Sprite::load(std::string filename)
 
 		if(image != 0)
 		{
+			Uint32 colorkey = SDL_MapRGB(image->format, 255, 0, 255);
+
+			SDL_SetColorKey(image, SDL_SRCCOLORKEY, colorkey);
+
 			return true;
 		}
 	}

@@ -7,11 +7,12 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include"SDL.h"
-#include<string>
-#include<vector>
-#include"Sprite.h"
-#include"Piece.h"
+#include "SDL.h"
+#include <string>
+#include <vector>
+#include "Sprite.h"
+#include "Piece.h"
+#include "Selector.h"
 
 class Game
 {
@@ -51,12 +52,18 @@ public:
 	bool render() const;
 	inline SDL_Surface* getScreen() const;
 	void setScreen(SDL_Surface* s);
-	void handleSelectorInput();
+
+	//selector functions
+	void handleSelectorInput(SDL_Event& gEvent);
+	void moveSelector() const;
+	void showSelector() const;
+	inline int getSelectorChoice() const;
 
 private:
 	//game's collection of pieces
 	std::vector<Piece*> pieces;
 
+	//game state backgrounds
 	Sprite* introBG;
 	Sprite* loginBG;
 	Sprite* startMenuBG;
@@ -65,6 +72,9 @@ private:
 	Sprite* endGameBG;
 	Sprite* menuBG;
 	Sprite* statisticsBG;
+
+	//selector
+	Selector* gSelector;
 
 	SDL_Surface* screen;
 	
@@ -81,6 +91,12 @@ int Game::getState() const
 SDL_Surface* Game::getScreen() const
 {
 	return screen;
+}
+
+//******************************************
+inline int Game::getSelectorChoice() const
+{
+	return gSelector->getChoice();
 }
 
 #endif
