@@ -303,3 +303,13 @@ void Game::resetSelector()
 {
 	gSelector->reset();
 }
+//******************************************
+void Game::getInput()
+{
+     name->handle_input();
+}
+//******************************************
+void Game::showName() const
+{
+     name->show_centered(getScreen());
+}

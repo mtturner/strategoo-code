@@ -13,6 +13,7 @@
 #include "Sprite.h"
 #include "Piece.h"
 #include "Selector.h"
+#include "StringInput.h"
 
 class Game
 {
@@ -60,6 +61,10 @@ public:
 	inline int getSelectorChoice() const;
 	void resetSelector();
 
+	//String input functions
+	void showName() const;
+    	void getInput();
+
 private:
 	//game's collection of pieces
 	std::vector<Piece*> pieces;
@@ -78,6 +83,8 @@ private:
 	Selector* gSelector;
 
 	SDL_Surface* screen;
+
+	StringInput* name;
 	
 	int gameState_;
 };
