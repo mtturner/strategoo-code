@@ -31,12 +31,13 @@ public:
 	void setBoardSpace(int boardSpace);
 	void setOwner(int owner);
 	void setPieceImage(Sprite* image);
-/*		
-	inline bool operator ==(const Piece&) const;
-	inline bool operator !=(const Piece&) const;
-	inline bool operator <(const Piece&) const;
-	inline bool operator >(const Piece&) const;
-*/
+
+	//operator overloads
+	inline bool operator==(const Piece& piece) const;
+	inline bool operator!=(const Piece& piece) const;
+	inline bool operator<(const Piece& piece) const;
+	inline bool operator>(const Piece& piece) const;
+
 private:
 	int boardSpace_,
         rank_,
@@ -49,51 +50,59 @@ inline int Piece::getRank() const
 {
 	return rank_;
 }
+
 //*********************************
 inline int Piece::getXPos() const
 {
 	return pieceImage->getXPos();
 }
+
 //*********************************
 inline int Piece::getYPos() const
 {
 	return pieceImage->getYPos();
 }
+
 //*********************************
 inline int Piece::getBoardSpace() const
 {
 	return boardSpace_;
 }
+
 //*********************************
 inline int Piece::getOwner() const
 {
 	return owner_;
 }
+
 //*********************************
 inline Sprite* Piece::getPieceImage() const
 {
 	return pieceImage;
 }
+
 //*********************************
-/*
-inline bool operator ==(const Piece& piece) const;
+inline bool Piece::operator==(const Piece& piece) const
 {
 	return getRank() == piece.getRank();
 }
+
 //*********************************
-inline bool operator !=(const Piece& piece) const;
+inline bool Piece::operator!=(const Piece& piece) const
 {
 	return !(*this == piece);
 }
+
 //*********************************
-inline bool operator <(const Piece& piece) const;
+inline bool Piece::operator<(const Piece& piece) const
 {
 	return getRank() < piece.getRank();
 }
+
 //*********************************
-inline bool operator >(const Piece& piece) const;
+inline bool Piece::operator>(const Piece& piece) const
 {
-	return !(*this < piece);
+	return getRank() > piece.getRank();
 }
-*/
+
 #endif
