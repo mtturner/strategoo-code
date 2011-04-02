@@ -12,7 +12,7 @@ public:
     Piece(int xPos, int yPos, int boardSpace, int rank, int owner, Sprite* image);
     ~Piece();
 
-	bool move();
+	virtual bool move();
 	void namePiece();
 	void render() const;
 	inline int getRank() const;
