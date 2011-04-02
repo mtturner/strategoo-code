@@ -3,7 +3,7 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-class Sprite;
+#include"Sprite.h"
 
 class Piece
 {

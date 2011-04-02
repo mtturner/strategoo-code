@@ -3,6 +3,8 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include"Sprite.h"
+
 class Menu
 {
 public:

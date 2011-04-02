@@ -3,6 +3,9 @@
 #ifndef COMPUTER_H
 #define COMPUTER_H
 
+#include<vector>
+#include"Piece.h"
+
 class Computer
 {
 public:

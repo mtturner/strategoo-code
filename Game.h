@@ -3,6 +3,12 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include"SDL.h"
+#include<string>
+#include<vector>
+#include"Sprite.h"
+#include"Piece.h"
+
 class Game
 {
 public:

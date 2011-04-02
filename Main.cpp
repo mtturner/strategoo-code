@@ -1,8 +1,4 @@
-#include"SDL/SDL.h"
-#include<string>
-#include<vector>
-#include"Sprite.h"
-#include"Piece.h"
+#include"SDL.h"
 #include"Game.h"
 
 int main(int argc, char* args[]) 

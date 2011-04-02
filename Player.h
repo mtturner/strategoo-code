@@ -3,6 +3,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include<string>
+#include<vector>
+#include"Statistics.h"
+#include"Piece.h"
+
 class Player
 {
 public:

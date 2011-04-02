@@ -3,6 +3,10 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include<vector>
+#include"Sprite.h"
+#include"Piece.h"
+
 class Board
 {
 public:

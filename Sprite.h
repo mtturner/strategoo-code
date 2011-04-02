@@ -3,8 +3,8 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include <string>
-class SDL_Surface;
+#include"SDL.h"
+#include<string>
 
 class Sprite
 {
