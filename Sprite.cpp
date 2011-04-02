@@ -42,7 +42,6 @@ bool Sprite::load(std::string filename)
 	//delete old image
 	delete image;
 
-
 	loaded = IMG_Load(filename.c_str());
 
 	if(loaded)
