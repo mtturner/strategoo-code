@@ -34,13 +34,13 @@ private:
 };
 
 //******************************************
-int Sprite::getXPos() const
+inline int Sprite::getXPos() const
 {
 	return xPos_;
 }
 
 //******************************************
-int Sprite::getYPos() const
+inline int Sprite::getYPos() const
 {
 	return yPos_;
 }

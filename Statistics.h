@@ -7,6 +7,9 @@
 #ifndef STATISTICS_H
 #define STATISTICS_H
 
+#include <string>
+#include "Sprite.h"
+
 class Statistics
 {
 public:

@@ -7,10 +7,12 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include<string>
-#include<vector>
-#include"Statistics.h"
-#include"Piece.h"
+#include <string>
+#include <vector>
+#include "Statistics.h"
+#include "Piece.h"
+
+using namespace std;
 
 class Player
 {
@@ -22,7 +24,7 @@ public:
 	void clearPieces();
 	void loadStatistics();
 	void displayStatistics() const;
-	inline string getPlayerName() const;
+	inline std::string getPlayerName() const;
 
 private:
 	std::string name;
@@ -31,6 +33,9 @@ private:
 };
 
 //******************************************************************************
-inline string Player::getPlayerName() const
+inline std::string Player::getPlayerName() const
+{
+	return name;
+}
 
 #endif

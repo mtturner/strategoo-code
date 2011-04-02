@@ -6,7 +6,6 @@
 ******************************************************/
 
 #include "Statistics.h"
-#include <string>
 
 using namespace std;
 
@@ -50,7 +49,10 @@ bool Statistics::save()
 
 	statsFile.open("statistics.txt", ios::ate);
 
-	
+	while( statsFile >> playerName )
+	{
+
+		if( playerName == Player.getName
 	
 }
 
