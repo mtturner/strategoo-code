@@ -152,7 +152,7 @@ bool Game::initialize()
 		return false;
 	}
 
-	if(!startMenuBG->load("startMenu.png"))
+	if(!startMenuBG->load("startmenu.png"))
 	{
 		return false;
 	}
@@ -172,7 +172,7 @@ bool Game::initialize()
 		return false;
 	}
 
-	if(!menuBG->load("menu.png"))
+	if(!menuBG->load("ingamemenu.png"))
 	{
 		return false;
 	}
@@ -296,4 +296,10 @@ void Game::moveSelector() const
 void Game::showSelector() const
 {
 	gSelector->show(screen);
+}
+
+//******************************************
+void Game::resetSelector()
+{
+	gSelector->reset();
 }

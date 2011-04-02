@@ -58,6 +58,7 @@ public:
 	void moveSelector() const;
 	void showSelector() const;
 	inline int getSelectorChoice() const;
+	void resetSelector();
 
 private:
 	//game's collection of pieces

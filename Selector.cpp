@@ -42,6 +42,13 @@ void Selector::setMoved(bool moved)
 }
 
 //******************************************
+void Selector::reset()
+{
+	setChoice(1);
+	setMoved(true);
+}
+
+//******************************************
 void Selector::handleInput(SDL_Event& gEvent)
 {
 	if(gEvent.type == SDL_KEYDOWN)

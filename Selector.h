@@ -20,6 +20,7 @@ public:
 	inline int getChoice() const;
 	void setChoice(int choice);
 	void setMoved(bool moved);
+	void reset();
 
 	void handleInput(SDL_Event& gEvent);
 	void move();
