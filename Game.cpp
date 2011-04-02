@@ -147,42 +147,42 @@ bool Game::initialize()
 	SDL_WM_SetCaption("strategOO", "strategOO");
 
 	//load images
-	if(!introBG->load("intro.bmp"))
+	if(!introBG->load("intro.png"))
 	{
 		return false;
 	}
 
-	if(!loginBG->load("login.bmp"))
+	if(!loginBG->load("login.png"))
 	{
 		return false;
 	}
 
-	if(!startMenuBG->load("startMenu.bmp"))
+	if(!startMenuBG->load("startMenu.png"))
 	{
 		return false;
 	}
 
-	if(!setPieceBG->load("setPiece.bmp"))
+	if(!setPieceBG->load("setPiece.png"))
 	{
 		return false;
 	}
 
-	if(!playGameBG->load("playGame.bmp"))
+	if(!playGameBG->load("playGame.png"))
 	{
 		return false;
 	}
 
-	if(!endGameBG->load("endGame.bmp"))
+	if(!endGameBG->load("endGame.png"))
 	{
 		return false;
 	}
 
-	if(!menuBG->load("menu.bmp"))
+	if(!menuBG->load("menu.png"))
 	{
 		return false;
 	}
 
-	if(!statisticsBG->load("statistics.bmp"))
+	if(!statisticsBG->load("statistics.png"))
 	{
 		return false;
 	}
