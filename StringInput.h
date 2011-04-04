@@ -2,29 +2,28 @@
 #define STRINGINPUT_H
 
 #include <string>
+#include "SDL_ttf.h"
 
 //The key press interpreter
 class StringInput
 {
     private:
-    //The storage string
-    std::string str;
+            //The storage string
+            std::string str;
 
-    //The text surface
-    SDL_Surface *text;
+             //The text surface
+             SDL_Surface* text;
+             TTF_Font* font;
+             SDL_Color textColor;
 
     public:
-    //Initializes variables
-    StringInput();
+           StringInput();
+           ~StringInput();
 
-    //Does clean up
-    ~StringInput();
+           void handle_input(SDL_Event& gEvent);
 
-    //Handles input
-    void handle_input();
-
-    //Shows the message on screen
-    void show_centered(SDL_Surface* screen);
+           //Shows the message on screen
+           void show_centered(SDL_Surface* screen);
 };
 
 #endif

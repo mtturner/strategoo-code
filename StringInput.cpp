@@ -2,14 +2,6 @@
 #include "SDL.h"
 #include "StringInput.h"
 
-SDL_Event gEvent;
-SDL_Color textColor = { 153, 217, 234 };
-TTF_Font *font = TTF_OpenFont( "lazy.ttf", 24 );
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
-const int SCREEN_BPP = 32;
-
-
 StringInput::StringInput()
 {
     //Initialize the string
@@ -17,6 +9,8 @@ StringInput::StringInput()
 
     //Initialize the surface
     text = NULL;
+   font = TTF_OpenFont( "lazy.ttf", 28 );
+   textColor = { 153, 217, 234 };
 
     //Enable Unicode
     SDL_EnableUNICODE( SDL_ENABLE );
@@ -31,7 +25,7 @@ StringInput::~StringInput()
     SDL_EnableUNICODE( SDL_DISABLE );
 }
 //****************************************
-void StringInput::handle_input()
+void StringInput::handle_input(SDL_Event &gEvent)
 {
     //If a key was pressed
     if( gEvent.type == SDL_KEYDOWN )
@@ -96,8 +90,8 @@ void StringInput::show_centered(SDL_Surface* screen)
         SDL_Rect offset;
 
         //Get offsets
-        offset.x = ( SCREEN_WIDTH - text->w ) / 2;
-        offset.y = ( SCREEN_HEIGHT - text->h ) / 2;
+        offset.x = ( 800 - text->w ) / 2;
+        offset.y = ( 600 - text->h ) / 2;
 
         //Blit
         SDL_BlitSurface( text, NULL, screen, &offset );
