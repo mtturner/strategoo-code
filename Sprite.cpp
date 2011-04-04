@@ -78,7 +78,7 @@ void Sprite::show(SDL_Surface* destination) const
 	position.x = getXPos();
 	position.y = getYPos();
 
-	SDL_BlitSurface(image, NULL, destination, &position);
+	SDL_BlitSurface(image, 0, destination, &position);
 }
 
 //******************************************
