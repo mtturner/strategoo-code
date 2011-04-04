@@ -59,19 +59,74 @@ bool Statistics::save()
 }
 
 //*******************************************************************
-bool Statistics::save()
+bool Statistics::save(std::string currentPlayer)
 {
 	//declaring local variables
 	fstream statsFile;
 	std::string playerName;
 
 	statsFile.open("statistics.txt", ios::ate);
+
+	while( statsFile >> playerName )
+	{
+		if( playerName == currentPlayer )
+		{
+			statsFile << gamesPlayed_ << endl;
+			statsFile << gamesWon_ << endl;
+			statsFile << gamesLost_ << endl;
+			statsFile << flagsCaptured_ << endl;
+			statsFile << capturedFlags_ << endl;
+			statsFile << timesExtinct_ << endl;
+			statsFile << genocide_ << endl;
+		}
+	}
+
+	statsFile.close();		
 }
 
 //*******************************************************************
-void Statistics::load()
+bool Statistics::load(std::string currentPlayer)
 {
-	//load statistics
+	//declaring local variables
+	ifstream statsFile;
+	std::string playerName;
+
+	//opening stats file
+	statsFile.open("statistics.txt", ios::ate);
+
+	//finding the correct stats to load
+	while( statsFile >> playerName )
+	{
+		//loading the corresponding stats when a match is found
+		if( playerName == currentPlayer)
+		{
+			statsFile >> gamesPlayed_;
+			statsFile >> gamesWon_;
+			statsFile >> gamesLost_;
+			statsFile >> flagsCaptured_;
+			statsFile >> capturedFlags_;
+			statsFile >> timesExtinct_;
+			statsFile >> genocide_;
+		}
+		//advancing to the next stored name in the file if a match is not found
+		else
+		{
+			statsFile >> endl;
+			statsFile >> endl;
+			statsFile >> endl;
+			statsFile >> endl;
+			statsFile >> endl;
+			statsFile >> endl;
+			statsFile >> endl;
+		}
+	}
+	
+	if( playerName != currentPlayer )
+	{
+		return false;
+	}
+
+	statsFile.close();
 }
 
 //*******************************************************************

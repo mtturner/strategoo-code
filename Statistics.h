@@ -16,8 +16,8 @@ public:
     Statistics();
     ~Statistics();
 
-    bool save();
-	bool load();
+    bool save(std::string);
+    bool load(std::string);
     void display() const;
 
 private:

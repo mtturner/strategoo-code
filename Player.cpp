@@ -32,9 +32,15 @@ void Player::clearPieces()
 }
 
 //*******************************************************************
-void Player::loadStatistics()
+bool Player::loadStatistics()
 {
-	//load stats
+	stats->load(name);
+}
+
+//*******************************************************************
+bool Player::saveStatistics()
+{
+	stats->save(name);
 }
 
 //*******************************************************************

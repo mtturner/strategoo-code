@@ -22,20 +22,14 @@ public:
 
 	void clearPiece();
 	void clearPieces();
-	void loadStatistics();
+	bool loadStatistics();
+	bool saveStatistics();
 	void displayStatistics() const;
-	inline std::string getPlayerName() const;
 
 private:
 	std::string name;
 	std::vector<Piece*> pieces;
 	Statistics* stats;
 };
-
-//******************************************************************************
-inline std::string Player::getPlayerName() const
-{
-	return name;
-}
 
 #endif
