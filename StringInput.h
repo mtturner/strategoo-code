@@ -37,7 +37,7 @@ public:
 
 private:
 	//The storage string
-    std::string str;
+    std::string input;
 
     //The text surface
     SDL_Surface* text;
@@ -48,7 +48,7 @@ private:
 //****************************************
 inline std::string StringInput::getInput() const
 {
-	return str;
+	return input;
 }
 
 //****************************************

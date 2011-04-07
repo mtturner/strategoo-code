@@ -45,18 +45,16 @@ StringInput::~StringInput()
 //****************************************
 void StringInput::setInput(std::string newInput)
 {
-	str = newInput;
+	input = newInput;
 }
 
 //****************************************
 void StringInput::setMessageSurface(SDL_Surface* surface)
 {
-	/*
 	if(text != 0)
 	{
 		SDL_FreeSurface(text);
 	}
-	*/
 
 	text = surface;
 }
