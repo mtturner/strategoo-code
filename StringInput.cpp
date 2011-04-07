@@ -12,9 +12,10 @@ StringInput::StringInput() : text(0), font(0), textColor(0)
 	//Initialize the string
     setInput("");
 
-    //Initialize the surface
-    setMessageSurface(0);
-    setFont(TTF_OpenFont("lazy.ttf", 28));
+	//set font
+	TTF_Font* temp = TTF_OpenFont("HARRP___.TTF", 28);
+
+    setFont(temp);
 
 	//temporary SDL_Color struct
 	SDL_Color color;
@@ -50,7 +51,12 @@ void StringInput::setInput(std::string newInput)
 //****************************************
 void StringInput::setMessageSurface(SDL_Surface* surface)
 {
-	SDL_FreeSurface(text);
+	/*
+	if(text != 0)
+	{
+		SDL_FreeSurface(text);
+	}
+	*/
 
 	text = surface;
 }
@@ -84,7 +90,7 @@ void StringInput::handleInput(SDL_Event &gEvent)
         if(temp.length() <= 16)
         {
             //If the key is a space
-            if(gEvent.key.keysym.unicode == (Uint16)' ')
+            if(gEvent.key.keysym.unicode == static_cast<Uint16>(' '))
             {
                 //Append the character
                 temp += static_cast<char>(gEvent.key.keysym.unicode);
@@ -96,7 +102,7 @@ void StringInput::handleInput(SDL_Event &gEvent)
                 //Append the character
                 temp += static_cast<char>(gEvent.key.keysym.unicode);
             }
-            //If the key is a uppercase letter
+            //If the key is an uppercase letter
             else if((gEvent.key.keysym.unicode >= static_cast<Uint16>('A')) && 
 				    (gEvent.key.keysym.unicode <= static_cast<Uint16>('Z')))
             {
@@ -133,9 +139,6 @@ void StringInput::handleInput(SDL_Event &gEvent)
 
 			//set new text
 			setMessageSurface(newInput);
-
-			//free temporary surface
-			SDL_FreeSurface(newInput);
         }
     }
 }

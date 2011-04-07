@@ -4,6 +4,7 @@
 	This is the header file for the Statistics class.
 ******************************************************/
 
+/*
 #ifndef STATISTICS_H
 #define STATISTICS_H
 
@@ -30,14 +31,14 @@ private:
 	genocide_;
 
 	//Sprites to display each stat
-	Sprite* statisticsScreen_
-	gamesPlayedLine_,
-	gamesWonLine_,
-	gamesLostLine_,
-	flagsCapturedLine_,
-	capturedFlagsLine_,
-	timesExtinctLine_,
-	genocideLine_;
+	Sprite* gamesPlayedLine,
+	gamesWonLine,
+	gamesLostLine,
+	flagsCapturedLine,
+	capturedFlagsLine,
+	timesExtinctLine,
+	genocideLine;
 };
 
 #endif
+*/

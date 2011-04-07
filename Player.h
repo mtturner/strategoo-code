@@ -29,7 +29,7 @@ public:
 private:
 	std::string name;
 	std::vector<Piece*> pieces;
-	Statistics* stats;
+	//Statistics* stats;
 };
 
 #endif

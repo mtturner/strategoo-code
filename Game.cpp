@@ -136,6 +136,12 @@ bool Game::initialize()
 	//initialize SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
 
+	//initialize SDL_ttf
+	if(TTF_Init() == -1)
+	{
+		return false;
+	}
+
 	//set up screen
 	setScreen(SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE));
 
@@ -185,6 +191,9 @@ bool Game::initialize()
 	//create selector
 	gSelector = new Selector();
 
+	//create string input
+	name = new StringInput();
+
 	if(getScreen() == 0)
 	{
 		return false;
@@ -196,6 +205,9 @@ bool Game::initialize()
 //******************************************
 void Game::cleanUp()
 {
+	//quit SDL_ttf
+	TTF_Quit();
+
 	//quit SDL
 	SDL_Quit();
 }
@@ -304,12 +316,12 @@ void Game::resetSelector()
 	gSelector->reset();
 }
 //******************************************
-void Game::getInput()
+void Game::getNameInput(SDL_Event& gEvent)
 {
-     name->handle_input();
+     name->handleInput(gEvent);
 }
 //******************************************
-void Game::showName() const
+void Game::showNameInput() const
 {
-     name->show_centered(getScreen());
+     name->show(getScreen());
 }

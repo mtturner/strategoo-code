@@ -82,10 +82,15 @@ int main(int argc, char* args[])
 						controller.setState(STATE_STARTMENU);
 					}
 				}
+
+				controller.getNameInput(gEvent);
 			}
 
 			//apply the login image to the screen
 			controller.showLogin();
+
+			//apply input text to screen
+			controller.showNameInput();
 
 			//render to the screen
 			//if rendering was unsuccessfull

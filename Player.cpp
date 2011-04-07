@@ -34,17 +34,21 @@ void Player::clearPieces()
 //*******************************************************************
 bool Player::loadStatistics()
 {
-	stats->load(name);
+	//stats->load(name);
+
+	return true;
 }
 
 //*******************************************************************
 bool Player::saveStatistics()
 {
-	stats->save(name);
+	//stats->save(name);
+
+	return true;
 }
 
 //*******************************************************************
 void Player::displayStatistics() const
 {
-	stats->display();
+	//stats->display();
 }

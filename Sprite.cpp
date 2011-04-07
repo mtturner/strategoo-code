@@ -15,21 +15,19 @@ Sprite::Sprite() : image(0)
 }
 
 //******************************************
+Sprite::Sprite(int x, int y) : image(0)
+{
+	setXPos(x);
+	setYPos(y);
+}
+
+//******************************************
 Sprite::Sprite(int x, int y, std::string filename)
 {
 	setXPos(x);
 	setYPos(y);
 
 	load(filename.c_str());
-}
-
-//******************************************
-Sprite::Sprite(int x, int y, SDL_Surface* surface)
-{
-	setSurface(surface);
-
-	setXPos(x);
-	setYPos(y);
 }
 
 //******************************************
@@ -106,6 +104,8 @@ void Sprite::setSurface(SDL_Surface* surface)
 {
 	if(surface != 0)
 	{
+		SDL_FreeSurface(image);
+
 		image = surface;
 	}
 }

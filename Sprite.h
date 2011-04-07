@@ -14,9 +14,8 @@ class Sprite
 {
 public:
 	Sprite();
+	Sprite(int x, int y);
 	Sprite(int x, int y, std::string filename);
-	//constructor for message surfaces
-	Sprite(int x, int y, SDL_Surface* surface);
 	~Sprite();
 
 	bool load(std::string filename);

@@ -66,7 +66,7 @@ inline TTF_Font* StringInput::getFont() const
 //****************************************
 inline SDL_Color* StringInput::getFontColor() const
 {
-	return textColor
+	return textColor;
 }
 
 #endif

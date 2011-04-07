@@ -8,6 +8,7 @@
 #define GAME_H
 
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include <string>
 #include <vector>
 #include "Sprite.h"
@@ -62,8 +63,8 @@ public:
 	void resetSelector();
 
 	//String input functions
-	void showName() const;
-    	void getInput();
+	void showNameInput() const;
+    void getNameInput(SDL_Event& gEvent);
 
 private:
 	//game's collection of pieces

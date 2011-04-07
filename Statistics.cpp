@@ -5,6 +5,9 @@
 	Statistics class.
 ******************************************************/
 
+/*
+#include"SDL.h"
+#include<fstream>
 #include "Statistics.h"
 
 using namespace std;
@@ -19,25 +22,25 @@ Statistics::Statistics()
 	timesExtinct_ = 0;
 	genocide_ = 0;
 
-	gamesPlayedLine_ = new Sprite;
-	gamesWonLine_ = new Sprite;
-	gamesLostLine_ = new Sprite;
-	flagsCapturedLine_ = new Sprite;
-	capturedFlagsLine_ = new Sprite;
-	timesExtinctLine_ = new Sprite;
-	genocideLine_ = new Sprite;
+	gamesPlayedLine = new Sprite(300, 0);
+	gamesWonLine = new Sprite(300, 75);
+	gamesLostLine = new Sprite(300, 150);
+	flagsCapturedLine = new Sprite(300, 225);
+	capturedFlagsLine = new Sprite(300, 300);
+	timesExtinctLine = new Sprite(300, 375);
+	genocideLine = new Sprite(300, 450);
 }
 
 //*******************************************************************
 Statistics::~Statistics()
 {
-	delete gamesPlayedLine_;
-	delete gamesWonLine_;
-	delete gamesLostLine_;
-	delete flagsCapturedLine_;
-	delete capturedFlagsLine_;
-	delete timesExtinctLine_;
-	delete genocideLine_;
+	delete gamesPlayedLine;
+	delete gamesWonLine;
+	delete gamesLostLine;
+	delete flagsCapturedLine;
+	delete capturedFlagsLine;
+	delete timesExtinctLine;
+	delete genocideLine;
 }
 
 //*******************************************************************
@@ -51,8 +54,7 @@ bool Statistics::save()
 
 	while(statsFile >> playerName)
 	{
-
-		if( playerName == Player.getName)
+		if(playerName == Player.getName)
 		{
 		}
 	}
@@ -134,3 +136,4 @@ void Statistics::display() const
 {
 	//display stats
 }
+*/
