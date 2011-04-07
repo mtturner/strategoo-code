@@ -83,7 +83,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				controller.getNameInput(gEvent);
+				controller.handleNameInput(gEvent);
 			}
 
 			//apply the login image to the screen

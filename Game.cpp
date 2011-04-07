@@ -316,7 +316,7 @@ void Game::resetSelector()
 	gSelector->reset();
 }
 //******************************************
-void Game::getNameInput(SDL_Event& gEvent)
+void Game::handleNameInput(SDL_Event& gEvent)
 {
      name->handleInput(gEvent);
 }

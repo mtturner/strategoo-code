@@ -63,8 +63,8 @@ public:
 	void resetSelector();
 
 	//String input functions
+	void handleNameInput(SDL_Event& gEvent);
 	void showNameInput() const;
-    void getNameInput(SDL_Event& gEvent);
 
 private:
 	//game's collection of pieces
