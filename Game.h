@@ -86,7 +86,7 @@ public:
 	inline int getSelectorChoice() const;
 	void resetSelector();
 
-	//String input functions
+	//string input functions
 	void handleNameInput(SDL_Event& gEvent);
 	void showNameInput() const;
 

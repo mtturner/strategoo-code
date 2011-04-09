@@ -51,10 +51,7 @@ void StringInput::setInput(std::string newInput)
 //****************************************
 void StringInput::setMessageSurface(SDL_Surface* surface)
 {
-	if(text != 0)
-	{
-		SDL_FreeSurface(text);
-	}
+	SDL_FreeSurface(text);
 
 	text = surface;
 }
@@ -76,7 +73,7 @@ void StringInput::setFontColor(SDL_Color* color)
 }
 
 //****************************************
-void StringInput::handleInput(SDL_Event &gEvent)
+void StringInput::handleInput(SDL_Event& gEvent)
 {
     //If a key was pressed
     if(gEvent.type == SDL_KEYDOWN)

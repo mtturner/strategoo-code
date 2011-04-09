@@ -46,12 +46,29 @@ Game::~Game()
 void Game::startGame()
 {
 	//create player, computer, and board
-	gPlayer = new Player();  //temporary until login is complete
 	gComputer = new Computer();
 	gBoard = new Board();
 
 	//temporary piece for creation
 	Piece* temp = 0;
+
+	//create emptyspace's and add to appropriate collections
+	for(int i = 0; i < 92; i++)
+	{
+		//if 40 pieces haven't been created
+		if(i < 40)
+		{
+			//add to board's collection along with game's collection
+			gBoard->addPiece(temp);
+			addPiece(temp);
+		}
+		//if the first 40 pieces have already been created,
+		//only add piece to game's collection
+		else
+		{
+			addPiece(temp);
+		}
+	}
 
 	//create marshal's and add to appropriate collections
 	for(int i = 0; i < 2; i++)
@@ -532,7 +549,7 @@ bool Game::doIntro()
 	showIntro();
 
 	//render to the screen
-	//if rendering was unsuccessfull
+	//if rendering was unsuccessful
 	if(!render())
 	{
 		//return 1, closing the program
@@ -580,7 +597,7 @@ bool Game::login()
 		showNameInput();
 
 		//render to the screen
-		//if rendering was unsuccessfull
+		//if rendering was unsuccessful
 		if(!render())
 		{
 			//return 1, closing the program
@@ -638,7 +655,7 @@ bool Game::doStartMenu()
 	showSelector();
 
 	//render to the screen
-	//if rendering was unsuccessfull
+	//if rendering was unsuccessful
 	if(!render())
 	{
 		//return 1, closing the program
@@ -673,7 +690,7 @@ bool Game::doSetPiece()
 	showSetPiece();
 
 	//render to the screen
-	//if rendering was unsuccessfull
+	//if rendering was unsuccessful
 	if(!render())
 	{
 		//return 1, closing the program
@@ -708,7 +725,7 @@ bool Game::doPlayGame()
 	showPlayGame();
 
 	//render to the screen
-	//if rendering was unsuccessfull
+	//if rendering was unsuccessful
 	if(!render())
 	{
 		//return 1, closing the program
@@ -744,7 +761,7 @@ bool Game::doEndGame()
 	showEndGame();
 
 	//render to the screen
-	//if rendering was unsuccessfull
+	//if rendering was unsuccessful
 	if(!render())
 	{
 		//return 1, closing the program
@@ -798,7 +815,7 @@ bool Game::doInGameMenu()
 	showSelector();
 
 	//render to the screen
-	//if rendering was unsuccessfull
+	//if rendering was unsuccessful
 	if(!render())
 	{
 		//return 1, closing the program
@@ -834,7 +851,7 @@ bool Game::doStatistics()
 	showStatistics();
 
 	//render to the screen
-	//if rendering was unsuccessfull
+	//if rendering was unsuccessful
 	if(!render())
 	{
 		//return 1, closing the program
