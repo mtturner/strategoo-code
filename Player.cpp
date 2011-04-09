@@ -9,14 +9,34 @@
 
 Player::Player()
 {
-	name = " ";
-	//pieces.load(0);
+	setName(" ");
+}
+
+//*******************************************************************
+Player::Player(std::string& currentPlayer)
+{
+	setName(currentPlayer);
 }
 
 //*******************************************************************
 Player::~Player()
 {
 	//deallocate memory
+}
+
+//*******************************************************************
+void Player::setName(std::string newPlayer)
+{
+	name = newPlayer;
+}
+
+//*******************************************************************
+void Player::addPiece(Piece* piece)
+{
+	if(piece != 0)
+	{
+		pieces.push_back(piece);
+	}
 }
 
 //*******************************************************************
@@ -34,7 +54,7 @@ void Player::clearPieces()
 //*******************************************************************
 bool Player::loadStatistics()
 {
-	//stats->load(name);
+	stats->load(name);
 
 	return true;
 }
@@ -42,7 +62,7 @@ bool Player::loadStatistics()
 //*******************************************************************
 bool Player::saveStatistics()
 {
-	//stats->save(name);
+	stats->save(name);
 
 	return true;
 }

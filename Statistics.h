@@ -4,7 +4,7 @@
 	This is the header file for the Statistics class.
 ******************************************************/
 
-/*
+
 #ifndef STATISTICS_H
 #define STATISTICS_H
 
@@ -17,8 +17,8 @@ public:
     Statistics();
     ~Statistics();
 
-    bool save(std::string);
-    bool load(std::string);
+    bool save(const std::string& currentPlayer);
+    bool load(const std::string& currentPlayer);
     void display() const;
 
 private:
@@ -31,14 +31,13 @@ private:
 	genocide_;
 
 	//Sprites to display each stat
-	Sprite* gamesPlayedLine,
-	gamesWonLine,
-	gamesLostLine,
-	flagsCapturedLine,
-	capturedFlagsLine,
-	timesExtinctLine,
-	genocideLine;
+	Sprite* gamesPlayedLine;
+	Sprite* gamesWonLine;
+	Sprite* gamesLostLine;
+	Sprite* flagsCapturedLine;
+	Sprite* capturedFlagsLine;
+	Sprite* timesExtinctLine;
+	Sprite* genocideLine;
 };
 
 #endif
-*/

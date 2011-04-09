@@ -18,8 +18,11 @@ class Player
 {
 public:
 	Player();
+	Player(std::string& currentPlayer);
 	~Player();
 
+	void setName(std::string newPlayer);
+	void addPiece(Piece* piece);
 	void clearPiece();
 	void clearPieces();
 	bool loadStatistics();
@@ -29,7 +32,7 @@ public:
 private:
 	std::string name;
 	std::vector<Piece*> pieces;
-	//Statistics* stats;
+	Statistics* stats;
 };
 
 #endif

@@ -5,9 +5,9 @@
 	Statistics class.
 ******************************************************/
 
-/*
-#include"SDL.h"
-#include<fstream>
+
+#include "SDL/SDL.h"
+#include <fstream>
 #include "Statistics.h"
 
 using namespace std;
@@ -44,30 +44,13 @@ Statistics::~Statistics()
 }
 
 //*******************************************************************
-bool Statistics::save()
+bool Statistics::save(const string& currentPlayer)
 {
 	//declaring local variables
 	fstream statsFile;
-	std::string playerName;
+	string playerName;
 
-	statsFile.open("statistics.txt", ios::ate);
-
-	while(statsFile >> playerName)
-	{
-		if(playerName == Player.getName)
-		{
-		}
-	}
-}
-
-//*******************************************************************
-bool Statistics::save(std::string currentPlayer)
-{
-	//declaring local variables
-	fstream statsFile;
-	std::string playerName;
-
-	statsFile.open("statistics.txt", ios::ate);
+	statsFile.open("statistics.txt", ios::app);
 
 	while( statsFile >> playerName )
 	{
@@ -83,24 +66,33 @@ bool Statistics::save(std::string currentPlayer)
 		}
 	}
 
-	statsFile.close();		
+	statsFile.close();
+
+	if(statsFile.fail())
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
 //*******************************************************************
-bool Statistics::load(std::string currentPlayer)
+bool Statistics::load(const string& currentPlayer)
 {
 	//declaring local variables
 	ifstream statsFile;
-	std::string playerName;
+	string playerName;
 
 	//opening stats file
-	statsFile.open("statistics.txt", ios::ate);
+	statsFile.open("statistics.txt", ios::app);
 
 	//finding the correct stats to load
-	while( statsFile >> playerName )
+	while(statsFile >> playerName)
 	{
 		//loading the corresponding stats when a match is found
-		if( playerName == currentPlayer)
+		if(playerName == currentPlayer)
 		{
 			statsFile >> gamesPlayed_;
 			statsFile >> gamesWon_;
@@ -113,13 +105,7 @@ bool Statistics::load(std::string currentPlayer)
 		//advancing to the next stored name in the file if a match is not found
 		else
 		{
-			statsFile >> endl;
-			statsFile >> endl;
-			statsFile >> endl;
-			statsFile >> endl;
-			statsFile >> endl;
-			statsFile >> endl;
-			statsFile >> endl;
+			statsFile.seekg(28L, ios::cur);
 		}
 	}
 	
@@ -127,8 +113,14 @@ bool Statistics::load(std::string currentPlayer)
 	{
 		return false;
 	}
+	else
+	{
+		return true;
+	}
 
 	statsFile.close();
+
+	return 0;
 }
 
 //*******************************************************************
@@ -136,4 +128,3 @@ void Statistics::display() const
 {
 	//display stats
 }
-*/
