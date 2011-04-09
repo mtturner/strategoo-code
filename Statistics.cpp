@@ -6,7 +6,7 @@
 ******************************************************/
 
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 #include <fstream>
 #include "Statistics.h"
 

@@ -43,11 +43,6 @@ Game::~Game()
 }
 
 //******************************************
-void Game::login()
-{
-}
-
-//******************************************
 void Game::startGame()
 {
 	//create player, computer, and board
@@ -510,6 +505,343 @@ void Game::setScreen(SDL_Surface* s)
 	{
 		screen = s;
 	}
+}
+
+//******************************************
+bool Game::doIntro()
+{
+	while(SDL_PollEvent(&gEvent))
+	{
+		//if the user has exited the window
+		if(gEvent.type == SDL_QUIT)
+		{
+			//set next state to exit
+			setState(STATE_EXIT);
+		}
+		//else if the user has hit the enter key
+		else if(gEvent.type == SDL_KEYDOWN)
+		{
+			if(gEvent.key.keysym.sym == SDLK_RETURN)
+			{
+				setState(STATE_LOGIN);
+			}
+		}
+	}
+
+	//apply the intro image to the screen
+	showIntro();
+
+	//render to the screen
+	//if rendering was unsuccessfull
+	if(!render())
+	{
+		//return 1, closing the program
+		return false;
+	}
+
+	return true;
+}
+
+//******************************************
+bool Game::login()
+{
+	bool isLoggingIn = true;
+
+	while(isLoggingIn)
+	{
+		while(SDL_PollEvent(&gEvent))
+		{
+			//if the user has exited the window
+			if(gEvent.type == SDL_QUIT)
+			{
+				//set next state to exit
+				setState(STATE_EXIT);
+
+				isLoggingIn = false;
+			}
+			//else if the user has hit the enter key
+			else if(gEvent.type == SDL_KEYDOWN)
+			{
+				if(gEvent.key.keysym.sym == SDLK_RETURN)
+				{
+					setState(STATE_STARTMENU);
+
+					isLoggingIn = false;
+				}
+			}
+
+			handleNameInput(gEvent);
+		}
+
+		//apply the login image to the screen
+		showLogin();
+
+		//apply input text to screen
+		showNameInput();
+
+		//render to the screen
+		//if rendering was unsuccessfull
+		if(!render())
+		{
+			//return 1, closing the program
+			return false;
+		}
+	}
+	
+	//create new player with name that was input
+	gPlayer = new Player(name->getInput());
+
+	return true;
+}
+
+//******************************************
+bool Game::doStartMenu()
+{
+	while(SDL_PollEvent(&gEvent))
+	{
+		//if the user has exited the window
+		if(gEvent.type == SDL_QUIT)
+		{
+			//set next state to exit
+			setState(STATE_EXIT);
+		}
+				
+		//handle start menu selector input
+		handleSelectorInput(gEvent);
+
+		//if the user has hit the enter key
+		if(gEvent.type == SDL_KEYDOWN)
+		{
+			if(gEvent.key.keysym.sym == SDLK_RETURN)
+			{
+				if(getSelectorChoice() == 0)
+				{
+					setState(STATE_SETPIECE);
+
+					resetSelector();
+				}
+				else if(getSelectorChoice() == 1)
+				{
+					setState(STATE_STATISTICS);
+
+					resetSelector();
+				}
+			}
+		}
+	}
+
+	//move the selector
+	moveSelector();
+
+	//apply the start menu image and selector image to the screen
+	showStartMenu();
+	showSelector();
+
+	//render to the screen
+	//if rendering was unsuccessfull
+	if(!render())
+	{
+		//return 1, closing the program
+		return false;
+	}
+
+	return true;
+}
+
+//******************************************
+bool Game::doSetPiece()
+{
+	while(SDL_PollEvent(&gEvent))
+	{
+		//if the user has exited the window
+		if(gEvent.type == SDL_QUIT)
+		{
+			//set next state to exit
+			setState(STATE_EXIT);
+		}
+		//else if the user has hit the enter key
+		else if(gEvent.type == SDL_KEYDOWN)
+		{
+			if(gEvent.key.keysym.sym == SDLK_RETURN)
+			{
+				setState(STATE_PLAYGAME);
+			}
+		}
+	}
+
+	//apply the start menu image to the screen
+	showSetPiece();
+
+	//render to the screen
+	//if rendering was unsuccessfull
+	if(!render())
+	{
+		//return 1, closing the program
+		return false;
+	}
+
+	return true;
+}
+
+//******************************************
+bool Game::doPlayGame()
+{
+	while(SDL_PollEvent(&gEvent))
+	{
+		//if the user has exited the window
+		if(gEvent.type == SDL_QUIT)
+		{
+			//set next state to exit
+			setState(STATE_EXIT);
+		}
+		//else if the user has hit the enter key
+		else if(gEvent.type == SDL_KEYDOWN)
+		{
+			if(gEvent.key.keysym.sym == SDLK_RETURN)
+			{
+				setState(STATE_ENDGAME);
+			}
+		}
+	}
+
+	//apply the start menu image to the screen
+	showPlayGame();
+
+	//render to the screen
+	//if rendering was unsuccessfull
+	if(!render())
+	{
+		//return 1, closing the program
+		return false;
+	}
+
+	return true;
+}
+
+//******************************************
+bool Game::doEndGame()
+{
+	while(SDL_PollEvent(&gEvent))
+	{
+		//if the user has exited the window
+		if(gEvent.type == SDL_QUIT)
+		{
+			//set next state to exit
+			setState(STATE_EXIT);
+		}
+		//else if the user has hit the enter key
+		else if(gEvent.type == SDL_KEYDOWN)
+		{
+			if(gEvent.key.keysym.sym == SDLK_RETURN)
+			{
+				//reset the game
+				setState(STATE_MENU);
+			}
+		}
+	}
+
+	//apply the end game image to the screen
+	showEndGame();
+
+	//render to the screen
+	//if rendering was unsuccessfull
+	if(!render())
+	{
+		//return 1, closing the program
+		return false;
+	}
+
+	return true;
+}
+
+//******************************************
+bool Game::doInGameMenu()
+{
+	while(SDL_PollEvent(&gEvent))
+	{
+		//if the user has exited the window
+		if(gEvent.type == SDL_QUIT)
+		{
+			//set next state to exit
+			setState(STATE_EXIT);
+		}
+				
+		//handle start menu selector input
+		handleSelectorInput(gEvent);
+
+		//if the user has hit the enter key
+		if(gEvent.type == SDL_KEYDOWN)
+		{
+			if(gEvent.key.keysym.sym == SDLK_RETURN)
+			{
+				if(getSelectorChoice() == 0)
+				{
+					setState(STATE_STATISTICS);
+
+					resetSelector();
+				}
+				else if(getSelectorChoice() == 1)
+				{
+					setState(STATE_STARTMENU);
+
+					resetSelector();
+				}
+			}
+		}
+	}
+
+	//move the selector
+	moveSelector();
+
+	//apply the start menu image and selector image to the screen
+	showInGameMenu();
+	showSelector();
+
+	//render to the screen
+	//if rendering was unsuccessfull
+	if(!render())
+	{
+		//return 1, closing the program
+		return false;
+	}
+
+	return true;
+}
+
+//******************************************
+bool Game::doStatistics()
+{
+	while(SDL_PollEvent(&gEvent))
+	{
+		//if the user has exited the window
+		if(gEvent.type == SDL_QUIT)
+		{
+			//set next state to exit
+			setState(STATE_EXIT);
+		}
+		//else if the enter key was pressed
+		else if(gEvent.type == SDL_KEYDOWN)
+		{
+			if(gEvent.key.keysym.sym == SDLK_RETURN)
+			{
+				//set state to start menu
+				setState(STATE_INTRO);
+			}
+		}
+	}
+
+	//apply the statistics image and messages to the screen
+	showStatistics();
+
+	//render to the screen
+	//if rendering was unsuccessfull
+	if(!render())
+	{
+		//return 1, closing the program
+		return false;
+	}
+
+	return true;
 }
 
 //******************************************

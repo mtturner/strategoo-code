@@ -37,7 +37,6 @@ public:
 	Game();
 	~Game();
 
-	void login();
 	void startGame();
 	std::string promptName();
 	void resetGame();
@@ -70,6 +69,16 @@ public:
 	inline SDL_Surface* getScreen() const;
 	void setScreen(SDL_Surface* s);
 
+	//main loop functions
+	bool doIntro();
+	bool login();
+	bool doStartMenu();
+	bool doSetPiece();
+	bool doPlayGame();
+	bool doEndGame();
+	bool doInGameMenu();
+	bool doStatistics();
+
 	//selector functions
 	void handleSelectorInput(SDL_Event& gEvent);
 	void moveSelector() const;
@@ -82,6 +91,9 @@ public:
 	void showNameInput() const;
 
 private:
+	//SDL_Event structure
+	SDL_Event gEvent;
+
 	//player, computer, and board
 	Player* gPlayer;
 	Computer* gComputer;
@@ -108,6 +120,11 @@ private:
 	StringInput* name;
 	
 	int gameState_;
+
+	//enumeration of all game states
+	enum GameStates {STATE_INTRO, STATE_LOGIN, STATE_STARTMENU,
+		             STATE_SETPIECE, STATE_PLAYGAME, STATE_ENDGAME,
+					 STATE_MENU, STATE_STATISTICS, STATE_EXIT};
 };
 
 //******************************************
