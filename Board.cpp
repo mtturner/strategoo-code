@@ -43,3 +43,12 @@ void Board::render() const
 {
 	//render the board
 }
+
+//*********************************
+void Board::addPiece(Piece* piece)
+{
+	if(piece != 0)
+	{
+		pieces.push_back(piece);
+	}
+}

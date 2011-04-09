@@ -21,6 +21,7 @@ public:
 	void clearPiece();
 	void clearPieces();
 	void render() const;
+	void addPiece(Piece* piece);
 
 private:
 	Sprite* boardImage;
