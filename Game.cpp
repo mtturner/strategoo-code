@@ -9,6 +9,11 @@
 
 Game::Game() : screen(0)
 {
+	//create player and set other pointers to null
+	gPlayer = new Player();
+	gComputer = 0;
+	gBoard = 0;
+
 	//set initial game state
 	setState(0);
 
@@ -45,6 +50,217 @@ void Game::login()
 //******************************************
 void Game::startGame()
 {
+	//create player, computer, and board
+	gPlayer = new Player();  //temporary until login is complete
+	gComputer = new Computer();
+	gBoard = new Board();
+
+	//temporary piece for creation
+	Piece* temp = 0;
+
+	//create marshal's and add to appropriate collections
+	for(int i = 0; i < 2; i++)
+	{
+		temp = new Marshal();
+
+		if(i == 0)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
+
+	//create general's and add to appropriate collections
+	for(int i = 0; i < 2; i++)
+	{
+		temp = new General();
+
+		if(i == 0)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
+
+	//create colonel's and add to appropriate collections
+	for(int i = 0; i < 4; i++)
+	{
+		temp = new Colonel();
+
+		if(i < 2)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
+
+	//create major's and add to appropriate collections
+	for(int i = 0; i < 6; i++)
+	{
+		temp = new Major();
+
+		if(i < 3)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
+
+	//create captain's and add to appropriate collections
+	for(int i = 0; i < 8; i++)
+	{
+		temp = new Captain();
+
+		if(i < 4)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
+
+	//create lieutenant's and add to appropriate collections
+	for(int i = 0; i < 8; i++)
+	{
+		temp = new Lieutenant();
+
+		if(i < 4)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
+
+	//create sergeant's and add to appropriate collections
+	for(int i = 0; i < 8; i++)
+	{
+		temp = new Sergeant();
+
+		if(i < 4)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
+
+	//create miner's and add to appropriate collections
+	for(int i = 0; i < 10; i++)
+	{
+		temp = new Miner();
+
+		if(i < 5)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
+
+	//create scout's and add to appropriate collections
+	for(int i = 0; i < 16; i++)
+	{
+		temp = new Scout();
+
+		if(i < 8)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
+
+	//create spy's and add to appropriate collections
+	for(int i = 0; i < 2; i++)
+	{
+		temp = new Spy();
+
+		if(i == 0)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
+
+	//create bomb's and add to appropriate collections
+	for(int i = 0; i < 12; i++)
+	{
+		temp = new Bomb();
+
+		if(i < 6)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
+
+	//create flag's and add to appropriate collections
+	for(int i = 0; i < 2; i++)
+	{
+		temp = new Flag();
+
+		if(i == 0)
+		{
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			addPiece(temp);
+			gComputer->addPiece(temp);
+		}
+	}
 }
 
 //******************************************
@@ -87,8 +303,12 @@ void Game::namePiece()
 }
 
 //******************************************
-void Game::addPiece()
+void Game::addPiece(Piece* piece)
 {
+	if(piece != 0)
+	{
+		pieces.push_back(piece);
+	}
 }
 
 //******************************************

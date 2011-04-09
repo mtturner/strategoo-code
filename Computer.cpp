@@ -17,6 +17,15 @@ Computer::~Computer()
 }
 
 //*********************************
+void Computer::addPiece(Piece* piece)
+{
+	if(piece != 0)
+	{
+		pieces.push_back(piece);
+	}
+}
+
+//*********************************
 void Computer::clearPiece()
 {
 }

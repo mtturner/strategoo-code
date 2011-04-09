@@ -11,8 +11,23 @@
 #include "SDL_ttf.h"
 #include <string>
 #include <vector>
+#include "Player.h"
+#include "Computer.h"
+#include "Board.h"
 #include "Sprite.h"
 #include "Piece.h"
+#include "Marshal.h"
+#include "General.h"
+#include "Colonel.h"
+#include "Major.h"
+#include "Captain.h"
+#include "Lieutenant.h"
+#include "Sergeant.h"
+#include "Miner.h"
+#include "Scout.h"
+#include "Spy.h"
+#include "Bomb.h"
+#include "Flag.h"
 #include "Selector.h"
 #include "StringInput.h"
 
@@ -31,7 +46,7 @@ public:
 	bool movePiece();
 	void swapLocation();
 	void namePiece();
-	void addPiece();
+	void addPiece(Piece* piece);
 	std::string getPieceName() const;
 	void loadMenu();
 	SDL_Rect* getMouseCoords();
@@ -67,6 +82,11 @@ public:
 	void showNameInput() const;
 
 private:
+	//player, computer, and board
+	Player* gPlayer;
+	Computer* gComputer;
+	Board* gBoard;
+
 	//game's collection of pieces
 	std::vector<Piece*> pieces;
 

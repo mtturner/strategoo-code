@@ -16,6 +16,7 @@ public:
     Computer();
     ~Computer();
     
+	void addPiece(Piece* piece);
     void clearPiece();
     void clearPieces();
     
