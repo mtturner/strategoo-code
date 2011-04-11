@@ -4,7 +4,7 @@
 	This is Main for the application.
 ******************************************************/
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 #include "Game.h"
 
 int main(int argc, char* args[]) 

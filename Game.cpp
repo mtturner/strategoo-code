@@ -604,12 +604,9 @@ bool Game::login()
 			return false;
 		}
 	}
-
-	//getting current player's inputted name
-	std::string inputName = name->getInput();
 	
 	//create new player with name that was input
-	gPlayer = new Player(inputName);
+	gPlayer = new Player(name->getInput());
 
 	return true;
 }
