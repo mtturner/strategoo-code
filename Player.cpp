@@ -25,7 +25,7 @@ Player::~Player()
 }
 
 //*******************************************************************
-void Player::setName(std::string newPlayer)
+void Player::setName(const std::string& newPlayer)
 {
 	name = newPlayer;
 }

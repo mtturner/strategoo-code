@@ -21,7 +21,7 @@ public:
 	Player(std::string& currentPlayer);
 	~Player();
 
-	void setName(std::string newPlayer);
+	void setName(const std::string& newPlayer);
 	void addPiece(Piece* piece);
 	void clearPiece();
 	void clearPieces();

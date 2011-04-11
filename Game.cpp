@@ -70,7 +70,7 @@ void Game::startGame()
 		}
 	}
 
-	//create marshal's and add to appropriate collections
+	//create marshals and add to appropriate collections
 	for(int i = 0; i < 2; i++)
 	{
 		temp = new Marshal();
@@ -87,7 +87,7 @@ void Game::startGame()
 		}
 	}
 
-	//create general's and add to appropriate collections
+	//create generals and add to appropriate collections
 	for(int i = 0; i < 2; i++)
 	{
 		temp = new General();
@@ -104,7 +104,7 @@ void Game::startGame()
 		}
 	}
 
-	//create colonel's and add to appropriate collections
+	//create colonels and add to appropriate collections
 	for(int i = 0; i < 4; i++)
 	{
 		temp = new Colonel();
@@ -121,7 +121,7 @@ void Game::startGame()
 		}
 	}
 
-	//create major's and add to appropriate collections
+	//create majors and add to appropriate collections
 	for(int i = 0; i < 6; i++)
 	{
 		temp = new Major();
@@ -138,7 +138,7 @@ void Game::startGame()
 		}
 	}
 
-	//create captain's and add to appropriate collections
+	//create captains and add to appropriate collections
 	for(int i = 0; i < 8; i++)
 	{
 		temp = new Captain();
@@ -155,7 +155,7 @@ void Game::startGame()
 		}
 	}
 
-	//create lieutenant's and add to appropriate collections
+	//create lieutenants and add to appropriate collections
 	for(int i = 0; i < 8; i++)
 	{
 		temp = new Lieutenant();
@@ -172,7 +172,7 @@ void Game::startGame()
 		}
 	}
 
-	//create sergeant's and add to appropriate collections
+	//create sergeants and add to appropriate collections
 	for(int i = 0; i < 8; i++)
 	{
 		temp = new Sergeant();
@@ -189,7 +189,7 @@ void Game::startGame()
 		}
 	}
 
-	//create miner's and add to appropriate collections
+	//create miners and add to appropriate collections
 	for(int i = 0; i < 10; i++)
 	{
 		temp = new Miner();
@@ -206,7 +206,7 @@ void Game::startGame()
 		}
 	}
 
-	//create scout's and add to appropriate collections
+	//create scouts and add to appropriate collections
 	for(int i = 0; i < 16; i++)
 	{
 		temp = new Scout();
@@ -223,7 +223,7 @@ void Game::startGame()
 		}
 	}
 
-	//create spy's and add to appropriate collections
+	//create spys and add to appropriate collections
 	for(int i = 0; i < 2; i++)
 	{
 		temp = new Spy();
@@ -240,7 +240,7 @@ void Game::startGame()
 		}
 	}
 
-	//create bomb's and add to appropriate collections
+	//create bombs and add to appropriate collections
 	for(int i = 0; i < 12; i++)
 	{
 		temp = new Bomb();
@@ -257,7 +257,7 @@ void Game::startGame()
 		}
 	}
 
-	//create flag's and add to appropriate collections
+	//create flags and add to appropriate collections
 	for(int i = 0; i < 2; i++)
 	{
 		temp = new Flag();
@@ -604,9 +604,12 @@ bool Game::login()
 			return false;
 		}
 	}
+
+	//getting current player's inputted name
+	std::string inputName = name->getInput();
 	
 	//create new player with name that was input
-	gPlayer = new Player(name->getInput());
+	gPlayer = new Player(inputName);
 
 	return true;
 }
