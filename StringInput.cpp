@@ -18,15 +18,15 @@ StringInput::StringInput() : text(0), font(0), textColor(0)
     setFont(temp);
 
 	//temporary SDL_Color struct
-	SDL_Color color;
+	SDL_Color* color = new SDL_Color();
 
 	//set rgb values
-    color.r = 153;
-	color.g = 217;
-	color.b = 234;
+    color->r = 153;
+	color->g = 217;
+	color->b = 234;
 
 	//set font color
-	setFontColor(&color);
+	setFontColor(color);
 
     //Enable Unicode
     SDL_EnableUNICODE(SDL_ENABLE);
@@ -37,6 +37,8 @@ StringInput::~StringInput()
 {
     //Free text surface
     SDL_FreeSurface(text);
+
+	delete textColor;
 
     //Disable Unicode
     SDL_EnableUNICODE(SDL_DISABLE);
