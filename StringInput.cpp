@@ -9,7 +9,7 @@
 
 StringInput::StringInput() : text(0), font(0), textColor(0)
 {
-	//Initialize the string
+	//initialize the string
     setInput("");
 
 	//set font
@@ -28,19 +28,19 @@ StringInput::StringInput() : text(0), font(0), textColor(0)
 	//set font color
 	setFontColor(color);
 
-    //Enable Unicode
+    //enable Unicode
     SDL_EnableUNICODE(SDL_ENABLE);
 }
 
 //****************************************
 StringInput::~StringInput()
 {
-    //Free text surface
+    //free text surface
     SDL_FreeSurface(text);
 
 	delete textColor;
 
-    //Disable Unicode
+    //disable Unicode
     SDL_EnableUNICODE(SDL_DISABLE);
 }
 
@@ -77,52 +77,46 @@ void StringInput::setFontColor(SDL_Color* color)
 //****************************************
 void StringInput::handleInput(SDL_Event& gEvent)
 {
-    //If a key was pressed
+    //if a key was pressed
     if(gEvent.type == SDL_KEYDOWN)
     {
         //temporary version of input to be modified
         std::string temp = getInput();
 
-        //If the string less than maximum size
+        //if the string less than maximum size
         if(temp.length() <= 16)
         {
-            //If the key is a space
-            if(gEvent.key.keysym.unicode == static_cast<Uint16>(' '))
-            {
-                //Append the character
-                temp += static_cast<char>(gEvent.key.keysym.unicode);
-            }
-            //If the key is a number
-            else if((gEvent.key.keysym.unicode >= static_cast<Uint16>('0')) && 
+            //if the key is a number
+            if((gEvent.key.keysym.unicode >= static_cast<Uint16>('0')) && 
 					(gEvent.key.keysym.unicode <= static_cast<Uint16>('9')))
             {
-                //Append the character
+                //append the character
                 temp += static_cast<char>(gEvent.key.keysym.unicode);
             }
-            //If the key is an uppercase letter
+            //if the key is an uppercase letter
             else if((gEvent.key.keysym.unicode >= static_cast<Uint16>('A')) && 
 				    (gEvent.key.keysym.unicode <= static_cast<Uint16>('Z')))
             {
-                //Append the character
+                //append the character
                 temp += static_cast<char>(gEvent.key.keysym.unicode);
             }
-            //If the key is a lowercase letter
+            //if the key is a lowercase letter
             else if((gEvent.key.keysym.unicode >= static_cast<Uint16>('a')) && 
 				    (gEvent.key.keysym.unicode <= static_cast<Uint16>('z')))
             {
-                //Append the character
+                //append the character
                 temp += static_cast<char>(gEvent.key.keysym.unicode);
             }
         }
 
-        //If backspace was pressed and the string isn't blank
+        //if backspace was pressed and the string isn't blank
         if((gEvent.key.keysym.sym == SDLK_BACKSPACE) && (temp.length() != 0))
         {
-            //Remove a character from the end
+            //remove a character from the end
             temp.erase(temp.length() - 1);
         }
 
-        //If the string was changed
+        //if the string was changed
         if(getInput() != temp)
         {
 			//set new input
@@ -131,7 +125,7 @@ void StringInput::handleInput(SDL_Event& gEvent)
 			//temporary surface for new input surface
             SDL_Surface* newInput;
 
-            //Render a new text surface
+            //render a new text surface
             newInput = TTF_RenderText_Solid(getFont(), getInput().c_str(), *(getFontColor()));
 
 			//set new text
@@ -143,17 +137,17 @@ void StringInput::handleInput(SDL_Event& gEvent)
 //****************************************
 void StringInput::show(SDL_Surface* screen)
 {
-    //If the surface isn't blank
+    //if the surface isn't blank
     if(getMessageSurface() != 0)
     {
-        //Holds offsets
+        //holds offsets
         SDL_Rect offset;
 
-        //Get offsets
+        //get offsets
         offset.x = (800 - getMessageSurface()->w) / 2;
         offset.y = (600 - getMessageSurface()->h) / 2;
 
-        //Blit
+        //blit
         SDL_BlitSurface(getMessageSurface(), 0, screen, &offset);
     }
 }
