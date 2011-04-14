@@ -30,6 +30,7 @@
 #include "Flag.h"
 #include "Selector.h"
 #include "StringInput.h"
+#include "PieceButton.h"
 
 class Game
 {
@@ -115,11 +116,28 @@ private:
 	//selector
 	Selector* gSelector;
 
+	//screen surface
 	SDL_Surface* screen;
 
+	//string input class for login
 	StringInput* name;
 	
+	//current game state
 	int gameState_;
+
+	//piece buttons for set piece
+	PieceButton* bombButton;
+	PieceButton* captainButton;
+	PieceButton* colonelButton;
+	PieceButton* flagButton;
+	PieceButton* generalButton;
+	PieceButton* lieutenantButton;
+	PieceButton* majorButton;
+	PieceButton* marshalButton;
+	PieceButton* minerButton;
+	PieceButton* scoutButton;
+	PieceButton* sergeantButton;
+	PieceButton* spyButton;
 
 	//enumeration of all game states
 	enum GameStates {STATE_INTRO, STATE_LOGIN, STATE_STARTMENU,

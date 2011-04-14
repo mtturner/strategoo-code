@@ -40,6 +40,24 @@ Game::~Game()
 	delete endGameBG;
 	delete menuBG;
 	delete statisticsBG;
+
+	//delete selector and string input
+	delete gSelector;
+	delete name;
+
+	//delete piece buttons
+	delete bombButton;
+	delete captainButton;
+	delete colonelButton;
+	delete flagButton;
+	delete generalButton;
+	delete lieutenantButton;
+	delete majorButton;
+	delete marshalButton;
+	delete minerButton;
+	delete scoutButton;
+	delete sergeantButton;
+	delete spyButton;
 }
 
 //******************************************
@@ -425,6 +443,20 @@ bool Game::initialize()
 
 	//create string input
 	name = new StringInput();
+
+	//create piece buttons
+	bombButton = new PieceButton(0, 500, "bombbutton.png", "overlay.png");
+	captainButton = new PieceButton(0, 200, "captainbutton.png", "overlay.png");
+	colonelButton = new PieceButton(0, 100, "colonelbutton.png", "overlay.png");
+	flagButton = new PieceButton(0, 550, "flagbutton.png", "overlay.png");
+	generalButton = new PieceButton(0, 50, "generalbutton.png", "overlay.png");
+	lieutenantButton = new PieceButton(0, 250, "lieutenantbutton.png", "overlay.png");
+	majorButton = new PieceButton(0, 150, "majorbutton.png", "overlay.png");
+	marshalButton = new PieceButton(0, 0, "marshalbutton.png", "overlay.png");
+	minerButton = new PieceButton(0, 350, "minerbutton.png", "overlay.png");
+	scoutButton = new PieceButton(0, 400, "scoutbutton.png", "overlay.png");
+	sergeantButton = new PieceButton(0, 300, "sergeantbutton.png", "overlay.png");
+	spyButton = new PieceButton(0, 450, "spybutton.png", "overlay.png");
 
 	if(getScreen() == 0)
 	{

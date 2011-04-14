@@ -17,7 +17,7 @@ class PieceButton
 {
 public:
 	PieceButton();
-	PieceButton(const int x, const int y, const std::string& setter, 
+	PieceButton(const int x, const int y, const std::string& button, 
 				const std::string& overlay);
 	~PieceButton();
 
@@ -28,7 +28,7 @@ public:
 	void setIsAvailable(const bool available);
 
 	//input and rendering
-	void handleInput(SDL_Event& gEvent) const;
+	void handleInput(SDL_Event& gEvent);
 	void show(SDL_Surface* screen) const;
 
 private:

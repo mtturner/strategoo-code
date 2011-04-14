@@ -18,11 +18,11 @@ PieceButton::PieceButton()
 }
 
 //******************************************
-PieceButton::PieceButton(const int x, const int y, const std::string& setter, 
+PieceButton::PieceButton(const int x, const int y, const std::string& button, 
 						 const std::string& overlay)
 {
 	//create sprites
-	buttonImage = new Sprite(x, y, setter.c_str());
+	buttonImage = new Sprite(x, y, button.c_str());
 	selectedOverlay = new Sprite(x, y, overlay.c_str());
 
 	//set isEmpty to false
@@ -87,7 +87,7 @@ void PieceButton::handleInput(SDL_Event& gEvent)
 }
 
 //******************************************
-void PieceButton::show(SDL_Surface* screen)
+void PieceButton::show(SDL_Surface* screen) const
 {
 	//if the button is available
 	if(getIsAvailable())
