@@ -6,7 +6,8 @@
 ******************************************************/
 
 
-#include "SDL.h"
+#include "SDL/SDL.h"
+#include <iostream>
 #include <fstream>
 #include "Statistics.h"
 
@@ -50,73 +51,67 @@ bool Statistics::save(const string& currentPlayer)
 	fstream statsFile;
 	string playerName;
 
-	statsFile.open("statistics.txt", ios::app);
+	statsFile.open("statistics.txt", ios::in | ios::out);
 
 	while( statsFile >> playerName )
 	{
 		if( playerName == currentPlayer )
 		{
-			statsFile << gamesPlayed_ << endl;
-			statsFile << gamesWon_ << endl;
-			statsFile << gamesLost_ << endl;
-			statsFile << flagsCaptured_ << endl;
-			statsFile << capturedFlags_ << endl;
-			statsFile << timesExtinct_ << endl;
-			statsFile << genocide_ << endl;
+			statsFile << gamesPlayed_;
+			statsFile << gamesWon_;
+			statsFile << gamesLost_;
+			statsFile << flagsCaptured_;
+			statsFile << capturedFlags_;
+			statsFile << timesExtinct_;
+			statsFile << genocide_;
 		}
 	}
 
 	statsFile.close();
 
-	if(statsFile.fail())
+	/*if(statsFile.fail())
 	{
 		return false;
 	}
 	else
 	{
 		return true;
-	}
+	}*/
+
+	return 0;
 }
 
 //*******************************************************************
 bool Statistics::load(const string& currentPlayer)
 {
+
+	cout << "Hello";
 	//declaring local variables
-	ifstream statsFile;
-	string playerName;
+	fstream statsFile;
+	string playerName = "Mary";
+	string currentStat = "Harry";
 
-	//opening stats file
-	statsFile.open("statistics.txt", ios::app);
+	/*//opening stats file
+	statsFile.open("statistics.txt", ios::app | ios::out);
 
-	//finding the correct stats to load
-	while(statsFile >> playerName)
+	if(statsFile.fail())
 	{
-		//loading the corresponding stats when a match is found
+		cout << "There was a problem opening the file.";
+	}
+
+	while(getline(statsFile, playerName))
+	{
 		if(playerName == currentPlayer)
 		{
-			statsFile >> gamesPlayed_;
-			statsFile >> gamesWon_;
-			statsFile >> gamesLost_;
-			statsFile >> flagsCaptured_;
-			statsFile >> capturedFlags_;
-			statsFile >> timesExtinct_;
-			statsFile >> genocide_;
+			getline(statsFile,currentStat);
+			gamesPlayed_ = atoi(currentStat.c_str());
+			getline(statsFile,currentStat);
+			gamesWon_ = atoi(currentStat.c_str());
 		}
-		//advancing to the next stored name in the file if a match is not found
-		else
-		{
-			statsFile.seekg(28L, ios::cur);
-		}
-	}
-	
-	if( playerName != currentPlayer )
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+	}*/
+
+	//cout << statsFile.good();
+	cout << gamesWon_ << gamesPlayed_;
 
 	statsFile.close();
 

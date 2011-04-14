@@ -10,6 +10,7 @@
 Player::Player()
 {
 	setName(" ");
+	stats = new Statistics();
 }
 
 //*******************************************************************
@@ -21,7 +22,7 @@ Player::Player(std::string& currentPlayer)
 //*******************************************************************
 Player::~Player()
 {
-	//deallocate memory
+	delete stats;
 }
 
 //*******************************************************************
@@ -54,21 +55,17 @@ void Player::clearPieces()
 //*******************************************************************
 bool Player::loadStatistics()
 {
-	stats->load(name);
-
-	return true;
+	return(stats->load(name));
 }
 
 //*******************************************************************
 bool Player::saveStatistics()
 {
-	stats->save(name);
-
-	return true;
+	return(stats->save(name));
 }
 
 //*******************************************************************
 void Player::displayStatistics() const
 {
-	//stats->display();
+	stats->display();
 }
