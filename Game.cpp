@@ -413,12 +413,12 @@ bool Game::initialize()
 		return false;
 	}
 
-	if(!setPieceBG->load("setPiece.png"))
+	if(!setPieceBG->load("board.png"))
 	{
 		return false;
 	}
 
-	if(!playGameBG->load("playGame.png"))
+	if(!playGameBG->load("board.png"))
 	{
 		return false;
 	}

@@ -22,7 +22,7 @@ Sprite::Sprite(int x, int y) : image(0)
 }
 
 //******************************************
-Sprite::Sprite(int x, int y, std::string filename)
+Sprite::Sprite(int x, int y, std::string filename) : image(0)
 {
 	setXPos(x);
 	setYPos(y);
