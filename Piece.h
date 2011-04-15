@@ -7,30 +7,29 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-#include"Sprite.h"
+#include "Sprite.h"
 
 class Piece
 {
 public:
-	Piece();
-    Piece(int xPos, int yPos, int boardSpace, int rank, int owner, Sprite* image);
+	Piece(int x = 0, int y = 0);
+	Piece(int x, int y, std::string filename);
     virtual ~Piece();
 
 	virtual bool move() = 0;
 	void namePiece();
-	void render() const;
+	void handleInput(SDL_Event& gEvent);
+	void show() const;
 	inline int getRank() const;
-	inline int getXPos() const;
-	inline int getYPos() const;
 	inline int getBoardSpace() const;
-	inline int getOwner() const;
-	inline Sprite* getPieceImage() const;
 	void setRank(int rank);
+	inline int getXPos() const;
 	void setXPos(int xPos);
+	inline int getYPos() const;
 	void setYPos(int yPos);
 	void setBoardSpace(int boardSpace);
-	void setOwner(int owner);
-	void setPieceImage(Sprite* image);
+	inline bool getIsSelected() const;
+	void setIsSelected(const bool selected);
 
 	//operator overloads
 	inline bool operator==(const Piece& piece) const;
@@ -39,16 +38,23 @@ public:
 	inline bool operator>(const Piece& piece) const;
 
 private:
+	Sprite* pieceImage;
+
 	int boardSpace_,
-        rank_,
-        owner_;
-    Sprite* pieceImage;
+		rank_;
+	bool isSelected;
 };
 
 //*********************************
 inline int Piece::getRank() const
 {
 	return rank_;
+}
+
+//*********************************
+inline int Piece::getBoardSpace() const
+{
+	return boardSpace_;
 }
 
 //*********************************
@@ -64,21 +70,9 @@ inline int Piece::getYPos() const
 }
 
 //*********************************
-inline int Piece::getBoardSpace() const
+inline bool Piece::getIsSelected() const
 {
-	return boardSpace_;
-}
-
-//*********************************
-inline int Piece::getOwner() const
-{
-	return owner_;
-}
-
-//*********************************
-inline Sprite* Piece::getPieceImage() const
-{
-	return pieceImage;
+	return isSelected;
 }
 
 //*********************************

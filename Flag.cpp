@@ -7,18 +7,10 @@
 
 #include "Flag.h"
 
-Flag::Flag() : Piece()
+Flag::Flag(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "flag.png")
 {
-}
-
-//****************************************
-Flag::Flag(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage) : Piece(xPos, yPos,  rank,  owner, boardSpace, pieceImage)
-{
-}
-
-//****************************************
-Flag::~Flag()
-{
+	setBoardSpace(boardSpace);
+	setRank(12);
 }
 
 //****************************************

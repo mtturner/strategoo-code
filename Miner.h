@@ -12,9 +12,7 @@
 class Miner : public Piece
 {
 public:
-	Miner();
-    Miner(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    virtual ~Miner();     
+    Miner(int xPos = 0, int yPos = 0, int boardSpace = -1);   
 
 	virtual bool move();
 };

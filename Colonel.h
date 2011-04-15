@@ -12,9 +12,7 @@
 class Colonel : public Piece
 {
 public:
-	Colonel();
-    Colonel(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    virtual ~Colonel();   
+    Colonel(int xPos = 0, int yPos = 0, int boardSpace = -1);  
 
 	virtual bool move();
 };

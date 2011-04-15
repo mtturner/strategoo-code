@@ -5,8 +5,7 @@
 	Statistics class.
 ******************************************************/
 
-
-#include "SDL/SDL.h"
+#include "SDL.h"
 #include <iostream>
 #include <fstream>
 #include "Statistics.h"
@@ -84,15 +83,13 @@ bool Statistics::save(const string& currentPlayer)
 //*******************************************************************
 bool Statistics::load(const string& currentPlayer)
 {
-
-	cout << "Hello";
 	//declaring local variables
 	fstream statsFile;
-	string playerName = "Mary";
-	string currentStat = "Harry";
+	string playerName;
+	string currentStat;
 
-	/*//opening stats file
-	statsFile.open("statistics.txt", ios::app | ios::out);
+	//opening stats file
+	statsFile.open("statistics.txt", ios::in);
 
 	if(statsFile.fail())
 	{
@@ -103,15 +100,12 @@ bool Statistics::load(const string& currentPlayer)
 	{
 		if(playerName == currentPlayer)
 		{
-			getline(statsFile,currentStat);
-			gamesPlayed_ = atoi(currentStat.c_str());
-			getline(statsFile,currentStat);
-			gamesWon_ = atoi(currentStat.c_str());
+			statsFile >> currentStat;
 		}
-	}*/
+	}
 
-	//cout << statsFile.good();
-	cout << gamesWon_ << gamesPlayed_;
+	cout << statsFile.good();
+	//cout << gamesWon_ << gamesPlayed_;
 
 	statsFile.close();
 

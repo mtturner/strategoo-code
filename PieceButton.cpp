@@ -11,22 +11,21 @@ PieceButton::PieceButton()
 {
 	//create sprites
 	buttonImage = new Sprite();
-	selectedOverlay = new Sprite();
 
-	//set isEmpty to true
-	setIsAvailable(true);
+	//set isSelected and isAvailable to false
+	setIsAvailable(false);
+	setIsSelected(false);
 }
 
 //******************************************
-PieceButton::PieceButton(const int x, const int y, const std::string& button, 
-						 const std::string& overlay)
+PieceButton::PieceButton(const int x, const int y, const std::string& button)
 {
 	//create sprites
 	buttonImage = new Sprite(x, y, button.c_str());
-	selectedOverlay = new Sprite(x, y, overlay.c_str());
 
-	//set isEmpty to false
-	setIsAvailable(false);
+	//set isSelected to false and isAvailable to true
+	setIsSelected(false);
+	setIsAvailable(true);
 }
 
 //******************************************
@@ -34,7 +33,6 @@ PieceButton::~PieceButton()
 {
 	//delete sprites
 	delete buttonImage;
-	delete selectedOverlay;
 }
 
 //******************************************
@@ -76,11 +74,6 @@ void PieceButton::handleInput(SDL_Event& gEvent)
 					//button is selected
 					setIsSelected(true);
 				}
-				else
-				{
-					//button isn't selected
-					setIsSelected(false);
-				}
 			}
 		}
 	}
@@ -94,12 +87,5 @@ void PieceButton::show(SDL_Surface* screen) const
 	{
 		//show the button
 		buttonImage->show(screen);
-
-		//if the button is currently selected
-		if(getIsSelected())
-		{
-			//show the selected overlay
-			selectedOverlay->show(screen);
-		}
 	}
 }

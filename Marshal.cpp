@@ -7,18 +7,10 @@
 
 #include "Marshal.h"
 
-Marshal::Marshal() : Piece()
+Marshal::Marshal(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "marshal.png")
 {
-}
-
-//****************************************
-Marshal::Marshal(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage) : Piece(xPos, yPos,  rank,  owner, boardSpace, pieceImage)
-{
-}
-
-//****************************************
-Marshal::~Marshal()
-{
+	setBoardSpace(boardSpace);
+	setRank(10);
 }
 
 //****************************************

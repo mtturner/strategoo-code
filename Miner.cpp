@@ -7,18 +7,10 @@
 
 #include "Miner.h"
 
-Miner::Miner() : Piece()
+Miner::Miner(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "miner.png")
 {
-}
-
-//****************************************
-Miner::Miner(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage) : Piece(xPos, yPos,  rank,  owner, boardSpace, pieceImage)
-{
-}
-
-//****************************************
-Miner::~Miner()
-{
+	setBoardSpace(boardSpace);
+	setRank(3);
 }
 
 //****************************************

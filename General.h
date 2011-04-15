@@ -12,9 +12,7 @@
 class General : public Piece
 {
 public:
-	General();
-	General(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    virtual ~General();    
+	General(int xPos = 0, int yPos = 0, int boardSpace = -1);    
 
 	virtual bool move();
 };

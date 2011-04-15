@@ -12,9 +12,7 @@
 class Sergeant : public Piece
 {
 public:
-	Sergeant();
-    Sergeant(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    virtual ~Sergeant();     
+    Sergeant(int xPos = 0, int yPos = 0, int boardSpace = -1);   
 
 	virtual bool move();
 };

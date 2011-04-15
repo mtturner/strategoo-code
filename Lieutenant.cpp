@@ -7,18 +7,10 @@
 
 #include "Lieutenant.h"
 
-Lieutenant::Lieutenant() : Piece()
+Lieutenant::Lieutenant(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "lieutenant.png")
 {
-}
-
-//****************************************
-Lieutenant::Lieutenant(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage) : Piece(xPos, yPos,  rank,  owner, boardSpace, pieceImage)
-{
-}
-
-//****************************************
-Lieutenant::~Lieutenant()
-{
+	setBoardSpace(boardSpace);
+	setRank(5);
 }
 
 //****************************************

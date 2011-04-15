@@ -12,9 +12,7 @@
 class Marshal : public Piece
 {
 public:
-	Marshal();
-    Marshal(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    virtual ~Marshal();  
+    Marshal(int xPos = 0, int yPos = 0, int boardSpace = -1); 
 
 	virtual bool move();
 };

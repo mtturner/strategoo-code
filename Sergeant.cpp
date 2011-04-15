@@ -7,18 +7,10 @@
 
 #include "Sergeant.h"
 
-Sergeant::Sergeant() : Piece()
+Sergeant::Sergeant(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "sergeant.png")
 {
-}
-
-//****************************************
-Sergeant::Sergeant(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage) : Piece(xPos, yPos,  rank,  owner, boardSpace, pieceImage)
-{
-}
-
-//****************************************
-Sergeant::~Sergeant()
-{
+	setBoardSpace(boardSpace);
+	setRank(4);
 }
 
 //****************************************

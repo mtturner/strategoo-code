@@ -7,18 +7,10 @@
 
 #include "EmptySpace.h"
 
-EmptySpace::EmptySpace() : Piece()
+EmptySpace::EmptySpace(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos)
 {
-}
-
-//****************************************
-EmptySpace::EmptySpace(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage) : Piece(xPos, yPos,  rank,  owner, boardSpace, pieceImage)
-{
-}
-
-//****************************************
-EmptySpace::~EmptySpace()
-{
+	setBoardSpace(boardSpace);
+	setRank(0);
 }
 
 //****************************************

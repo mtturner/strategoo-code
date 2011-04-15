@@ -9,8 +9,7 @@
 
 Game::Game() : screen(0)
 {
-	//create player and set other pointers to null
-	gPlayer = new Player();
+	//set computer and board pointers to null
 	gComputer = 0;
 	gBoard = 0;
 
@@ -41,23 +40,20 @@ Game::~Game()
 	delete menuBG;
 	delete statisticsBG;
 
+	//delete player, computer, and board
+	delete gPlayer;
+	delete gComputer;
+	delete gBoard;
+
 	//delete selector and string input
 	delete gSelector;
 	delete name;
 
 	//delete piece buttons
-	delete bombButton;
-	delete captainButton;
-	delete colonelButton;
-	delete flagButton;
-	delete generalButton;
-	delete lieutenantButton;
-	delete majorButton;
-	delete marshalButton;
-	delete minerButton;
-	delete scoutButton;
-	delete sergeantButton;
-	delete spyButton;
+	for(int i = 0; i < 12; i++)
+	{
+		delete buttons[i];
+	}
 }
 
 //******************************************
@@ -70,20 +66,55 @@ void Game::startGame()
 	//temporary piece for creation
 	Piece* temp = 0;
 
+	//piece coordinates
+	int x = 200,
+		y = 240;
+
 	//create emptyspace's and add to appropriate collections
 	for(int i = 0; i < 92; i++)
 	{
 		//if 40 pieces haven't been created
-		if(i < 40)
+		if(i < 52)
 		{
+			temp = new EmptySpace(x, y, i);
+
 			//add to board's collection along with game's collection
 			gBoard->addPiece(temp);
 			addPiece(temp);
+
+			//update coordinates
+			x += 60;
+
+			if(x == 800)
+			{
+				x = 200;
+				y += 60;
+			}
+
+			//skip over no man's land
+			if((x == 320) && (y == 240))
+			{
+				x = 440;
+			}
+			else if((x == 560) && (y == 240))
+			{
+				x = 680;
+			}
+			else if((x == 320) && (y == 300))
+			{
+				x = 440;
+			}
+			else if((x == 560) && (y == 300))
+			{
+				x = 680;
+			}
 		}
-		//if the first 40 pieces have already been created,
+		//if the first 52 pieces have already been created,
 		//only add piece to game's collection
 		else
 		{
+			temp = new EmptySpace();
+
 			addPiece(temp);
 		}
 	}
@@ -445,18 +476,18 @@ bool Game::initialize()
 	name = new StringInput();
 
 	//create piece buttons
-	bombButton = new PieceButton(0, 500, "bombbutton.png", "overlay.png");
-	captainButton = new PieceButton(0, 200, "captainbutton.png", "overlay.png");
-	colonelButton = new PieceButton(0, 100, "colonelbutton.png", "overlay.png");
-	flagButton = new PieceButton(0, 550, "flagbutton.png", "overlay.png");
-	generalButton = new PieceButton(0, 50, "generalbutton.png", "overlay.png");
-	lieutenantButton = new PieceButton(0, 250, "lieutenantbutton.png", "overlay.png");
-	majorButton = new PieceButton(0, 150, "majorbutton.png", "overlay.png");
-	marshalButton = new PieceButton(0, 0, "marshalbutton.png", "overlay.png");
-	minerButton = new PieceButton(0, 350, "minerbutton.png", "overlay.png");
-	scoutButton = new PieceButton(0, 400, "scoutbutton.png", "overlay.png");
-	sergeantButton = new PieceButton(0, 300, "sergeantbutton.png", "overlay.png");
-	spyButton = new PieceButton(0, 450, "spybutton.png", "overlay.png");
+	buttons[0] = new PieceButton(0, 500, "bombbutton.png");
+	buttons[1] = new PieceButton(0, 200, "captainbutton.png");
+	buttons[2] = new PieceButton(0, 100, "colonelbutton.png");
+	buttons[3] = new PieceButton(0, 550, "flagbutton.png");
+	buttons[4] = new PieceButton(0, 50, "generalbutton.png");
+	buttons[5] = new PieceButton(0, 250, "lieutenantbutton.png");
+	buttons[6] = new PieceButton(0, 150, "majorbutton.png");
+	buttons[7] = new PieceButton(0, 0, "marshalbutton.png");
+	buttons[8] = new PieceButton(0, 350, "minerbutton.png");
+	buttons[9] = new PieceButton(0, 400, "scoutbutton.png");
+	buttons[10] = new PieceButton(0, 300, "sergeantbutton.png");
+	buttons[11] = new PieceButton(0, 450, "spybutton.png");
 
 	if(getScreen() == 0)
 	{
@@ -640,6 +671,8 @@ bool Game::login()
 	//create new player with name that was input
 	gPlayer = new Player(name->getInput());
 
+	gPlayer->loadStatistics();
+
 	return true;
 }
 
@@ -700,6 +733,11 @@ bool Game::doStartMenu()
 //******************************************
 bool Game::doSetPiece()
 {
+	//current piece button selection and
+	//current piece selection
+	PieceButton* currentButton = 0;
+	Piece* currentPiece = 0;
+
 	while(SDL_PollEvent(&gEvent))
 	{
 		//if the user has exited the window
@@ -716,10 +754,31 @@ bool Game::doSetPiece()
 				setState(STATE_PLAYGAME);
 			}
 		}
+
+		//handle piece button input
+		for(int i = 0; i < 12; i++)
+		{
+			buttons[i]->handleInput(gEvent);
+		}
+	}
+
+	//check to see if a button was selected
+	for(int i = 0; i < 12; i++)
+	{
+		if(buttons[i]->getIsSelected())
+		{
+			currentButton = buttons[i];
+		}
 	}
 
 	//apply the start menu image to the screen
 	showSetPiece();
+
+	//apply button images to screen
+	for(int i = 0; i < 12; i++)
+	{
+		buttons[i]->show(screen);
+	}
 
 	//render to the screen
 	//if rendering was unsuccessful

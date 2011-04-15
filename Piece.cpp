@@ -7,26 +7,18 @@
 
 #include "Piece.h"
 
-Piece::Piece()
+Piece::Piece(int x, int y)
 {
-	rank_ = -1;
-	owner_ = -1;
-	boardSpace_ = -1;
+	pieceImage = new Sprite(x, y);
 
-	pieceImage = new Sprite();
+	setIsSelected(false);
 }
 
-//*********************************
-Piece::Piece(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage)
+Piece::Piece(int x, int y, std::string filename)
 {
-	setPieceImage(pieceImage);
+	pieceImage = new Sprite(x, y, filename.c_str());
 
-	pieceImage->setXPos(xPos);
-	pieceImage->setYPos(yPos);
-
-	setRank(rank);
-	setOwner(owner);
-	setBoardSpace(boardSpace);
+	setIsSelected(false);
 }
 
 //*********************************
@@ -40,8 +32,36 @@ void Piece::namePiece()
 {
 }
 
+//*********************************
+void Piece::handleInput(SDL_Event& gEvent)
+{
+	//mouse offsets
+	int x = 0,
+		y = 0;
+
+	//if the mouse was clicked
+	if(gEvent.type == SDL_MOUSEBUTTONDOWN)
+	{
+		//if the left mouse button was clicked
+		if(gEvent.button.button == SDL_BUTTON_LEFT)
+		{
+			//get mouse offsets
+			x = gEvent.button.x;
+			y = gEvent.button.y;
+
+			//if the mouse was over the button when it was clicked
+			if((x > pieceImage->getXPos()) && (x < pieceImage->getXPos() + 60) &&
+			   (y > pieceImage->getYPos()) && (y < pieceImage->getYPos() + 60))
+			{
+				//button is selected
+				setIsSelected(true);
+			}
+		}
+	}
+}
+
 //*********************************       
-void Piece::render() const
+void Piece::show() const
 {
 }
 
@@ -52,36 +72,13 @@ void Piece::setRank(int rank)
 }
 
 //*********************************
-void Piece::setXPos(int xPos)
-{
-	pieceImage->setXPos(xPos);
-}
-
-//*********************************
-void Piece::setYPos(int yPos)
-{
-	pieceImage->setYPos(yPos);
-}
-
-//*********************************
 void Piece::setBoardSpace(int boardSpace)
 {
 	boardSpace_ = boardSpace;
 }
 
 //*********************************
-void Piece::setOwner(int owner)
+void Piece::setIsSelected(const bool selected)
 {
-	owner_ = owner;
-}
-
-//*********************************
-void Piece::setPieceImage(Sprite* image)
-{
-	if(image != 0)
-	{
-		delete pieceImage;
-
-		pieceImage = image;
-	}
+	isSelected = selected;
 }

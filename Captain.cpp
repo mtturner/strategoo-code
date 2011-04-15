@@ -7,18 +7,10 @@
 
 #include "Captain.h"
 
-Captain::Captain() : Piece()
+Captain::Captain(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "captain.png")
 {
-}
-
-//****************************************
-Captain::Captain(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage) : Piece(xPos, yPos,  rank,  owner, boardSpace, pieceImage)
-{
-}
-
-//****************************************
-Captain::~Captain()
-{
+	setBoardSpace(boardSpace);
+	setRank(6);
 }
 
 //****************************************

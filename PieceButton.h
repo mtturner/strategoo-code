@@ -17,8 +17,7 @@ class PieceButton
 {
 public:
 	PieceButton();
-	PieceButton(const int x, const int y, const std::string& button, 
-				const std::string& overlay);
+	PieceButton(const int x, const int y, const std::string& button);
 	~PieceButton();
 
 	//getters and setters
@@ -34,7 +33,6 @@ public:
 private:
 	//sprites
 	Sprite* buttonImage;
-	Sprite* selectedOverlay;
 
 	bool isSelected,
 		 isAvailable;

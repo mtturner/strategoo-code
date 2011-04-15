@@ -12,9 +12,7 @@
 class Major : public Piece
 {
 public:
-	Major();
-    Major(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    virtual ~Major();     
+    Major(int xPos = 0, int yPos = 0, int boardSpace = -1);    
 
 	virtual bool move();
 };

@@ -7,14 +7,12 @@
 #ifndef EMPTYSPACE_H
 #define EMPTYSPACE_H
 
-#include"Piece.h"
+#include "Piece.h"
 
 class EmptySpace : public Piece
 {
 public:
-	EmptySpace();
-    EmptySpace(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage);
-    virtual ~EmptySpace();
+    EmptySpace(int xPos = 0, int yPos = 0, int boardSpace = -1);
 
     virtual bool move();
 };

@@ -7,18 +7,10 @@
 
 #include "General.h"
 
-General::General() : Piece()
+General::General(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "general.png")
 {
-}
-
-//****************************************
-General::General(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage) : Piece(xPos, yPos,  rank,  owner, boardSpace, pieceImage)
-{
-}
-
-//****************************************
-General::~General()
-{
+	setBoardSpace(boardSpace);
+	setRank(9);
 }
 
 //****************************************

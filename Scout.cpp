@@ -7,18 +7,10 @@
 
 #include "Scout.h"
 
-Scout::Scout() : Piece()
+Scout::Scout(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "scout.png")
 {
-}
-
-//****************************************
-Scout::Scout(int xPos, int yPos, int rank, int owner, int boardSpace, Sprite* pieceImage) : Piece(xPos, yPos,  rank,  owner, boardSpace, pieceImage)
-{
-}
-
-//****************************************
-Scout::~Scout()
-{
+	setBoardSpace(boardSpace);
+	setRank(2);
 }
 
 //****************************************

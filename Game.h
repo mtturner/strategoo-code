@@ -28,6 +28,7 @@
 #include "Spy.h"
 #include "Bomb.h"
 #include "Flag.h"
+#include "EmptySpace.h"
 #include "Selector.h"
 #include "StringInput.h"
 #include "PieceButton.h"
@@ -126,18 +127,7 @@ private:
 	int gameState_;
 
 	//piece buttons for set piece
-	PieceButton* bombButton;
-	PieceButton* captainButton;
-	PieceButton* colonelButton;
-	PieceButton* flagButton;
-	PieceButton* generalButton;
-	PieceButton* lieutenantButton;
-	PieceButton* majorButton;
-	PieceButton* marshalButton;
-	PieceButton* minerButton;
-	PieceButton* scoutButton;
-	PieceButton* sergeantButton;
-	PieceButton* spyButton;
+	PieceButton* buttons[12];
 
 	//enumeration of all game states
 	enum GameStates {STATE_INTRO, STATE_LOGIN, STATE_STARTMENU,
