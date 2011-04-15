@@ -5,8 +5,10 @@
 	Statistics class.
 ******************************************************/
 
-#include "SDL.h"
+
+#include "SDL/SDL.h"
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include "Statistics.h"
 
@@ -52,10 +54,23 @@ bool Statistics::save(const string& currentPlayer)
 
 	statsFile.open("statistics.txt", ios::in | ios::out);
 
-	while( statsFile >> playerName )
+	cout << gamesPlayed_ << endl;
+	cout << gamesWon_ << endl;
+	cout << gamesLost_ << endl;
+	cout << flagsCaptured_ << endl;
+	cout << capturedFlags_ << endl;
+	cout << timesExtinct_ << endl;
+	cout << genocide_ << endl;
+
+	gamesPlayed_ = 2345;
+
+	while(getline(statsFile,playerName))
 	{
-		if( playerName == currentPlayer )
+		if(playerName == currentPlayer)
 		{
+			cout << playerName << endl;
+			cout << gamesPlayed_ << endl;
+			
 			statsFile << gamesPlayed_;
 			statsFile << gamesWon_;
 			statsFile << gamesLost_;
@@ -63,21 +78,27 @@ bool Statistics::save(const string& currentPlayer)
 			statsFile << capturedFlags_;
 			statsFile << timesExtinct_;
 			statsFile << genocide_;
+
+			cout << gamesPlayed_ << endl;
+			cout << gamesWon_ << endl;
+			cout << gamesLost_ << endl;
+			cout << flagsCaptured_ << endl;
+			cout << capturedFlags_ << endl;
+			cout << timesExtinct_ << endl;
+			cout << genocide_ << endl;
 		}
 	}
 
 	statsFile.close();
 
-	/*if(statsFile.fail())
+	if(statsFile.fail())
 	{
 		return false;
 	}
 	else
 	{
 		return true;
-	}*/
-
-	return 0;
+	}
 }
 
 //*******************************************************************
@@ -86,7 +107,6 @@ bool Statistics::load(const string& currentPlayer)
 	//declaring local variables
 	fstream statsFile;
 	string playerName;
-	string currentStat;
 
 	//opening stats file
 	statsFile.open("statistics.txt", ios::in);
@@ -96,20 +116,46 @@ bool Statistics::load(const string& currentPlayer)
 		cout << "There was a problem opening the file.";
 	}
 
+	cout << gamesPlayed_ << endl;
+	cout << gamesWon_ << endl;
+	cout << gamesLost_ << endl;
+	cout << flagsCaptured_ << endl;
+	cout << capturedFlags_ << endl;
+	cout << timesExtinct_ << endl;
+	cout << genocide_ << endl;
+
 	while(getline(statsFile, playerName))
 	{
 		if(playerName == currentPlayer)
 		{
-			statsFile >> currentStat;
+			statsFile >> gamesPlayed_;
+			statsFile >> gamesWon_;
+			statsFile >> gamesLost_;
+			statsFile >> flagsCaptured_;
+			statsFile >> capturedFlags_;
+			statsFile >> timesExtinct_;
+			statsFile >> genocide_;
 		}
 	}
-
-	cout << statsFile.good();
-	//cout << gamesWon_ << gamesPlayed_;
-
+	
 	statsFile.close();
 
-	return 0;
+	cout << gamesPlayed_ << endl;
+	cout << gamesWon_ << endl;
+	cout << gamesLost_ << endl;
+	cout << flagsCaptured_ << endl;
+	cout << capturedFlags_ << endl;
+	cout << timesExtinct_ << endl;
+	cout << genocide_ << endl;
+
+	if(playerName == currentPlayer)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}	
 }
 
 //*******************************************************************
