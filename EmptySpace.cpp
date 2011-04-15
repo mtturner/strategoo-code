@@ -18,3 +18,9 @@ bool EmptySpace::move()
 {
 	return true;
 }
+
+//****************************************
+void EmptySpace::show(SDL_Surface* destination) const
+{
+	//do nothing
+}

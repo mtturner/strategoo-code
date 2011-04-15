@@ -42,22 +42,26 @@ public:
 	void startGame();
 	std::string promptName();
 	void resetGame();
-	bool findPiece() const;
-	bool setPiece();
-	bool movePiece();
-	void swapLocation();
-	void namePiece();
-	void addPiece(Piece* piece);
 	std::string getPieceName() const;
 	void loadMenu();
 	SDL_Rect* getMouseCoords();
 	//Piece* getNewLocationPiece() const;
 	void displayStatistics() const;
 	void displayResults() const;
-	void clearPieces();
 	bool initialize();
 	void cleanUp();
 	void setState(int gameState);
+	bool render() const;
+	void setScreen(SDL_Surface* s);
+
+	//piece functions
+	void namePiece();
+	bool findPiece() const;
+	bool setPiece();
+	void swapLocation(Piece* first, Piece* second);
+	bool movePiece();
+
+	//game state background render functions
 	void showIntro() const;
 	void showLogin() const;
 	void showStartMenu() const;
@@ -66,8 +70,10 @@ public:
 	void showEndGame() const;
 	void showInGameMenu() const;
 	void showStatistics() const;
-	bool render() const;
-	void setScreen(SDL_Surface* s);
+
+	//collection functions
+	void addPiece(Piece* piece);
+	void clearPieces();
 
 	//getters and setters
 	inline int getState() const;

@@ -21,10 +21,15 @@ public:
 	Player(std::string& currentPlayer);
 	~Player();
 
-	void setName(const std::string& newPlayer);
+	//collection functions
 	void addPiece(Piece* piece);
 	void clearPiece();
 	void clearPieces();
+	Piece* findUnplacedPiece(const int rank);
+
+	void setName(const std::string& newPlayer);
+
+	//statistics functions
 	bool loadStatistics();
 	bool saveStatistics();
 	void displayStatistics() const;

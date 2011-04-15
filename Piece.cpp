@@ -14,6 +14,7 @@ Piece::Piece(int x, int y)
 	setIsSelected(false);
 }
 
+//*********************************
 Piece::Piece(int x, int y, std::string filename)
 {
 	pieceImage = new Sprite(x, y, filename.c_str());
@@ -28,8 +29,15 @@ Piece::~Piece()
 }
 
 //*********************************
-void Piece::namePiece()
+void Piece::setXPos(int xPos)
 {
+	pieceImage->setXPos(xPos);
+}
+
+//*********************************
+void Piece::setYPos(int yPos)
+{
+	pieceImage->setYPos(yPos);
 }
 
 //*********************************
@@ -61,7 +69,13 @@ void Piece::handleInput(SDL_Event& gEvent)
 }
 
 //*********************************       
-void Piece::show() const
+void Piece::show(SDL_Surface* destination) const
+{
+	pieceImage->show(destination);
+}
+
+//*********************************
+void Piece::namePiece()
 {
 }
 

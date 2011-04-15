@@ -79,10 +79,28 @@ void Game::startGame()
 		y = 240;
 
 	//create emptyspace's and add to appropriate collections
-	for(int i = 0; i < 92; i++)
+	for(int i = 0; i < 100; i++)
 	{
-		//if 40 pieces haven't been created
-		if(i < 52)
+		//skip over no man's land
+		if(i == 42)
+		{
+			i = 44;
+		}
+		else if(i == 46)
+		{
+			i = 48;
+		}
+		else if(i == 52)
+		{
+			i = 54;
+		}
+		else if(i == 56)
+		{
+			i = 58;
+		}
+
+		//if 40 pieces have been created
+		if(i > 39)
 		{
 			temp = new EmptySpace(x, y, i);
 
@@ -362,8 +380,27 @@ bool Game::movePiece()
 }
 
 //******************************************
-void Game::swapLocation()
+void Game::swapLocation(Piece* first, Piece* second)
 {
+	//x, y, and boardspace
+	int x = 0,
+		y = 0,
+		boardSpace = 0;
+
+	//hold first's position
+	x = first->getXPos();
+	y = first->getYPos();
+	boardSpace = first->getBoardSpace();
+
+	//set first's position to second's position
+	first->setXPos(second->getXPos());
+	first->setYPos(second->getYPos());
+	first->setBoardSpace(second->getBoardSpace());
+
+	//set second's position with first's position
+	second->setXPos(x);
+	second->setYPos(y);
+	second->setBoardSpace(boardSpace);
 }
 
 //******************************************
@@ -765,8 +802,12 @@ bool Game::doSetPiece()
 	PieceButton* currentButton = 0;
 	Piece* currentPiece = 0;
 
-	//temp piece
-	Piece* temp = 0;
+	//clicked piece and unplaced piece
+	Piece* clickedPiece = 0;
+	Piece* unplacedPiece = 0;
+
+	//button rank
+	int buttonRank = -1;
 
 	//setPiece loop boolean
 	bool isSettingPiece = true;
@@ -818,19 +859,23 @@ bool Game::doSetPiece()
 				buttonOverlay->setXPos(currentButton->getXPos());
 				buttonOverlay->setYPos(currentButton->getYPos());
 
+				//get button rank
+				buttonRank = buttons[i]->getRank();
+
 				//set isButtonSelected to true
 				setIsButtonSelected(true);
 			}
 		}
 
-		//check to see if a button was selected
-		temp = gBoard->findSelectedPiece();
+		//check to see if a piece was selected
+		clickedPiece = gBoard->findSelectedPiece();
 
-		//if a selected piece was found
-		if(temp != 0)
+		//if a selected piece was found and is in one
+		//of player's boardspaces
+		if(clickedPiece != 0 && (clickedPiece->getBoardSpace() > 59))
 		{	
 			//set currently selected piece
-			currentPiece = temp;
+			currentPiece = clickedPiece;
 
 			//set overlay to cover current piece
 			pieceOverlay->setXPos(currentPiece->getXPos());
@@ -839,8 +884,27 @@ bool Game::doSetPiece()
 			//set isPieceSelected to true
 			setIsPieceSelected(true);
 
-			//reset temp
-			temp = 0;
+			//reset clickedPiece
+			clickedPiece = 0;
+		}
+
+		//check to see if a piece was place
+		if(isPieceSelected && isButtonSelected)
+		{
+			//find an unplaced piece of the correct type
+			unplacedPiece = gPlayer->findUnplacedPiece(buttonRank);
+
+			//swap boardspace and rendering coordinates with emptyspace
+			swapLocation(currentPiece, unplacedPiece);
+
+			//remove emptyspace from board's collection
+			gBoard->clearPiece(currentPiece->getBoardSpace());
+
+			//add set piece to board's collection
+			gBoard->addPiece(unplacedPiece);
+
+			//reset isPieceSelected
+			setIsPieceSelected(false);
 		}
 
 		//apply the start menu image to the screen
@@ -857,6 +921,9 @@ bool Game::doSetPiece()
 		{
 			buttonOverlay->show(screen);
 		}
+
+		//render board to screen
+		gBoard->show(screen);
 
 		//render piece overlay if needed
 		if(getIsPieceSelected())

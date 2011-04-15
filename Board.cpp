@@ -19,17 +19,25 @@ Board::~Board()
 }
 
 //*******************************************************************
-bool Board::addPiece()
+void Board::clearPiece(const int boardSpace)
 {
-	//add pieces
+	//iterator
+	std::vector<Piece*>::iterator iter = pieces.begin();
 
-	return true;
-}
+	//found boolean
+	bool found = false;
 
-//*******************************************************************
-void Board::clearPiece()
-{
-	//clear piece
+	while(iter != pieces.end() && !found)
+	{
+		if((*iter)->getBoardSpace() == boardSpace)
+		{
+			pieces.erase(iter);
+
+			found = true;
+		}
+
+		iter++;
+	}
 }
 
 //*******************************************************************
@@ -74,15 +82,24 @@ Piece* Board::findSelectedPiece()
 
 			found = true;
 		}
+
+		iter++;
 	}
 
 	return temp;
 }
 
 //*******************************************************************
-void Board::show() const
+void Board::show(SDL_Surface* destination) const
 {
-	//render the board
+	//iterator
+	std::vector<Piece*>::const_iterator iter;
+
+	//render pieces
+	for(iter = pieces.begin(); iter != pieces.end(); iter++)
+	{
+		(*iter)->show(destination);
+	}
 }
 
 //*********************************

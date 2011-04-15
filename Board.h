@@ -17,13 +17,15 @@ public:
 	Board();
 	~Board();
 
-	bool addPiece();
-	void clearPiece();
-	void clearPieces();
-	void handlePieceInput(SDL_Event& gEvent);
-	Piece* findSelectedPiece();
-	void show() const;
+	//collection functions
 	void addPiece(Piece* piece);
+	void clearPiece(const int boardSpace);
+	void clearPieces();
+	Piece* findSelectedPiece();
+
+	//input and render
+	void handlePieceInput(SDL_Event& gEvent);
+	void show(SDL_Surface* destination) const;
 
 private:
 	Sprite* boardImage;

@@ -16,10 +16,12 @@ public:
 	Piece(int x, int y, std::string filename);
     virtual ~Piece();
 
+	//input logic, and render
 	virtual bool move() = 0;
-	void namePiece();
 	void handleInput(SDL_Event& gEvent);
-	void show() const;
+	virtual void show(SDL_Surface* destination) const;
+
+	void namePiece();
 	inline int getRank() const;
 	inline int getBoardSpace() const;
 	void setRank(int rank);
