@@ -58,7 +58,6 @@ public:
 	bool initialize();
 	void cleanUp();
 	void setState(int gameState);
-	inline int getState() const;
 	void showIntro() const;
 	void showLogin() const;
 	void showStartMenu() const;
@@ -68,8 +67,15 @@ public:
 	void showInGameMenu() const;
 	void showStatistics() const;
 	bool render() const;
-	inline SDL_Surface* getScreen() const;
 	void setScreen(SDL_Surface* s);
+
+	//getters and setters
+	inline int getState() const;
+	inline SDL_Surface* getScreen() const;
+	inline bool getIsPieceSelected() const;
+	void setIsPieceSelected(const bool selected);
+	inline bool getIsButtonSelected() const;
+	void setIsButtonSelected(const bool selected);
 
 	//main loop functions
 	bool doIntro();
@@ -114,6 +120,10 @@ private:
 	Sprite* menuBG;
 	Sprite* statisticsBG;
 
+	//piece and piece button overlays
+	Sprite* pieceOverlay;
+	Sprite* buttonOverlay;
+
 	//selector
 	Selector* gSelector;
 
@@ -129,6 +139,10 @@ private:
 	//piece buttons for set piece
 	PieceButton* buttons[12];
 
+	//selected bools
+	bool isPieceSelected,
+		 isButtonSelected;
+
 	//enumeration of all game states
 	enum GameStates {STATE_INTRO, STATE_LOGIN, STATE_STARTMENU,
 		             STATE_SETPIECE, STATE_PLAYGAME, STATE_ENDGAME,
@@ -136,13 +150,13 @@ private:
 };
 
 //******************************************
-int Game::getState() const
+inline int Game::getState() const
 {
 	return gameState_;
 }
 
 //******************************************
-SDL_Surface* Game::getScreen() const
+inline SDL_Surface* Game::getScreen() const
 {
 	return screen;
 }
@@ -151,6 +165,18 @@ SDL_Surface* Game::getScreen() const
 inline int Game::getSelectorChoice() const
 {
 	return gSelector->getChoice();
+}
+
+//******************************************
+inline bool Game::getIsPieceSelected() const
+{
+	return isPieceSelected;
+}
+
+//******************************************
+inline bool Game::getIsButtonSelected() const
+{
+	return isButtonSelected;
 }
 
 #endif

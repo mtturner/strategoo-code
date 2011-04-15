@@ -20,7 +20,9 @@ public:
 	bool addPiece();
 	void clearPiece();
 	void clearPieces();
-	void render() const;
+	void handlePieceInput(SDL_Event& gEvent);
+	Piece* findSelectedPiece();
+	void show() const;
 	void addPiece(Piece* piece);
 
 private:

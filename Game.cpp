@@ -16,6 +16,10 @@ Game::Game() : screen(0)
 	//set initial game state
 	setState(0);
 
+	//set booleans to false
+	setIsPieceSelected(false);
+	setIsButtonSelected(false);
+
 	//dynamically allocate sprite objects
 	introBG = new Sprite();
 	loginBG = new Sprite();
@@ -54,6 +58,10 @@ Game::~Game()
 	{
 		delete buttons[i];
 	}
+	
+	//delete overlays
+	delete pieceOverlay;
+	delete buttonOverlay;
 }
 
 //******************************************
@@ -476,18 +484,22 @@ bool Game::initialize()
 	name = new StringInput();
 
 	//create piece buttons
-	buttons[0] = new PieceButton(0, 500, "bombbutton.png");
-	buttons[1] = new PieceButton(0, 200, "captainbutton.png");
-	buttons[2] = new PieceButton(0, 100, "colonelbutton.png");
-	buttons[3] = new PieceButton(0, 550, "flagbutton.png");
-	buttons[4] = new PieceButton(0, 50, "generalbutton.png");
-	buttons[5] = new PieceButton(0, 250, "lieutenantbutton.png");
-	buttons[6] = new PieceButton(0, 150, "majorbutton.png");
-	buttons[7] = new PieceButton(0, 0, "marshalbutton.png");
-	buttons[8] = new PieceButton(0, 350, "minerbutton.png");
-	buttons[9] = new PieceButton(0, 400, "scoutbutton.png");
-	buttons[10] = new PieceButton(0, 300, "sergeantbutton.png");
-	buttons[11] = new PieceButton(0, 450, "spybutton.png");
+	buttons[0] = new PieceButton(0, 500, 11, "bombbutton.png");
+	buttons[1] = new PieceButton(0, 200, 6, "captainbutton.png");
+	buttons[2] = new PieceButton(0, 100, 8, "colonelbutton.png");
+	buttons[3] = new PieceButton(0, 550, 12, "flagbutton.png");
+	buttons[4] = new PieceButton(0, 50, 9, "generalbutton.png");
+	buttons[5] = new PieceButton(0, 250, 5, "lieutenantbutton.png");
+	buttons[6] = new PieceButton(0, 150, 7, "majorbutton.png");
+	buttons[7] = new PieceButton(0, 0, 10, "marshalbutton.png");
+	buttons[8] = new PieceButton(0, 350, 3, "minerbutton.png");
+	buttons[9] = new PieceButton(0, 400, 2, "scoutbutton.png");
+	buttons[10] = new PieceButton(0, 300, 4, "sergeantbutton.png");
+	buttons[11] = new PieceButton(0, 450, 1, "spybutton.png");
+
+	//create overlays
+	pieceOverlay = new Sprite(0, 0, "pieceoverlay.png");
+	buttonOverlay = new Sprite(0, 0, "buttonoverlay.png");
 
 	if(getScreen() == 0)
 	{
@@ -585,6 +597,18 @@ void Game::setScreen(SDL_Surface* s)
 	{
 		screen = s;
 	}
+}
+
+//******************************************
+void Game::setIsPieceSelected(const bool selected)
+{
+	isPieceSelected = selected;
+}
+
+//******************************************
+void Game::setIsButtonSelected(const bool selected)
+{
+	isButtonSelected = selected;
 }
 
 //******************************************
@@ -733,59 +757,120 @@ bool Game::doStartMenu()
 //******************************************
 bool Game::doSetPiece()
 {
+	//start the game
+	startGame();
+
 	//current piece button selection and
 	//current piece selection
 	PieceButton* currentButton = 0;
 	Piece* currentPiece = 0;
 
-	while(SDL_PollEvent(&gEvent))
+	//temp piece
+	Piece* temp = 0;
+
+	//setPiece loop boolean
+	bool isSettingPiece = true;
+
+	while(isSettingPiece)
 	{
-		//if the user has exited the window
-		if(gEvent.type == SDL_QUIT)
+		while(SDL_PollEvent(&gEvent))
 		{
-			//set next state to exit
-			setState(STATE_EXIT);
-		}
-		//else if the user has hit the enter key
-		else if(gEvent.type == SDL_KEYDOWN)
-		{
-			if(gEvent.key.keysym.sym == SDLK_RETURN)
+			//if the user has exited the window
+			if(gEvent.type == SDL_QUIT)
 			{
-				setState(STATE_PLAYGAME);
+				//set next state to exit
+				setState(STATE_EXIT);
+
+				isSettingPiece = false;
+			}
+			//else if the user has hit the enter key
+			else if(gEvent.type == SDL_KEYDOWN)
+			{
+				if(gEvent.key.keysym.sym == SDLK_RETURN)
+				{
+					setState(STATE_PLAYGAME);
+
+					isSettingPiece = false;
+				}
+			}
+	
+			//handle piece button input
+			for(int i = 0; i < 12; i++)
+			{
+				buttons[i]->handleInput(gEvent);
+			}
+
+			//handle board piece input
+			gBoard->handlePieceInput(gEvent);
+		}
+
+		//check to see if a button was selected
+		for(int i = 0; i < 12; i++)
+		{
+			if(buttons[i]->getIsSelected())
+			{
+				currentButton = buttons[i];
+
+				//reset button
+				buttons[i]->setIsSelected(false);
+
+				//set overlay to cover current button
+				buttonOverlay->setXPos(currentButton->getXPos());
+				buttonOverlay->setYPos(currentButton->getYPos());
+
+				//set isButtonSelected to true
+				setIsButtonSelected(true);
 			}
 		}
 
-		//handle piece button input
+		//check to see if a button was selected
+		temp = gBoard->findSelectedPiece();
+
+		//if a selected piece was found
+		if(temp != 0)
+		{	
+			//set currently selected piece
+			currentPiece = temp;
+
+			//set overlay to cover current piece
+			pieceOverlay->setXPos(currentPiece->getXPos());
+			pieceOverlay->setYPos(currentPiece->getYPos());
+
+			//set isPieceSelected to true
+			setIsPieceSelected(true);
+
+			//reset temp
+			temp = 0;
+		}
+
+		//apply the start menu image to the screen
+		showSetPiece();
+
+		//apply button images to screen
 		for(int i = 0; i < 12; i++)
 		{
-			buttons[i]->handleInput(gEvent);
+			buttons[i]->show(screen);
 		}
-	}
 
-	//check to see if a button was selected
-	for(int i = 0; i < 12; i++)
-	{
-		if(buttons[i]->getIsSelected())
+		//render button overlay if needed
+		if(getIsButtonSelected())
 		{
-			currentButton = buttons[i];
+			buttonOverlay->show(screen);
 		}
-	}
 
-	//apply the start menu image to the screen
-	showSetPiece();
+		//render piece overlay if needed
+		if(getIsPieceSelected())
+		{
+			pieceOverlay->show(screen);
+		}
 
-	//apply button images to screen
-	for(int i = 0; i < 12; i++)
-	{
-		buttons[i]->show(screen);
-	}
-
-	//render to the screen
-	//if rendering was unsuccessful
-	if(!render())
-	{
-		//return 1, closing the program
-		return false;
+		//render to the screen
+		//if rendering was unsuccessful
+		if(!render())
+		{
+			//return 1, closing the program
+			return false;
+		}
 	}
 
 	return true;

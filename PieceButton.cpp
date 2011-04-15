@@ -18,10 +18,14 @@ PieceButton::PieceButton()
 }
 
 //******************************************
-PieceButton::PieceButton(const int x, const int y, const std::string& button)
+PieceButton::PieceButton(const int x, const int y, const int rank,
+						 const std::string& button)
 {
 	//create sprites
 	buttonImage = new Sprite(x, y, button.c_str());
+
+	//set button rank
+	setRank(rank);
 
 	//set isSelected to false and isAvailable to true
 	setIsSelected(false);
@@ -45,6 +49,33 @@ void PieceButton::setIsSelected(const bool selected)
 void PieceButton::setIsAvailable(const bool available)
 {
 	isAvailable = available;
+}
+
+//******************************************
+void PieceButton::setRank(int rank)
+{
+	if(rank > 0 && rank < 13)
+	{
+		rank_ = rank;
+	}
+}
+
+//******************************************
+void PieceButton::setXPos(int xPos)
+{
+	if(xPos > -1 && xPos < 800)
+	{
+		buttonImage->setXPos(xPos);
+	}
+}
+
+//******************************************
+void PieceButton::setYPos(int yPos)
+{
+	if(yPos > -1 && yPos < 600)
+	{
+		buttonImage->setYPos(yPos);
+	}
 }
 
 //******************************************
