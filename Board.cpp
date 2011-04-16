@@ -27,16 +27,19 @@ void Board::clearPiece(const int boardSpace)
 	//found boolean
 	bool found = false;
 
-	while(iter != pieces.end() && !found)
+	while(!found && iter != pieces.end())
 	{
 		if((*iter)->getBoardSpace() == boardSpace)
 		{
-			pieces.erase(iter);
-
 			found = true;
+
+			pieces.erase(iter);
 		}
 
-		iter++;
+		if(!found)
+		{
+			iter++;
+		}
 	}
 }
 

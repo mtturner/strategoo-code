@@ -888,23 +888,37 @@ bool Game::doSetPiece()
 			clickedPiece = 0;
 		}
 
-		//check to see if a piece was place
+		//check to see if a piece was set
 		if(isPieceSelected && isButtonSelected)
 		{
 			//find an unplaced piece of the correct type
 			unplacedPiece = gPlayer->findUnplacedPiece(buttonRank);
 
-			//swap boardspace and rendering coordinates with emptyspace
-			swapLocation(currentPiece, unplacedPiece);
+			//if there's no unplaced pieces of this rank
+			if(unplacedPiece == 0)
+			{
+				//disable the piece button
+				currentButton->setIsAvailable(false);
 
-			//remove emptyspace from board's collection
-			gBoard->clearPiece(currentPiece->getBoardSpace());
+				//set isButtonSelected to false
+				setIsButtonSelected(false);
+			}
 
-			//add set piece to board's collection
-			gBoard->addPiece(unplacedPiece);
+			//if there's a piece to set
+			if(unplacedPiece != 0)
+			{
+				//swap boardspace and rendering coordinates with emptyspace
+				swapLocation(currentPiece, unplacedPiece);
 
-			//reset isPieceSelected
-			setIsPieceSelected(false);
+				//remove emptyspace from board's collection
+				gBoard->clearPiece(currentPiece->getBoardSpace());
+
+				//add set piece to board's collection
+				gBoard->addPiece(unplacedPiece);
+
+				//reset isPieceSelected
+				setIsPieceSelected(false);
+			}
 		}
 
 		//apply the start menu image to the screen
