@@ -14,6 +14,13 @@ Lieutenant::Lieutenant(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "
 }
 
 //****************************************
+Lieutenant::Lieutenant(std::string filename) : Piece(0, 0, filename.c_str())
+{
+	setBoardSpace(-1);
+	setRank(5);
+}
+
+//****************************************
 bool Lieutenant::move()
 {
 	return true;

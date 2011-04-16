@@ -12,7 +12,8 @@
 class Colonel : public Piece
 {
 public:
-    Colonel(int xPos = 0, int yPos = 0, int boardSpace = -1);  
+    Colonel(int xPos = 0, int yPos = 0, int boardSpace = -1);
+	Colonel(std::string filename);
 
 	virtual bool move();
 };

@@ -13,6 +13,7 @@ class Captain : public Piece
 {
 public:
     Captain(int xPos = 0, int yPos = 0, int boardSpace = -1);
+	Captain(std::string filename);
 
 	virtual bool move();
 };

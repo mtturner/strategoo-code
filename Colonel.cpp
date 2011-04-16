@@ -14,6 +14,13 @@ Colonel::Colonel(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "colone
 }
 
 //****************************************
+Colonel::Colonel(std::string filename) : Piece(0, 0, filename.c_str())
+{
+	setBoardSpace(-1);
+	setRank(8);
+}
+
+//****************************************
 bool Colonel::move()
 {
 	return true;

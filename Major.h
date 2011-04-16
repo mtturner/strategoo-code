@@ -12,7 +12,8 @@
 class Major : public Piece
 {
 public:
-    Major(int xPos = 0, int yPos = 0, int boardSpace = -1);    
+    Major(int xPos = 0, int yPos = 0, int boardSpace = -1);
+	Major(std::string filename);
 
 	virtual bool move();
 };

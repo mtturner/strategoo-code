@@ -7,8 +7,9 @@
 #ifndef COMPUTER_H
 #define COMPUTER_H
 
-#include<vector>
-#include"Piece.h"
+#include <vector>
+#include <algorithm>
+#include "Piece.h"
 
 class Computer
 {
@@ -19,6 +20,7 @@ public:
 	void addPiece(Piece* piece);
     void clearPiece();
     void clearPieces();
+	void setPieces();
     
 private:
     std::vector<Piece*> pieces;

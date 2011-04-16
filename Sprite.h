@@ -16,6 +16,7 @@ public:
 	Sprite();
 	Sprite(int x, int y);
 	Sprite(int x, int y, std::string filename);
+	Sprite(int x, int y, std::string filename, int alpha);
 	~Sprite();
 
 	bool load(std::string filename);
@@ -24,6 +25,7 @@ public:
 	inline int getYPos() const;
 	void setXPos(int xPos);
 	void setYPos(int yPos);
+	inline SDL_Surface* getSurface() const;
 	void setSurface(SDL_Surface* surface);
 
 private:
@@ -42,6 +44,12 @@ inline int Sprite::getXPos() const
 inline int Sprite::getYPos() const
 {
 	return yPos_;
+}
+
+//******************************************
+inline SDL_Surface* Sprite::getSurface() const
+{
+	return image;
 }
 
 #endif

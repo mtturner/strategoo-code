@@ -12,7 +12,8 @@
 class Sergeant : public Piece
 {
 public:
-    Sergeant(int xPos = 0, int yPos = 0, int boardSpace = -1);   
+    Sergeant(int xPos = 0, int yPos = 0, int boardSpace = -1);
+	Sergeant(std::string filename);
 
 	virtual bool move();
 };

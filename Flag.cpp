@@ -14,6 +14,13 @@ Flag::Flag(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "flag.png")
 }
 
 //****************************************
+Flag::Flag(std::string filename) : Piece(0, 0, filename.c_str())
+{
+	setBoardSpace(-1);
+	setRank(12);
+}
+
+//****************************************
 bool Flag::move()
 {
 	return true;

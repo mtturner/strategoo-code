@@ -14,6 +14,13 @@ General::General(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "genera
 }
 
 //****************************************
+General::General(std::string filename) : Piece(0, 0, filename.c_str())
+{
+	setBoardSpace(-1);
+	setRank(9);
+}
+
+//****************************************
 bool General::move()
 {
 	return true;

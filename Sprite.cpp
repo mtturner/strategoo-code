@@ -31,6 +31,17 @@ Sprite::Sprite(int x, int y, std::string filename) : image(0)
 }
 
 //******************************************
+Sprite::Sprite(int x, int y, std::string filename, int alpha) : image(0)
+{
+	setXPos(x);
+	setYPos(y);
+	
+	load(filename.c_str());
+
+	SDL_SetAlpha(getSurface(), SDL_SRCALPHA, alpha);
+}
+
+//******************************************
 Sprite::~Sprite()
 {
 	SDL_FreeSurface(image);

@@ -62,6 +62,9 @@ Game::~Game()
 	//delete overlays
 	delete pieceOverlay;
 	delete buttonOverlay;
+
+	//delete set piece finish
+	delete finishedSetPiece;
 }
 
 //******************************************
@@ -135,7 +138,7 @@ void Game::startGame()
 				x = 680;
 			}
 		}
-		//if the first 52 pieces have already been created,
+		//if the first 40 pieces have already been created,
 		//only add piece to game's collection
 		else
 		{
@@ -148,206 +151,245 @@ void Game::startGame()
 	//create marshals and add to appropriate collections
 	for(int i = 0; i < 2; i++)
 	{
-		temp = new Marshal();
-
 		if(i == 0)
 		{
+			temp = new Marshal();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new Marshal("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
 
 	//create generals and add to appropriate collections
 	for(int i = 0; i < 2; i++)
 	{
-		temp = new General();
-
 		if(i == 0)
 		{
+			temp = new General();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new General("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
 
 	//create colonels and add to appropriate collections
 	for(int i = 0; i < 4; i++)
 	{
-		temp = new Colonel();
-
 		if(i < 2)
 		{
+			temp = new Colonel();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new Colonel("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
 
 	//create majors and add to appropriate collections
 	for(int i = 0; i < 6; i++)
 	{
-		temp = new Major();
-
 		if(i < 3)
 		{
+			temp = new Major();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new Major("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
 
 	//create captains and add to appropriate collections
 	for(int i = 0; i < 8; i++)
 	{
-		temp = new Captain();
-
 		if(i < 4)
 		{
+			temp = new Captain();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new Captain("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
 
 	//create lieutenants and add to appropriate collections
 	for(int i = 0; i < 8; i++)
 	{
-		temp = new Lieutenant();
-
 		if(i < 4)
 		{
+			temp = new Lieutenant();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new Lieutenant("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
 
 	//create sergeants and add to appropriate collections
 	for(int i = 0; i < 8; i++)
 	{
-		temp = new Sergeant();
-
 		if(i < 4)
 		{
+			temp = new Sergeant();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new Sergeant("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
 
 	//create miners and add to appropriate collections
 	for(int i = 0; i < 10; i++)
 	{
-		temp = new Miner();
-
 		if(i < 5)
 		{
+			temp = new Miner();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new Miner("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
 
 	//create scouts and add to appropriate collections
 	for(int i = 0; i < 16; i++)
 	{
-		temp = new Scout();
-
 		if(i < 8)
 		{
+			temp = new Scout();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new Scout("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
 
 	//create spys and add to appropriate collections
 	for(int i = 0; i < 2; i++)
 	{
-		temp = new Spy();
-
 		if(i == 0)
 		{
+			temp = new Spy();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new Spy("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
 
 	//create bombs and add to appropriate collections
 	for(int i = 0; i < 12; i++)
 	{
-		temp = new Bomb();
-
 		if(i < 6)
 		{
+			temp = new Bomb();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new Bomb("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
 
 	//create flags and add to appropriate collections
 	for(int i = 0; i < 2; i++)
 	{
-		temp = new Flag();
-
 		if(i == 0)
 		{
+			temp = new Flag();
+
 			addPiece(temp);
 			gPlayer->addPiece(temp);
 		}
 		else
 		{
+			temp = new Flag("cpiece.png");
+
 			addPiece(temp);
 			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
 		}
 	}
+
+	//set computer pieces
+	gComputer->setPieces();
 }
 
 //******************************************
@@ -535,8 +577,11 @@ bool Game::initialize()
 	buttons[11] = new PieceButton(0, 450, 1, "spybutton.png");
 
 	//create overlays
-	pieceOverlay = new Sprite(0, 0, "pieceoverlay.png");
-	buttonOverlay = new Sprite(0, 0, "buttonoverlay.png");
+	pieceOverlay = new Sprite(0, 0, "pieceoverlay.png", 100);
+	buttonOverlay = new Sprite(0, 0, "buttonoverlay.png", 100);
+
+	//create set piece finish image
+	finishedSetPiece = new Sprite(260, 50, "gamestart.png");
 
 	if(getScreen() == 0)
 	{
@@ -809,8 +854,9 @@ bool Game::doSetPiece()
 	//button rank
 	int buttonRank = -1;
 
-	//setPiece loop boolean
-	bool isSettingPiece = true;
+	//setPiece loop boolean and finished boolean
+	bool isSettingPiece = true,
+		 finished = false;
 
 	while(isSettingPiece)
 	{
@@ -871,15 +917,14 @@ bool Game::doSetPiece()
 		clickedPiece = gBoard->findSelectedPiece();
 
 		//if a selected piece was found and is in one
-		//of player's boardspaces
-		if(clickedPiece != 0 && (clickedPiece->getBoardSpace() > 59))
+		//of player's boardspaces that isn't already occupied
+		//and a piece button that is available is already selected
+		if(clickedPiece != 0 && (clickedPiece->getBoardSpace() > 59) &&
+		   (clickedPiece->getRank() == 0) && (currentButton != 0) &&
+		   currentButton->getIsAvailable())
 		{	
 			//set currently selected piece
 			currentPiece = clickedPiece;
-
-			//set overlay to cover current piece
-			pieceOverlay->setXPos(currentPiece->getXPos());
-			pieceOverlay->setYPos(currentPiece->getYPos());
 
 			//set isPieceSelected to true
 			setIsPieceSelected(true);
@@ -893,16 +938,6 @@ bool Game::doSetPiece()
 		{
 			//find an unplaced piece of the correct type
 			unplacedPiece = gPlayer->findUnplacedPiece(buttonRank);
-
-			//if there's no unplaced pieces of this rank
-			if(unplacedPiece == 0)
-			{
-				//disable the piece button
-				currentButton->setIsAvailable(false);
-
-				//set isButtonSelected to false
-				setIsButtonSelected(false);
-			}
 
 			//if there's a piece to set
 			if(unplacedPiece != 0)
@@ -918,6 +953,31 @@ bool Game::doSetPiece()
 
 				//reset isPieceSelected
 				setIsPieceSelected(false);
+			}
+
+			//find an unplaced piece of the correct type
+			unplacedPiece = gPlayer->findUnplacedPiece(buttonRank);
+
+			//if there's no unplaced pieces of this rank
+			if(unplacedPiece == 0)
+			{
+				//disable the piece button
+				currentButton->setIsAvailable(false);
+
+				//set isButtonSelected to false
+				setIsButtonSelected(false);
+			}
+		}
+
+		//set finished to true
+		finished = true;
+
+		//check to see if all pieces are set
+		for(int i = 0; i < 12; i++)
+		{
+			if(buttons[i]->getIsAvailable())
+			{
+				finished = false;
 			}
 		}
 
@@ -939,10 +999,10 @@ bool Game::doSetPiece()
 		//render board to screen
 		gBoard->show(screen);
 
-		//render piece overlay if needed
-		if(getIsPieceSelected())
+		//render finished set piece image if need
+		if(finished)
 		{
-			pieceOverlay->show(screen);
+			finishedSetPiece->show(screen);
 		}
 
 		//render to the screen

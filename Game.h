@@ -130,6 +130,9 @@ private:
 	Sprite* pieceOverlay;
 	Sprite* buttonOverlay;
 
+	//sprite for set piece finish
+	Sprite* finishedSetPiece;
+
 	//selector
 	Selector* gSelector;
 

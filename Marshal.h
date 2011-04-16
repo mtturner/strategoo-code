@@ -12,7 +12,8 @@
 class Marshal : public Piece
 {
 public:
-    Marshal(int xPos = 0, int yPos = 0, int boardSpace = -1); 
+    Marshal(int xPos = 0, int yPos = 0, int boardSpace = -1);
+	Marshal(std::string filename);
 
 	virtual bool move();
 };

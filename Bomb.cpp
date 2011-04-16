@@ -14,6 +14,13 @@ Bomb::Bomb(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "bomb.png")
 }
 
 //****************************************
+Bomb::Bomb(std::string filename) : Piece(0, 0, filename.c_str())
+{
+	setBoardSpace(-1);
+	setRank(11);
+}
+
+//****************************************
 bool Bomb::move()
 {
 	return true;

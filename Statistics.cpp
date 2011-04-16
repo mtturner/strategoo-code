@@ -5,7 +5,6 @@
 	Statistics class.
 ******************************************************/
 
-
 #include "SDL.h"
 #include <iostream>
 #include <sstream>

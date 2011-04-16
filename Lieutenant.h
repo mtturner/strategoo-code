@@ -13,6 +13,7 @@ class Lieutenant : public Piece
 {
 public:
     Lieutenant(int xPos = 0, int yPos = 0, int boardSpace = -1);
+	Lieutenant(std::string filename);
 
 	virtual bool move();
 };

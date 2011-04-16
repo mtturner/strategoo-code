@@ -14,6 +14,13 @@ Marshal::Marshal(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "marsha
 }
 
 //****************************************
+Marshal::Marshal(std::string filename) : Piece(0, 0, filename.c_str())
+{
+	setBoardSpace(-1);
+	setRank(10);
+}
+
+//****************************************
 bool Marshal::move()
 {
 	return true;

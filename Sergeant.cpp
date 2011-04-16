@@ -14,6 +14,13 @@ Sergeant::Sergeant(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "serg
 }
 
 //****************************************
+Sergeant::Sergeant(std::string filename) : Piece(0, 0, filename.c_str())
+{
+	setBoardSpace(-1);
+	setRank(4);
+}
+
+//****************************************
 bool Sergeant::move()
 {
 	return true;
