@@ -732,6 +732,7 @@ bool Game::doIntro()
 bool Game::login()
 {
 	bool isLoggingIn = true;
+	std::string inputtedName;
 
 	while(isLoggingIn)
 	{
@@ -774,8 +775,11 @@ bool Game::login()
 		}
 	}
 	
+	//getting current user's name
+	inputtedName = name->getInput();
+	
 	//create new player with name that was input
-	gPlayer = new Player(name->getInput());
+	gPlayer = new Player(inputtedName);
 
 	gPlayer->loadStatistics();
 
