@@ -9,7 +9,8 @@
 
 Game::Game() : screen(0)
 {
-	//set computer and board pointers to null
+	//set player, computer and board pointers to null
+	gPlayer = 0;
 	gComputer = 0;
 	gBoard = 0;
 
