@@ -61,16 +61,6 @@ public:
 	void swapLocation(Piece* first, Piece* second);
 	bool movePiece();
 
-	//game state background render functions
-	void showIntro() const;
-	void showLogin() const;
-	void showStartMenu() const;
-	void showSetPiece() const;
-	void showPlayGame() const;
-	void showEndGame() const;
-	void showInGameMenu() const;
-	void showStatistics() const;
-
 	//collection functions
 	void addPiece(Piece* piece);
 	void clearPieces();
@@ -92,17 +82,6 @@ public:
 	bool doEndGame();
 	bool doInGameMenu();
 	bool doStatistics();
-
-	//selector functions
-	void handleSelectorInput(SDL_Event& gEvent);
-	void moveSelector() const;
-	void showSelector() const;
-	inline int getSelectorChoice() const;
-	void resetSelector();
-
-	//string input functions
-	void handleNameInput(SDL_Event& gEvent);
-	void showNameInput() const;
 
 private:
 	//SDL_Event structure
@@ -168,12 +147,6 @@ inline int Game::getState() const
 inline SDL_Surface* Game::getScreen() const
 {
 	return screen;
-}
-
-//******************************************
-inline int Game::getSelectorChoice() const
-{
-	return gSelector->getChoice();
 }
 
 //******************************************

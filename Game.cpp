@@ -612,54 +612,6 @@ void Game::setState(int gameState)
 }
 
 //******************************************
-void Game::showIntro() const
-{
-	introBG->show(getScreen());
-}
-
-//******************************************
-void Game::showLogin() const
-{
-	loginBG->show(getScreen());
-}
-
-//******************************************
-void Game::showStartMenu() const
-{
-	startMenuBG->show(getScreen());
-}
-
-//******************************************
-void Game::showSetPiece() const
-{
-	setPieceBG->show(getScreen());
-}
-
-//******************************************
-void Game::showPlayGame() const
-{
-	playGameBG->show(getScreen());
-}
-
-//******************************************
-void Game::showEndGame() const
-{
-	endGameBG->show(getScreen());
-}
-
-//******************************************
-void Game::showInGameMenu() const
-{
-	menuBG->show(getScreen());
-}
-
-//******************************************
-void Game::showStatistics() const
-{
-	statisticsBG->show(getScreen());
-}
-
-//******************************************
 bool Game::render() const
 {
 	if(SDL_Flip(getScreen()) == -1)
@@ -716,7 +668,7 @@ bool Game::doIntro()
 	}
 
 	//apply the intro image to the screen
-	showIntro();
+	introBG->show(getScreen());
 
 	//render to the screen
 	//if rendering was unsuccessful
@@ -758,14 +710,14 @@ bool Game::login()
 				}
 			}
 
-			handleNameInput(gEvent);
+			name->handleInput(gEvent);
 		}
 
 		//apply the login image to the screen
-		showLogin();
+		loginBG->show(getScreen());
 
 		//apply input text to screen
-		showNameInput();
+		name->show(getScreen());
 
 		//render to the screen
 		//if rendering was unsuccessful
@@ -800,35 +752,35 @@ bool Game::doStartMenu()
 		}
 				
 		//handle start menu selector input
-		handleSelectorInput(gEvent);
+		gSelector->handleInput(gEvent);
 
 		//if the user has hit the enter key
 		if(gEvent.type == SDL_KEYDOWN)
 		{
 			if(gEvent.key.keysym.sym == SDLK_RETURN)
 			{
-				if(getSelectorChoice() == 0)
+				if(gSelector->getChoice() == 0)
 				{
 					setState(STATE_SETPIECE);
 
-					resetSelector();
+					gSelector->reset();
 				}
-				else if(getSelectorChoice() == 1)
+				else if(gSelector->getChoice() == 1)
 				{
 					setState(STATE_STATISTICS);
 
-					resetSelector();
+					gSelector->reset();
 				}
 			}
 		}
 	}
 
 	//move the selector
-	moveSelector();
+	gSelector->move();
 
 	//apply the start menu image and selector image to the screen
-	showStartMenu();
-	showSelector();
+	startMenuBG->show(getScreen());
+	gSelector->show(getScreen());
 
 	//render to the screen
 	//if rendering was unsuccessful
@@ -987,27 +939,27 @@ bool Game::doSetPiece()
 		}
 
 		//apply the start menu image to the screen
-		showSetPiece();
+		setPieceBG->show(getScreen());
 
 		//apply button images to screen
 		for(int i = 0; i < 12; i++)
 		{
-			buttons[i]->show(screen);
+			buttons[i]->show(getScreen());
 		}
 
 		//render button overlay if needed
 		if(getIsButtonSelected())
 		{
-			buttonOverlay->show(screen);
+			buttonOverlay->show(getScreen());
 		}
 
 		//render board to screen
-		gBoard->show(screen);
+		gBoard->show(getScreen());
 
 		//render finished set piece image if need
 		if(finished)
 		{
-			finishedSetPiece->show(screen);
+			finishedSetPiece->show(getScreen());
 		}
 
 		//render to the screen
@@ -1044,7 +996,7 @@ bool Game::doPlayGame()
 	}
 
 	//apply the start menu image to the screen
-	showPlayGame();
+	playGameBG->show(getScreen());
 
 	//render to the screen
 	//if rendering was unsuccessful
@@ -1080,7 +1032,7 @@ bool Game::doEndGame()
 	}
 
 	//apply the end game image to the screen
-	showEndGame();
+	endGameBG->show(getScreen());
 
 	//render to the screen
 	//if rendering was unsuccessful
@@ -1106,35 +1058,35 @@ bool Game::doInGameMenu()
 		}
 				
 		//handle start menu selector input
-		handleSelectorInput(gEvent);
+		gSelector->handleInput(gEvent);
 
 		//if the user has hit the enter key
 		if(gEvent.type == SDL_KEYDOWN)
 		{
 			if(gEvent.key.keysym.sym == SDLK_RETURN)
 			{
-				if(getSelectorChoice() == 0)
+				if(gSelector->getChoice() == 0)
 				{
 					setState(STATE_STATISTICS);
 
-					resetSelector();
+					gSelector->reset();
 				}
-				else if(getSelectorChoice() == 1)
+				else if(gSelector->getChoice() == 1)
 				{
 					setState(STATE_STARTMENU);
 
-					resetSelector();
+					gSelector->reset();
 				}
 			}
 		}
 	}
 
 	//move the selector
-	moveSelector();
+	gSelector->move();
 
 	//apply the start menu image and selector image to the screen
-	showInGameMenu();
-	showSelector();
+	menuBG->show(getScreen());
+	gSelector->show(getScreen());
 
 	//render to the screen
 	//if rendering was unsuccessful
@@ -1170,7 +1122,7 @@ bool Game::doStatistics()
 	}
 
 	//apply the statistics image and messages to the screen
-	showStatistics();
+	statisticsBG->show(getScreen());
 
 	//render to the screen
 	//if rendering was unsuccessful
@@ -1181,38 +1133,4 @@ bool Game::doStatistics()
 	}
 
 	return true;
-}
-
-//******************************************
-void Game::handleSelectorInput(SDL_Event& gEvent)
-{
-	gSelector->handleInput(gEvent);
-}
-
-//******************************************
-void Game::moveSelector() const
-{
-	gSelector->move();
-}
-
-//******************************************
-void Game::showSelector() const
-{
-	gSelector->show(screen);
-}
-
-//******************************************
-void Game::resetSelector()
-{
-	gSelector->reset();
-}
-//******************************************
-void Game::handleNameInput(SDL_Event& gEvent)
-{
-     name->handleInput(gEvent);
-}
-//******************************************
-void Game::showNameInput() const
-{
-     name->show(getScreen());
 }
