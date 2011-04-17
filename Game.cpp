@@ -388,9 +388,6 @@ void Game::startGame()
 			gBoard->addPiece(temp);
 		}
 	}
-
-	//set computer pieces
-	gComputer->setPieces();
 }
 
 //******************************************
@@ -798,6 +795,9 @@ bool Game::doSetPiece()
 {
 	//start the game
 	startGame();
+
+	//set computer pieces
+	gComputer->setPieces();
 
 	//current piece button selection and
 	//current piece selection
