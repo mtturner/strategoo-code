@@ -7,6 +7,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "SDL/SDL.h"
 #include <string>
 #include <vector>
 #include "Statistics.h"
@@ -21,18 +22,14 @@ public:
 	Player(std::string& currentPlayer);
 	~Player();
 
-	//collection functions
+	void setName(const std::string& newPlayer);
 	void addPiece(Piece* piece);
 	void clearPiece();
 	void clearPieces();
-	Piece* findUnplacedPiece(const int rank);
-
-	void setName(const std::string& newPlayer);
-
-	//statistics functions
 	bool loadStatistics();
 	bool saveStatistics();
-	void displayStatistics() const;
+	void displayStatistics(SDL_Surface* background) const;
+	void setStatisticsSprites();
 
 private:
 	std::string name;

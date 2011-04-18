@@ -5,10 +5,13 @@
 	Statistics class.
 ******************************************************/
 
-#include "SDL.h"
+
+#include "SDL/SDL.h"
+#include "SDL/SDL_ttf.h"
+#include <fstream>
+#include <string>
 #include <iostream>
 #include <sstream>
-#include <fstream>
 #include "Statistics.h"
 
 using namespace std;
@@ -48,49 +51,59 @@ Statistics::~Statistics()
 bool Statistics::save(const string& currentPlayer)
 {
 	//declaring local variables
-	fstream statsFile;
+	ifstream search;
+	ofstream output;
 	string playerName;
+	long readPos;
+	bool newPlayer = true;
 
-	statsFile.open("statistics.txt", ios::in | ios::out);
-
-	cout << gamesPlayed_ << endl;
-	cout << gamesWon_ << endl;
-	cout << gamesLost_ << endl;
-	cout << flagsCaptured_ << endl;
-	cout << capturedFlags_ << endl;
-	cout << timesExtinct_ << endl;
-	cout << genocide_ << endl;
-
-	gamesPlayed_ = 2345;
-
-	while(getline(statsFile,playerName))
+	//opening input stream to search player data
+	search.open("statistics.txt", ios::in);
+	
+	//reading through data
+	while(search >> playerName)
 	{
 		if(playerName == currentPlayer)
 		{
-			cout << playerName << endl;
-			cout << gamesPlayed_ << endl;
-			
-			statsFile << gamesPlayed_;
-			statsFile << gamesWon_;
-			statsFile << gamesLost_;
-			statsFile << flagsCaptured_;
-			statsFile << capturedFlags_;
-			statsFile << timesExtinct_;
-			statsFile << genocide_;
-
-			cout << gamesPlayed_ << endl;
-			cout << gamesWon_ << endl;
-			cout << gamesLost_ << endl;
-			cout << flagsCaptured_ << endl;
-			cout << capturedFlags_ << endl;
-			cout << timesExtinct_ << endl;
-			cout << genocide_ << endl;
+			//catching current position
+			readPos = search.tellg();
+			//current player is not new
+			newPlayer = false;
 		}
 	}
 
-	statsFile.close();
+	//closing input stream
+	search.close();
 
-	if(statsFile.fail())
+	//opening output stream to record new data
+	output.open("statistics.txt", ios::out|ios::in);
+
+	//if current player is not new go to their prior saved data
+	if(newPlayer == false)
+	{
+		output.seekp(readPos, ios::beg);
+	}
+	//if current player is new go to the end of the file
+	else
+	{
+		output.seekp(0L, ios::end);
+		output << "\n" << currentPlayer;
+	}
+
+	//writing out current player's stats
+	output << "\n" << gamesPlayed_;
+	output << "\n" << gamesWon_;
+	output << "\n" << gamesLost_;
+	output << "\n" << flagsCaptured_;
+	output << "\n" << capturedFlags_;
+	output << "\n" << timesExtinct_;
+	output << "\n" << genocide_;
+
+	//closing output stream
+	output.close();
+
+	//relay whether current player is new
+	if(newPlayer)
 	{
 		return false;
 	}
@@ -110,21 +123,10 @@ bool Statistics::load(const string& currentPlayer)
 	//opening stats file
 	statsFile.open("statistics.txt", ios::in);
 
-	if(statsFile.fail())
+	//reading through data
+	while(statsFile >> playerName)
 	{
-		cout << "There was a problem opening the file.";
-	}
-
-	cout << gamesPlayed_ << endl;
-	cout << gamesWon_ << endl;
-	cout << gamesLost_ << endl;
-	cout << flagsCaptured_ << endl;
-	cout << capturedFlags_ << endl;
-	cout << timesExtinct_ << endl;
-	cout << genocide_ << endl;
-
-	while(getline(statsFile, playerName))
-	{
+		//loading data if stored data exists
 		if(playerName == currentPlayer)
 		{
 			statsFile >> gamesPlayed_;
@@ -137,17 +139,11 @@ bool Statistics::load(const string& currentPlayer)
 		}
 	}
 	
+	//closing input stream
 	statsFile.close();
 
-	cout << gamesPlayed_ << endl;
-	cout << gamesWon_ << endl;
-	cout << gamesLost_ << endl;
-	cout << flagsCaptured_ << endl;
-	cout << capturedFlags_ << endl;
-	cout << timesExtinct_ << endl;
-	cout << genocide_ << endl;
-
-	if(playerName == currentPlayer)
+	//relaying if player had stored data
+	if(gamesPlayed_ == 0)
 	{
 		return 0;
 	}
@@ -158,7 +154,103 @@ bool Statistics::load(const string& currentPlayer)
 }
 
 //*******************************************************************
-void Statistics::display() const
+bool Statistics::setSprites() const
 {
-	//display stats
+	//creating surface for statistics text
+	SDL_Surface* currentStat;
+
+	//declaring an SDL font to use
+	TTF_Font* font = NULL;
+
+	//setting text color to black
+	SDL_Color textColor = {0, 0, 0};
+
+	//open font file that will be referenced
+	font = TTF_OpenFont("armalite.ttf", 28);
+
+	//error checking
+	if(font == NULL)
+	{
+		return false;
+	}
+
+	//declaring char array to hold converted variable
+	string currentVar;
+
+	//declaring string stream to write variables to
+	stringstream outStr;
+
+	//setting gamesPlayed variable
+	outStr << gamesPlayed_;
+	currentVar = outStr.str();
+	currentStat = TTF_RenderText_Solid(font, currentVar.c_str(), textColor);
+	gamesPlayedLine->setSurface(currentStat);
+	outStr.str("");
+
+	//setting gamesWon variable
+	outStr << gamesWon_;
+	currentVar = outStr.str();
+	currentStat = TTF_RenderText_Solid(font, currentVar.c_str(), textColor);
+	gamesWonLine->setSurface(currentStat);
+	outStr.str("");
+
+	//setting gamesLost variable
+	outStr << gamesLost_;
+	currentVar = outStr.str();
+	currentStat = TTF_RenderText_Solid(font, currentVar.c_str(), textColor);
+	gamesLostLine->setSurface(currentStat);
+	outStr.str("");
+
+	//setting flagsCaptured variable
+	outStr << flagsCaptured_;
+	currentVar = outStr.str();
+	currentStat = TTF_RenderText_Solid(font, currentVar.c_str(), textColor);
+	flagsCapturedLine->setSurface(currentStat);
+	outStr.str("");
+
+	//setting capturedFlags variable
+	outStr << capturedFlags_;
+	currentVar = outStr.str();
+	currentStat = TTF_RenderText_Solid(font, currentVar.c_str(), textColor);
+	capturedFlagsLine->setSurface(currentStat);
+	outStr.str("");
+
+	//setting timesExtinct variable
+	outStr << timesExtinct_;
+	currentVar = outStr.str();
+	currentStat = TTF_RenderText_Solid(font, currentVar.c_str(), textColor);
+	timesExtinctLine->setSurface(currentStat);
+	outStr.str("");
+
+	//setting genocide variable
+	outStr << genocide_;
+	currentVar = outStr.str();
+	currentStat = TTF_RenderText_Solid(font, currentVar.c_str(), textColor);
+	genocideLine->setSurface(currentStat);
+	
+	//closing reference to prior used font
+	TTF_CloseFont(font);
+	
+	//error checking
+	if(currentStat == NULL)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+//******************************************************************************
+void Statistics::display(SDL_Surface* background) const
+{
+	//setting individual stat surfaces to display
+	gamesPlayedLine->show(background);
+	gamesWonLine->show(background);
+	gamesLostLine->show(background);
+	flagsCapturedLine->show(background);
+	capturedFlagsLine->show(background);
+	timesExtinctLine->show(background);
+	genocideLine->show(background);
 }
