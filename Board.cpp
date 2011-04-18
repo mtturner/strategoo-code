@@ -127,20 +127,7 @@ bool Board::isMoveablePiece(Piece* selected)
 {
 	bool moveablePiece = true;
 
-	/*
-	//pieces to left and to the right
-	int left = 0,
-		right = 0;
-
-	if(((selected->getBoardSpace() + 1) / 10) == (selected->getBoardSpace() / 10))
-	{
-		right = selected->getBoardSpace() + 1;
-	}
-
-	if(((selected->getBoardSpace() - 1) / 10) == (selected->getBoardSpace() / 10))
-	{
-		left = selected->getBoardSpace() - 1;
-	}
+	
 	
 	std::vector<Piece*>::iterator iter;
 
@@ -152,17 +139,42 @@ bool Board::isMoveablePiece(Piece* selected)
 			moveablePiece = false;
 		}
 
-		if((((*iter)->getBoardSpace() == right) && ((*iter)->getOwner() == 0)) && 
-		   (((*iter)->getBoardSpace() == left) && ((*iter)->getOwner() == 0)) && 
-		   (((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0)) && 
-		   (((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == 0)))
-		
+		if( ((selected->getBoardSpace()) == 0) || ((selected->getBoardSpace()) == 10) || ((selected->getBoardSpace()) == 20) || ((selected->getBoardSpace()) == 30) )
 		{
-			moveablePiece = false;
+			if((((*iter)->getBoardSpace() == (selected->getBoardSpace() + 1)) && ((*iter)->getOwner() == 0)) &&  
+		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0)) && 
+		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == 0)))
+		
+			{
+				moveablePiece = false;
+			}
+		}
+		else if( ((selected->getBoardSpace()) == 9) || ((selected->getBoardSpace()) == 19) || ((selected->getBoardSpace()) == 29) || ((selected->getBoardSpace()) == 39) )
+		{
+			if((((*iter)->getBoardSpace() == (selected->getBoardSpace() - 1)) && ((*iter)->getOwner() == 0)) && 
+		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0)) && 
+		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == 0)))
+		
+			{
+				moveablePiece = false;
+			}
+		}
+		else
+		{
+			if((((*iter)->getBoardSpace() == (selected->getBoardSpace() + 1)) && ((*iter)->getOwner() == 0)) && 
+		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 1)) && ((*iter)->getOwner() == 0)) && 
+		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0)) && 
+		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == 0)))
+		
+			{
+				moveablePiece = false;
+			}
 		}
 	}
-	*/
+	
+	
 
+	/*
 	//pieces above, below, to the left of, and to the right of selected
 	Piece* up = 0;
 	Piece* down = 0;
@@ -257,6 +269,7 @@ bool Board::isMoveablePiece(Piece* selected)
 			moveablePiece = false;
 		}
 	}
+	*/
 	
 	return moveablePiece;
 }
