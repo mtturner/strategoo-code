@@ -7,7 +7,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 #include <string>
 #include <vector>
 #include "Statistics.h"
@@ -26,6 +26,7 @@ public:
 	void addPiece(Piece* piece);
 	void clearPiece();
 	void clearPieces();
+	Piece* findUnplacedPiece(const int buttonRank);
 	bool loadStatistics();
 	bool saveStatistics();
 	void displayStatistics(SDL_Surface* background) const;

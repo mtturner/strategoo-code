@@ -1366,34 +1366,48 @@ bool Game::doInGameMenu()
 //******************************************
 bool Game::doStatistics()
 {
-	while(SDL_PollEvent(&gEvent))
+	bool showingStatistics = true;
+
+	gPlayer->setStatisticsSprites();
+
+	while(showingStatistics)
 	{
-		//if the user has exited the window
-		if(gEvent.type == SDL_QUIT)
+		while(SDL_PollEvent(&gEvent))
 		{
-			//set next state to exit
-			setState(STATE_EXIT);
-		}
-		//else if the enter key was pressed
-		else if(gEvent.type == SDL_KEYDOWN)
-		{
-			if(gEvent.key.keysym.sym == SDLK_RETURN)
+			//if the user has exited the window
+			if(gEvent.type == SDL_QUIT)
 			{
-				//set state to start menu
-				setState(STATE_INTRO);
+				//set next state to exit
+				setState(STATE_EXIT);
+
+				showingStatistics = false;
+			}
+			//else if the enter key was pressed
+			else if(gEvent.type == SDL_KEYDOWN)
+			{
+				if(gEvent.key.keysym.sym == SDLK_RETURN)
+				{
+					//set state to start menu
+					setState(STATE_INTRO);
+				}
+
+				showingStatistics = false;
 			}
 		}
-	}
 
-	//apply the statistics image and messages to the screen
-	statisticsBG->show(getScreen());
+		//apply the statistics image and messages to the screen
+		statisticsBG->show(getScreen());
 
-	//render to the screen
-	//if rendering was unsuccessful
-	if(!render())
-	{
-		//return 1, closing the program
-		return false;
+		//apply statistics messages to screen
+		gPlayer->displayStatistics(getScreen());
+
+		//render to the screen
+		//if rendering was unsuccessful
+		if(!render())
+		{
+			//return 1, closing the program
+			return false;
+		}
 	}
 
 	return true;

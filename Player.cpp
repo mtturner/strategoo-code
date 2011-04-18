@@ -54,6 +54,36 @@ void Player::clearPieces()
 }
 
 //*******************************************************************
+Piece* Player::findUnplacedPiece(const int buttonRank)
+{
+	//temp piece
+	Piece* temp = 0;
+
+	//iterator
+	std::vector<Piece*>::iterator iter = pieces.begin();
+
+	//found boolean
+	bool found = false;
+
+	while(!found && iter != pieces.end())
+	{
+		if((*iter)->getRank() == buttonRank && (*iter)->getBoardSpace() == -1)
+		{
+			temp = *iter;
+
+			found = true;
+		}
+
+		if(!found)
+		{
+			iter++;
+		}
+	}
+
+	return temp;
+}
+
+//*******************************************************************
 bool Player::loadStatistics()
 {
 	return(stats->load(name));
