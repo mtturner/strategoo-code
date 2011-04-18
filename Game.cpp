@@ -408,6 +408,37 @@ bool Game::findPiece() const
 }
 
 //******************************************
+Piece* Game::findEmptySpacePiece()
+{
+	//temp piece
+	Piece* temp = 0;
+
+	//found boolean
+	bool found = false;
+
+	//iterator
+	std::vector<Piece*>::iterator iter = pieces.begin();
+
+	while(iter != pieces.end() && !found)
+	{
+		//if the piece has been selected
+		if((*iter)->getRank() == 0 && (*iter)->getBoardSpace() == -1)
+		{
+			temp = *iter;
+
+			found = true;
+		}
+
+		if(!found)
+		{
+			iter++;
+		}
+	}
+
+	return temp;
+}
+
+//******************************************
 bool Game::setPiece()
 {
 	return false;
@@ -417,6 +448,75 @@ bool Game::setPiece()
 bool Game::movePiece()
 {
 	return false;
+}
+
+//******************************************
+bool Game::isMoveablePiece(Piece* selected)
+{
+	return gBoard->isMoveablePiece(selected);
+}
+
+//******************************************
+bool Game::isValidMove(Piece* selected, Piece* destination)
+{
+	//if the selected piece is not a scout
+	if(selected->getRank() != 2)
+	{
+		//make sure destination is one space away above,
+		//below, to the left of, or to the right of the
+		//selected piece
+		if(selected->getBoardSpace() != (destination->getBoardSpace() - 10) &&
+		   selected->getBoardSpace() != (destination->getBoardSpace() + 10) &&
+		   selected->getBoardSpace() != (destination->getBoardSpace() - 1) &&
+		   selected->getBoardSpace() != (destination->getBoardSpace() + 1))
+		{
+			return false;
+		}
+		else
+		{
+			//check to see if destination is emptyspace, and if not
+			//check to see if pieces have different owners
+			if(destination->getRank() != 0)
+			{
+				if(selected->getOwner() == destination->getOwner())
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+			else
+			{
+				return true;
+			}
+		}
+	}
+	//else if piece is a scout
+	else
+	{
+		//check to see if destination piece is directly
+		//above, below, to the left of, or to the right
+		//of the selected piece
+		if((destination->getBoardSpace() % 10) == (selected->getBoardSpace() % 10) ||
+		   (destination->getBoardSpace() / 10) == (selected->getBoardSpace() / 10))
+		{
+			//check to see if it is a valid scout move
+			if(gBoard->isValidScoutMove(selected, destination))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
 
 //******************************************
@@ -977,33 +1077,197 @@ bool Game::doSetPiece()
 //******************************************
 bool Game::doPlayGame()
 {
-	while(SDL_PollEvent(&gEvent))
+	//pieces
+	Piece* selected = 0;
+	Piece* destination = 0;
+	Piece* winner = 0;
+	Piece* temp = 0;
+
+	//loop and overlay booleans
+	bool playingGame = true,
+		 showOverlay = false;
+
+	while(playingGame)
 	{
-		//if the user has exited the window
-		if(gEvent.type == SDL_QUIT)
+		while(SDL_PollEvent(&gEvent))
 		{
-			//set next state to exit
-			setState(STATE_EXIT);
-		}
-		//else if the user has hit the enter key
-		else if(gEvent.type == SDL_KEYDOWN)
-		{
-			if(gEvent.key.keysym.sym == SDLK_RETURN)
+			//if the user has exited the window
+			if(gEvent.type == SDL_QUIT)
 			{
-				setState(STATE_ENDGAME);
+				//set next state to exit
+				setState(STATE_EXIT);
+
+				playingGame = false;
+			}
+			//else if the user has hit the enter key
+			else if(gEvent.type == SDL_KEYDOWN)
+			{
+				if(gEvent.key.keysym.sym == SDLK_RETURN)
+				{
+					setState(STATE_ENDGAME);
+
+					playingGame = false;
+				}
+			}
+
+			//handle board piece input
+			gBoard->handlePieceInput(gEvent);
+		}
+
+		//if no piece has been selected
+		if(selected == 0 && destination == 0)
+		{
+			selected = gBoard->findSelectedPiece();
+
+			//if a piece was found
+			if(selected != 0)
+			{
+				//if the piece is moveable
+				if(isMoveablePiece(selected))
+				{
+					//reset selected variable
+					selected->setIsSelected(false);
+
+					//set overlay to show
+					showOverlay = true;
+
+					//move overlay to this piece
+					pieceOverlay->setXPos(selected->getXPos());
+					pieceOverlay->setYPos(selected->getYPos());
+				}
+				else
+				{
+					//reset selected
+					selected = 0;
+				}
 			}
 		}
-	}
+		//else if one piece has been selected
+		else if(destination == 0)
+		{
+			destination = gBoard->findSelectedPiece();
 
-	//apply the start menu image to the screen
-	playGameBG->show(getScreen());
+			//if a piece was found and it isn't the same piece
+			//as the first selected piece and the owners are not identical
+			if(destination != 0 && destination->getBoardSpace() !=
+			   selected->getBoardSpace() && destination->getOwner() !=
+			   selected->getOwner())
+			{
+				//if the move is valid
+				if(isValidMove(selected, destination))
+				{
+					//move the piece
+					winner = selected->move(destination);
 
-	//render to the screen
-	//if rendering was unsuccessful
-	if(!render())
-	{
-		//return 1, closing the program
-		return false;
+					//depending on the move outcome, remove defeated
+					//pieces from board's collection if needed
+					if(winner == 0)
+					{
+						temp = findEmptySpacePiece();
+
+						gBoard->addPiece(temp);
+
+						gBoard->clearPiece(destination->getBoardSpace());
+						gBoard->clearPiece(selected->getBoardSpace());
+
+						swapLocation(temp, selected);
+
+						temp = findEmptySpacePiece();
+
+						gBoard->addPiece(temp);
+
+						swapLocation(temp, destination);
+
+						temp = 0;
+					}
+					else if(winner->getRank() == 0)
+					{
+						//dont need to clear any pieces
+					}
+					else if(winner->getBoardSpace() == destination->getBoardSpace())
+					{
+						temp = findEmptySpacePiece();
+
+						gBoard->addPiece(temp);
+
+						gBoard->clearPiece(selected->getBoardSpace());
+
+						swapLocation(temp, selected);
+
+						temp = 0;
+					}
+					else
+					{
+						temp = findEmptySpacePiece();
+
+						gBoard->addPiece(temp);
+
+						gBoard->clearPiece(destination->getBoardSpace());
+
+						swapLocation(temp, destination);
+
+						temp = 0;
+					}
+
+					//check to see if the game has been won
+
+					//move computer's piece
+
+					//check to see if the game has been won
+
+					//reset pieces
+					selected = 0;
+					destination = 0;
+					winner = 0;
+
+					//reset overlay
+					showOverlay = false;
+				}
+				else
+				{
+					//reset destination
+					destination = 0;
+				}
+			}
+			else if(destination != 0)
+			{
+				if(destination->getOwner() == selected->getOwner() && isMoveablePiece(destination))
+				{
+					//set selected to destination, reset destination,
+					//and update piece overlay
+					selected = destination;
+					destination = 0;
+
+					pieceOverlay->setXPos(selected->getXPos());
+					pieceOverlay->setYPos(selected->getYPos());
+				}
+				else
+				{
+					//reset destination
+					destination = 0;
+				}
+			}
+		}
+
+		//apply the start menu image to the screen
+		playGameBG->show(getScreen());
+
+		//show board
+		gBoard->show(getScreen());
+
+		//show piece overlay if needed
+		if(showOverlay)
+		{
+			pieceOverlay->show(getScreen());
+		}
+
+		//render to the screen
+		//if rendering was unsuccessful
+		if(!render())
+		{
+			//return 1, closing the program
+			return false;
+		}
 	}
 
 	return true;

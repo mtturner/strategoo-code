@@ -7,16 +7,17 @@
 
 #include "EmptySpace.h"
 
-EmptySpace::EmptySpace(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos)
+EmptySpace::EmptySpace(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, -1)
 {
 	setBoardSpace(boardSpace);
 	setRank(0);
 }
 
 //****************************************
-bool EmptySpace::move()
+Piece* EmptySpace::move(Piece* destination)
 {
-	return true;
+	//can't move!!!!111oneone
+	return 0;
 }
 
 //****************************************

@@ -7,18 +7,20 @@
 
 #include "Piece.h"
 
-Piece::Piece(int x, int y)
+Piece::Piece(int x, int y, int owner)
 {
 	pieceImage = new Sprite(x, y);
 
+	setOwner(owner);
 	setIsSelected(false);
 }
 
 //*********************************
-Piece::Piece(int x, int y, std::string filename)
+Piece::Piece(int x, int y, std::string filename, int owner)
 {
 	pieceImage = new Sprite(x, y, filename.c_str());
 
+	setOwner(owner);
 	setIsSelected(false);
 }
 
@@ -95,4 +97,37 @@ void Piece::setBoardSpace(int boardSpace)
 void Piece::setIsSelected(const bool selected)
 {
 	isSelected = selected;
+}
+
+//*********************************
+void Piece::setOwner(const int owner)
+{
+	if(owner == 0 || owner == 1)
+	{
+		owner_ = owner;
+	}
+}
+
+//*********************************
+void Piece::swapLocation(Piece* other)
+{
+	//x, y, and boardspace
+	int x = 0,
+		y = 0,
+		boardSpace = 0;
+
+	//hold first's position
+	x = getXPos();
+	y = getYPos();
+	boardSpace = getBoardSpace();
+
+	//set first's position to second's position
+	setXPos(other->getXPos());
+	setYPos(other->getYPos());
+	setBoardSpace(other->getBoardSpace());
+
+	//set second's position with first's position
+	other->setXPos(x);
+	other->setYPos(y);
+	other->setBoardSpace(boardSpace);
 }

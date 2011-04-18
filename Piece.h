@@ -12,16 +12,16 @@
 class Piece
 {
 public:
-	Piece(int x = 0, int y = 0);
-	Piece(int x, int y, std::string filename);
+	Piece(int x = 0, int y = 0, int owner = 0);
+	Piece(int x, int y, std::string filename, int owner);
     virtual ~Piece();
 
 	//input logic, and render
-	virtual bool move() = 0;
+	virtual Piece* move(Piece* destination) = 0;
 	void handleInput(SDL_Event& gEvent);
 	virtual void show(SDL_Surface* destination) const;
 
-	void namePiece();
+	//getters and setters
 	inline int getRank() const;
 	inline int getBoardSpace() const;
 	void setRank(int rank);
@@ -32,6 +32,12 @@ public:
 	void setBoardSpace(int boardSpace);
 	inline bool getIsSelected() const;
 	void setIsSelected(const bool selected);
+	inline int getOwner() const;
+	void setOwner(const int owner);
+
+	//piece maintenance
+	void namePiece();
+	void swapLocation(Piece* other);
 
 	//operator overloads
 	inline bool operator==(const Piece& piece) const;
@@ -43,7 +49,8 @@ private:
 	Sprite* pieceImage;
 
 	int boardSpace_,
-		rank_;
+		rank_,
+		owner_; //0 for player, 1 for computer, -1 for emptyspace
 	bool isSelected;
 };
 
@@ -75,6 +82,12 @@ inline int Piece::getYPos() const
 inline bool Piece::getIsSelected() const
 {
 	return isSelected;
+}
+
+//*********************************
+inline int Piece::getOwner() const
+{
+	return owner_;
 }
 
 //*********************************

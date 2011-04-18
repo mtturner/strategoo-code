@@ -15,7 +15,7 @@ public:
 	Scout(int xPos = 0, int yPos = 0, int boardSpace = -1);
 	Scout(std::string filename);
 
-    virtual bool move();  
+    virtual Piece* move(Piece* destination);
 };
 
 #endif

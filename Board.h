@@ -22,13 +22,17 @@ public:
 	void clearPiece(const int boardSpace);
 	void clearPieces();
 	Piece* findSelectedPiece();
+	Piece* findPieceAtBoardSpace(const int boardSpace);
+
+	//piece functions
+	bool isMoveablePiece(Piece* selected);
+	bool isValidScoutMove(Piece* scout, Piece* destination);
 
 	//input and render
 	void handlePieceInput(SDL_Event& gEvent);
 	void show(SDL_Surface* destination) const;
 
 private:
-	Sprite* boardImage;
 	std::vector<Piece*> pieces;
 };
 

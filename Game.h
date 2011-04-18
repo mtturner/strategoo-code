@@ -57,9 +57,12 @@ public:
 	//piece functions
 	void namePiece();
 	bool findPiece() const;
+	Piece* findEmptySpacePiece();
 	bool setPiece();
 	void swapLocation(Piece* first, Piece* second);
 	bool movePiece();
+	bool isMoveablePiece(Piece* selected);
+	bool isValidMove(Piece* selected, Piece* destination);
 
 	//collection functions
 	void addPiece(Piece* piece);

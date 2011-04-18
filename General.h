@@ -15,7 +15,7 @@ public:
 	General(int xPos = 0, int yPos = 0, int boardSpace = -1);
 	General(std::string filename);
 
-	virtual bool move();
+	virtual Piece* move(Piece* destination);
 };
 
 #endif
