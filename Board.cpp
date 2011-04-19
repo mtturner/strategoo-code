@@ -1,7 +1,7 @@
 /******************************************************
 	Board.cpp
 
-	This is the implementation file for the Board 
+	This is the implementation file for the Board
 	class.
 ******************************************************/
 
@@ -125,54 +125,97 @@ Piece* Board::findPieceAtBoardSpace(const int boardSpace)
 //*******************************************************************
 bool Board::isMoveablePiece(Piece* selected)
 {
-	bool moveablePiece = true;
+	bool moveablePiece = true,
+        frontBlocked = false,
+        backBlocked = false,
+        rightBlocked = false,
+        leftBlocked = false;
 
 	std::vector<Piece*>::iterator iter;
 
+	if((selected->getRank() == 12) ||
+    (selected->getRank() == 11) ||
+    (selected->getRank() == 0))
+    {
+        moveablePiece = false;
+    }
+
 	for(iter = pieces.begin(); iter != pieces.end(); iter++)
 	{
-		if((selected->getRank() == 12) || (selected->getRank() == 11) ||
-		   (selected->getRank() == 0))
+		if(((selected->getBoardSpace()) == 60) || ((selected->getBoardSpace()) == 70) ||
+		   ((selected->getBoardSpace()) == 80) || ((selected->getBoardSpace()) == 90) ||
+		   ((selected->getBoardSpace()) == 0) || ((selected->getBoardSpace()) == 10) ||
+		   ((selected->getBoardSpace()) == 20) || ((selected->getBoardSpace()) == 30) ||
+		   ((selected->getBoardSpace()) == 40) || ((selected->getBoardSpace()) == 50))
 		{
-			moveablePiece = false;
-		}
-
-		if(((selected->getBoardSpace()) == 0) || ((selected->getBoardSpace()) == 10) || 
-		   ((selected->getBoardSpace()) == 20) || ((selected->getBoardSpace()) == 30))
-		{
-			if((((*iter)->getBoardSpace() == (selected->getBoardSpace() + 1)) && ((*iter)->getOwner() == 0)) &&  
-		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0)) && 
-		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == 0)))
-		
+			if( ((*iter)->getBoardSpace() == (selected->getBoardSpace() + 1)) && ((*iter)->getOwner() == 0) )
 			{
-				moveablePiece = false;
+				rightBlocked = true;
 			}
-		}
-		else if(((selected->getBoardSpace()) == 9) || ((selected->getBoardSpace()) == 19) || 
-			    ((selected->getBoardSpace()) == 29) || ((selected->getBoardSpace()) == 39))
-		{
-			if((((*iter)->getBoardSpace() == (selected->getBoardSpace() - 1)) && ((*iter)->getOwner() == 0)) && 
-		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0)) && 
-		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == 0)))
-		
+			else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0))
 			{
-				moveablePiece = false;
+			    backBlocked = true;
 			}
+			else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == 0))
+			{
+			    frontBlocked = true;
+			}
+			leftBlocked = true;
+		}
+		else if(((selected->getBoardSpace()) == 69) || ((selected->getBoardSpace()) == 79) ||
+		   ((selected->getBoardSpace()) == 89) || ((selected->getBoardSpace()) == 99) ||
+		   ((selected->getBoardSpace()) == 9) || ((selected->getBoardSpace()) == 19) ||
+		   ((selected->getBoardSpace()) == 29) || ((selected->getBoardSpace()) == 39) ||
+		   ((selected->getBoardSpace()) == 49) || ((selected->getBoardSpace()) == 59))
+		{
+			if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 1)) && ((*iter)->getOwner() == 0))
+			{
+			    leftBlocked = true;
+			}
+			else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0))
+			{
+			    backBlocked = true;
+			}
+			else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == 0))
+			{
+			    frontBlocked = true;
+			}
+			rightBlocked = true;
 		}
 		else
 		{
-			if((((*iter)->getBoardSpace() == (selected->getBoardSpace() + 1)) && ((*iter)->getOwner() == 0)) && 
-		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 1)) && ((*iter)->getOwner() == 0)) && 
-		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0)) && 
-		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == 0)))
-		
+			if( ((*iter)->getBoardSpace() == (selected->getBoardSpace() + 1)) && ((*iter)->getOwner() == 0) )
 			{
-				moveablePiece = false;
+				rightBlocked = true;
+			}
+			else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 1)) && ((*iter)->getOwner() == 0))
+			{
+			    leftBlocked = true;
+			}
+			else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0))
+			{
+			    backBlocked = true;
+			}
+			else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == 0))
+			{
+			    frontBlocked = true;
 			}
 		}
 	}
-	
-	
+
+	if(selected->getBoardSpace() < 10)
+	{
+	    frontBlocked = true;
+	}
+	if(selected->getBoardSpace() > 89)
+	{
+	    backBlocked = true;
+	}
+
+    if(rightBlocked && leftBlocked && frontBlocked && backBlocked)
+    {
+        moveablePiece = false;
+    }
 
 	/*
 	//pieces above, below, to the left of, and to the right of selected
@@ -270,7 +313,7 @@ bool Board::isMoveablePiece(Piece* selected)
 		}
 	}
 	*/
-	
+
 	return moveablePiece;
 }
 
@@ -422,7 +465,7 @@ bool Board::isValidScoutMove(Piece* scout, Piece* destination)
 		}
 		break;
 	}
-		
+
 	return valid;
 }
 
