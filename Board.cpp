@@ -127,8 +127,6 @@ bool Board::isMoveablePiece(Piece* selected)
 {
 	bool moveablePiece = true;
 
-	
-	
 	std::vector<Piece*>::iterator iter;
 
 	for(iter = pieces.begin(); iter != pieces.end(); iter++)
@@ -139,7 +137,8 @@ bool Board::isMoveablePiece(Piece* selected)
 			moveablePiece = false;
 		}
 
-		if( ((selected->getBoardSpace()) == 0) || ((selected->getBoardSpace()) == 10) || ((selected->getBoardSpace()) == 20) || ((selected->getBoardSpace()) == 30) )
+		if(((selected->getBoardSpace()) == 0) || ((selected->getBoardSpace()) == 10) || 
+		   ((selected->getBoardSpace()) == 20) || ((selected->getBoardSpace()) == 30))
 		{
 			if((((*iter)->getBoardSpace() == (selected->getBoardSpace() + 1)) && ((*iter)->getOwner() == 0)) &&  
 		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0)) && 
@@ -149,7 +148,8 @@ bool Board::isMoveablePiece(Piece* selected)
 				moveablePiece = false;
 			}
 		}
-		else if( ((selected->getBoardSpace()) == 9) || ((selected->getBoardSpace()) == 19) || ((selected->getBoardSpace()) == 29) || ((selected->getBoardSpace()) == 39) )
+		else if(((selected->getBoardSpace()) == 9) || ((selected->getBoardSpace()) == 19) || 
+			    ((selected->getBoardSpace()) == 29) || ((selected->getBoardSpace()) == 39))
 		{
 			if((((*iter)->getBoardSpace() == (selected->getBoardSpace() - 1)) && ((*iter)->getOwner() == 0)) && 
 		   	(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == 0)) && 
