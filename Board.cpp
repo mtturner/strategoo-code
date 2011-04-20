@@ -125,12 +125,14 @@ Piece* Board::findPieceAtBoardSpace(const int boardSpace)
 //*******************************************************************
 bool Board::isMoveablePiece(Piece* selected)
 {
+
     //booleans to determine the movibility of the selected piece
 	bool movablePiece = true,
         frontBlocked = false,
         backBlocked = false,
         rightBlocked = false,
         leftBlocked = false;
+
 
     //iterator
 	std::vector<Piece*>::iterator iter;
@@ -160,19 +162,19 @@ bool Board::isMoveablePiece(Piece* selected)
             for(iter = pieces.begin(); iter != pieces.end(); iter++)
             {
                 //if the board's piece is to the right of the selected piece, and shares an owner with the selected piece
-                if( ((*iter)->getBoardSpace() == (selected->getBoardSpace() + 1)) && ((*iter)->getOwner() == selected->getOwner()) )
+                if( ((*iter)->getBoardSpace() == (selected->getBoardSpace() + 1)) && ((*iter)->getOwner() == selected->getOwner()) && ((*iter)->getRank() != 0))
                 {
                     //the selected piece is block on the right side
                     rightBlocked = true;
                 }
                 //if the board's piece is behind the selected piece, and shares an owner with the selected piece
-                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == selected->getOwner()))
+                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == selected->getOwner()) && ((*iter)->getRank() != 0))
                 {
                     //the selected piece blocked on the back side
                     backBlocked = true;
                 }
                 //if the board's piece is in front of the selected piece, and shares an owner with the selected piece
-                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == selected->getOwner()))
+                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == selected->getOwner()) && ((*iter)->getRank() != 0))
                 {
                     //the selected piece is block on the front side
                     frontBlocked = true;
@@ -193,19 +195,19 @@ bool Board::isMoveablePiece(Piece* selected)
             for(iter = pieces.begin(); iter != pieces.end(); iter++)
             {
                 //if the board's piece is to the left of the selected piece, and shares an owner with the selected piece
-                if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 1)) && ((*iter)->getOwner() == selected->getOwner()))
+                if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 1)) && ((*iter)->getOwner() == selected->getOwner()) && ((*iter)->getRank() != 0))
                 {
                     //the selected piece is blocked on the left side
                     leftBlocked = true;
                 }
                 //if the board's piece is behind the selected piece, and shares an owner with the selected piece
-                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == selected->getOwner()))
+                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == selected->getOwner()) && ((*iter)->getRank() != 0))
                 {
                     //the selected piece blocked on the back side
                     backBlocked = true;
                 }
                 //if the board's piece is in front of the selected piece, and shares an owner with the selected piece
-                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == selected->getOwner()))
+                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == selected->getOwner()) && ((*iter)->getRank() != 0))
                 {
                     //the selected piece is block on the front side
                     frontBlocked = true;
@@ -219,25 +221,25 @@ bool Board::isMoveablePiece(Piece* selected)
             for(iter = pieces.begin(); iter != pieces.end(); iter++)
             {
                 //if the board's piece is to the right of the selected piece, and shares an owner with the selected piece
-                if( ((*iter)->getBoardSpace() == (selected->getBoardSpace() + 1)) && ((*iter)->getOwner() == selected->getOwner()) )
+                if( ((*iter)->getBoardSpace() == (selected->getBoardSpace() + 1)) && ((*iter)->getOwner() == selected->getOwner()) && ((*iter)->getRank() != 0))
                 {
                     //the selected piece is block on the right side
                     rightBlocked = true;
                 }
                 //if the board's piece is to the left of the selected piece, and shares an owner with the selected piece
-                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 1)) && ((*iter)->getOwner() == selected->getOwner()))
+                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 1)) && ((*iter)->getOwner() == selected->getOwner()) && ((*iter)->getRank() != 0))
                 {
                     //the selected piece is blocked on the left side
                     leftBlocked = true;
                 }
                 //if the board's piece is behind the selected piece, and shares an owner with the selected piece
-                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == selected->getOwner()))
+                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() + 10)) && ((*iter)->getOwner() == selected->getOwner()) && ((*iter)->getRank() != 0))
                 {
                     //the selected piece blocked on the back side
                     backBlocked = true;
                 }
                 //if the board's piece is in front of the selected piece, and shares an owner with the selected piece
-                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == selected->getOwner()))
+                else if(((*iter)->getBoardSpace() == (selected->getBoardSpace() - 10)) && ((*iter)->getOwner() == selected->getOwner()) && ((*iter)->getRank() != 0))
                 {
                     //the selected piece is block on the front side
                     frontBlocked = true;
@@ -245,6 +247,16 @@ bool Board::isMoveablePiece(Piece* selected)
             }
         }
 
+        //things that were missed
+        //if the selected piece is block by no mans land
+        if((selected->getBoardSpace() == 62) || (selected->getBoardSpace() == 63) || (selected->getBoardSpace() == 67) || (selected->getBoardSpace() == 66))
+        {
+            frontBlocked = true;
+        }
+        if((selected->getBoardSpace() == 32) || (selected->getBoardSpace() == 33) || (selected->getBoardSpace() == 37) || (selected->getBoardSpace() == 36))
+        {
+            backBlocked = true;
+        }
         //if the selected piece is in the top row
         if(selected->getBoardSpace() < 10)
         {
@@ -265,103 +277,6 @@ bool Board::isMoveablePiece(Piece* selected)
         //the selected piece is not movable
         movablePiece = false;
     }
-
-	/*
-	//pieces above, below, to the left of, and to the right of selected
-	Piece* up = 0;
-	Piece* down = 0;
-	Piece* left = 0;
-	Piece* right = 0;
-
-	//board spaces
-	int upBS = 0,
-		downBS = 0,
-		leftBS = 0,
-		rightBS = 0;
-
-	if((selected->getRank() == 12) || (selected->getRank() == 11) ||
-	   (selected->getRank() == 0))
-	{
-		moveablePiece = false;
-	}
-	else
-	{
-		//set board spaces
-		if((selected->getBoardSpace() - 10) > -1)
-		{
-			upBS = selected->getBoardSpace() - 10;
-
-			if(upBS == 42 || upBS == 43 || upBS == 46 || upBS == 47 ||
-			   upBS == 52 || upBS == 53 || upBS == 56 || upBS == 57)
-			{
-				upBS = selected->getBoardSpace();
-			}
-		}
-		else
-		{
-			upBS = selected->getBoardSpace();
-		}
-
-		if((selected->getBoardSpace() + 10) < 100)
-		{
-			downBS = selected->getBoardSpace() + 10;
-
-			if(downBS == 42 || downBS == 43 || downBS == 46 || downBS == 47 ||
-			   downBS == 52 || downBS == 53 || downBS == 56 || downBS == 57)
-			{
-				downBS = selected->getBoardSpace();
-			}
-		}
-		else
-		{
-			downBS = selected->getBoardSpace();
-		}
-
-		if(((selected->getBoardSpace() + 1) / 10) == (selected->getBoardSpace() / 10) &&
-		   selected->getBoardSpace() + 1 < 100)
-		{
-			rightBS = selected->getBoardSpace() + 1;
-
-			if(rightBS == 42 || rightBS == 43 || rightBS == 46 || rightBS == 47 ||
-			   rightBS == 52 || rightBS == 53 || rightBS == 56 || rightBS == 57)
-			{
-				rightBS = selected->getBoardSpace();
-			}
-		}
-		else
-		{
-			rightBS = selected->getBoardSpace();
-		}
-
-		if(((selected->getBoardSpace() - 1) / 10) == (selected->getBoardSpace() / 10) &&
-		   selected->getBoardSpace() - 1 > -1)
-		{
-			leftBS = selected->getBoardSpace() - 1;
-
-			if(leftBS == 42 || leftBS == 43 || leftBS == 46 || leftBS == 47 ||
-			   leftBS == 52 || leftBS == 53 || leftBS == 56 || leftBS == 57)
-			{
-				leftBS = selected->getBoardSpace();
-			}
-		}
-		else
-		{
-			leftBS = selected->getBoardSpace();
-		}
-
-		//set pieces
-		up = findPieceAtBoardSpace(upBS);
-		down = findPieceAtBoardSpace(downBS);
-		left = findPieceAtBoardSpace(leftBS);
-		right = findPieceAtBoardSpace(rightBS);
-
-		if(selected->getOwner() == up->getOwner() && selected->getOwner() == down->getOwner() &&
-		   selected->getOwner() == left->getOwner() && selected->getOwner() == right->getOwner())
-		{
-			moveablePiece = false;
-		}
-	}
-	*/
 
 	return movablePiece;
 }
