@@ -1265,207 +1265,226 @@ bool Game::doPlayGame()
 	bool playingGame = true,
 		 showOverlay = false;
 
+	//turn, 0 - player, 1 - computer
+	int turn = 0;
+
 	while(playingGame)
 	{
-		while(SDL_PollEvent(&gEvent))
+		//if it's player's turn
+		if(turn == 0)
 		{
-			//if the user has exited the window
-			if(gEvent.type == SDL_QUIT)
+			while(SDL_PollEvent(&gEvent))
 			{
-				//set next state to exit
-				setState(STATE_EXIT);
-
-				playingGame = false;
-			}
-			//else if the user has hit the enter key
-			else if(gEvent.type == SDL_KEYDOWN)
-			{
-				if(gEvent.key.keysym.sym == SDLK_RETURN)
+				//if the user has exited the window
+				if(gEvent.type == SDL_QUIT)
 				{
-					setState(STATE_ENDGAME);
+					//set next state to exit
+					setState(STATE_EXIT);
 
 					playingGame = false;
 				}
+				//else if the user has hit the enter key
+				else if(gEvent.type == SDL_KEYDOWN)
+				{
+					if(gEvent.key.keysym.sym == SDLK_RETURN)
+					{
+						setState(STATE_ENDGAME);
+
+						playingGame = false;
+					}
+				}
+
+				//handle board piece input
+				gBoard->handlePieceInput(gEvent);
 			}
 
-			//handle board piece input
-			gBoard->handlePieceInput(gEvent);
-		}
-
-		//if no piece has been selected
-		if(selected == 0 && destination == 0)
-		{
-			selected = gBoard->findSelectedPiece();
-
-			//if a piece was found
-			if(selected != 0)
+			//if no piece has been selected
+			if(selected == 0 && destination == 0)
 			{
-				//if the piece is moveable
-				if(isMoveablePiece(selected, 0))
+				selected = gBoard->findSelectedPiece();
+
+				//if a piece was found
+				if(selected != 0)
 				{
-					//reset selected variable
-					selected->setIsSelected(false);
-
-					//set overlay to show
-					showOverlay = true;
-
-					//move overlay to this piece
-					pieceOverlay->setXPos(selected->getXPos());
-					pieceOverlay->setYPos(selected->getYPos());
-				}
-				else
-				{
-					//reset selected
-					selected = 0;
-				}
-			}
-		}
-		//else if one piece has been selected
-		else if(destination == 0)
-		{
-			destination = gBoard->findSelectedPiece();
-
-			//if a piece was found and it isn't the same piece
-			//as the first selected piece and the owners are not identical
-			if(destination != 0 && destination->getBoardSpace() !=
-			   selected->getBoardSpace() && destination->getOwner() !=
-			   selected->getOwner())
-			{
-				//if the move is valid
-				if(isValidMove(selected, destination))
-				{
-					//move the piece
-					winner = selected->move(destination);
-
-					//depending on the move outcome, remove defeated
-					//pieces from board's collection if needed and
-					//add emptyspace's where necessary
-					if(winner == 0)
+					//if the piece is moveable
+					if(isMoveablePiece(selected, 0))
 					{
-						temp = findEmptySpacePiece();
+						//reset selected variable
+						selected->setIsSelected(false);
 
-						gBoard->addPiece(temp);
+						//set overlay to show
+						showOverlay = true;
 
-						gBoard->clearPiece(destination->getBoardSpace());
-						gBoard->clearPiece(selected->getBoardSpace());
-
-						//remove pieces from player and computer collections
-						if(selected->getOwner() == 0)
-						{
-							gPlayer->clearPiece(selected->getBoardSpace());
-						}
-						else
-						{
-							gComputer->clearPiece(selected->getBoardSpace());
-						}
-
-						if(destination->getOwner() == 0)
-						{
-							gPlayer->clearPiece(destination->getBoardSpace());
-						}
-						else
-						{
-							gComputer->clearPiece(destination->getBoardSpace());
-						}
-
-						swapLocation(temp, selected);
-
-						temp = findEmptySpacePiece();
-
-						gBoard->addPiece(temp);
-
-						swapLocation(temp, destination);
-
-						temp = 0;
-					}
-					else if(winner->getRank() == 0)
-					{
-						//dont need to clear any pieces
-					}
-					else if(winner->getBoardSpace() == destination->getBoardSpace())
-					{
-						temp = findEmptySpacePiece();
-
-						gBoard->addPiece(temp);
-
-						gBoard->clearPiece(selected->getBoardSpace());
-
-						//remove pieces from player and computer collections
-						if(selected->getOwner() == 0)
-						{
-							gPlayer->clearPiece(selected->getBoardSpace());
-						}
-						else
-						{
-							gComputer->clearPiece(selected->getBoardSpace());
-						}
-
-						swapLocation(temp, selected);
-
-						temp = 0;
+						//move overlay to this piece
+						pieceOverlay->setXPos(selected->getXPos());
+						pieceOverlay->setYPos(selected->getYPos());
 					}
 					else
 					{
-						temp = findEmptySpacePiece();
+						//reset selected
+						selected = 0;
+					}
+				}
+			}
+			//else if one piece has been selected
+			else if(destination == 0)
+			{
+				destination = gBoard->findSelectedPiece();
 
-						gBoard->addPiece(temp);
+				//if a piece was found and it isn't the same piece
+				//as the first selected piece and the owners are not identical
+				if(destination != 0 && destination->getBoardSpace() !=
+				  selected->getBoardSpace() && destination->getOwner() !=
+				  selected->getOwner())
+				{
+					//if the move is valid
+					if(isValidMove(selected, destination))
+					{
+						//move the piece
+						winner = selected->move(destination);
 
-						gBoard->clearPiece(destination->getBoardSpace());
-
-						//remove pieces from player and computer collections
-						if(destination->getOwner() == 0)
+						//depending on the move outcome, remove defeated
+						//pieces from board's collection if needed and
+						//add emptyspace's where necessary
+						if(winner == 0)
 						{
-							gPlayer->clearPiece(destination->getBoardSpace());
+							temp = findEmptySpacePiece();
+
+							gBoard->addPiece(temp);
+
+							gBoard->clearPiece(destination->getBoardSpace());
+							gBoard->clearPiece(selected->getBoardSpace());
+
+							//remove pieces from player and computer collections
+							if(selected->getOwner() == 0)
+							{
+								gPlayer->clearPiece(selected->getBoardSpace());
+							}
+							else
+							{
+								gComputer->clearPiece(selected->getBoardSpace());
+							}
+
+							if(destination->getOwner() == 0)
+							{
+								gPlayer->clearPiece(destination->getBoardSpace());
+							}
+							else
+							{
+								gComputer->clearPiece(destination->getBoardSpace());
+							}
+
+							swapLocation(temp, selected);
+
+							temp = findEmptySpacePiece();
+
+							gBoard->addPiece(temp);
+
+							swapLocation(temp, destination);
+
+							temp = 0;
+						}
+						else if(winner->getRank() == 0)
+						{
+							//dont need to clear any pieces
+						}
+						else if(winner->getBoardSpace() == destination->getBoardSpace())
+						{
+							temp = findEmptySpacePiece();
+
+							gBoard->addPiece(temp);
+
+							gBoard->clearPiece(selected->getBoardSpace());
+
+							//remove pieces from player and computer collections
+							if(selected->getOwner() == 0)
+							{
+								gPlayer->clearPiece(selected->getBoardSpace());
+							}
+							else
+							{
+								gComputer->clearPiece(selected->getBoardSpace());
+							}
+
+							swapLocation(temp, selected);
+
+							temp = 0;
 						}
 						else
 						{
-							gComputer->clearPiece(destination->getBoardSpace());
+							temp = findEmptySpacePiece();
+
+							gBoard->addPiece(temp);
+
+							gBoard->clearPiece(destination->getBoardSpace());
+
+							//remove pieces from player and computer collections
+							if(destination->getOwner() == 0)
+							{
+								gPlayer->clearPiece(destination->getBoardSpace());
+							}
+							else
+							{
+								gComputer->clearPiece(destination->getBoardSpace());
+							}
+
+							swapLocation(temp, destination);
+
+							temp = 0;
 						}
 
-						swapLocation(temp, destination);
+						//check to see if the game has been won
 
-						temp = 0;
+						//if the game has not been won, set turn to computer's
+						turn = 1;
+
+						//reset pieces
+						selected = 0;
+						destination = 0;
+						winner = 0;
+
+						//reset overlay
+						showOverlay = false;
 					}
-
-					//check to see if the game has been won
-
-					//do computer's turn
-					moveComputerPiece();
-
-					//check to see if the game has been won
-
-					//reset pieces
-					selected = 0;
-					destination = 0;
-					winner = 0;
-
-					//reset overlay
-					showOverlay = false;
+					else
+					{
+						//reset destination
+						destination = 0;
+					}
 				}
-				else
+				else if(destination != 0)
 				{
-					//reset destination
-					destination = 0;
+					if(destination->getOwner() == selected->getOwner() && isMoveablePiece(destination, 0))
+					{
+						//set selected to destination, reset destination,
+						//and update piece overlay
+						selected = destination;
+						destination = 0;
+
+						pieceOverlay->setXPos(selected->getXPos());
+						pieceOverlay->setYPos(selected->getYPos());
+					}
+					else
+					{
+						//reset destination
+						destination = 0;
+					}
 				}
 			}
-			else if(destination != 0)
-			{
-				if(destination->getOwner() == selected->getOwner() && isMoveablePiece(destination, 0))
-				{
-					//set selected to destination, reset destination,
-					//and update piece overlay
-					selected = destination;
-					destination = 0;
+		}
+		else
+		{
+			//do computer's turn
+			//delay two seconds to simulate computer thinking
+			SDL_Delay(2000);
 
-					pieceOverlay->setXPos(selected->getXPos());
-					pieceOverlay->setYPos(selected->getYPos());
-				}
-				else
-				{
-					//reset destination
-					destination = 0;
-				}
-			}
+			//move a piece of computer's
+			moveComputerPiece();
+
+			//check to see if the game has been won
+
+			//set turn to player's
+			turn = 0;
 		}
 
 		//apply the start menu image to the screen
