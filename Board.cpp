@@ -302,11 +302,11 @@ bool Board::isValidScoutMove(Piece* scout, Piece* destination)
 	{
 		if(scout->getBoardSpace() > destination->getBoardSpace())
 		{
-			direction = 3;
+			direction = 1;
 		}
 		else
 		{
-			direction = 1 ;
+			direction = 3;
 		}
 	}
 	else
@@ -344,6 +344,12 @@ bool Board::isValidScoutMove(Piece* scout, Piece* destination)
 					valid = false;
 				}
 			}
+			else
+			{
+				found = true;
+
+				valid = false;
+			}
 
 			i -= 10;
 		}
@@ -370,6 +376,12 @@ bool Board::isValidScoutMove(Piece* scout, Piece* destination)
 				{
 					valid = false;
 				}
+			}
+			else
+			{
+				found = true;
+
+				valid = false;
 			}
 
 			i++;
@@ -398,8 +410,14 @@ bool Board::isValidScoutMove(Piece* scout, Piece* destination)
 					valid = false;
 				}
 			}
+			else
+			{
+				found = true;
 
-			i -= 10;
+				valid = false;
+			}
+
+			i += 10;
 		}
 		break;
 
@@ -423,6 +441,12 @@ bool Board::isValidScoutMove(Piece* scout, Piece* destination)
 				{
 					valid = false;
 				}
+			}
+			else
+			{
+				found = true;
+
+				valid = false;
 			}
 
 			i--;

@@ -1160,7 +1160,8 @@ bool Game::doPlayGame()
 					winner = selected->move(destination);
 
 					//depending on the move outcome, remove defeated
-					//pieces from board's collection if needed
+					//pieces from board's collection if needed and
+					//add emptyspace's where necessary
 					if(winner == 0)
 					{
 						temp = findEmptySpacePiece();
