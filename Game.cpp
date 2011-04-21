@@ -528,6 +528,15 @@ void Game::moveComputerPiece()
 	Piece* winner = 0;
 	Piece* temp = 0;
 
+	//vector of integers
+	std::vector<int> numbers;
+
+	//vector of int's iterator
+	std::vector<int>::iterator iter;
+
+	//number of pieces that computer has
+	int numPieces = gComputer->getNumPieces();
+
 	//find piece and fine move booleans
 	bool isFindingPiece = true,
 		 isFindingMove = true;
@@ -538,14 +547,34 @@ void Game::moveComputerPiece()
 	//counter
 	int i = 99;
 
+	//seed time
+	srand(unsigned(time(0)));
+
+	//populate numbers vector with integers from 0
+	//to the number of pieces computer has
+	for(int j = 0; j < numPieces; j++)
+	{
+		numbers.push_back(j);
+	}
+
+	//shuffle numbers
+	random_shuffle(numbers.begin(), numbers.end());
+
+	iter = numbers.begin();
+
 	//find moveable piece
 	while(isFindingPiece)
 	{
-		selected = gComputer->findRandomPiece();
+		selected = gComputer->findPieceAtPosition(*iter);
 
 		if(isMoveablePiece(selected, 1))
 		{
 			isFindingPiece = false;
+		}
+
+		if(isFindingPiece)
+		{
+			iter++;
 		}
 	}
 

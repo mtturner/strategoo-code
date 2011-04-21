@@ -58,6 +58,12 @@ void Computer::clearPieces()
 }
 
 //*********************************
+Piece* Computer::findPieceAtPosition(const int position)
+{
+	return pieces[position];
+}
+
+//*********************************
 void Computer::setPieces()
 {
 	//vector to hold board spaces
@@ -111,23 +117,4 @@ void Computer::setPieces()
 			(*iter)->setXPos(200 + (((*iter)->getBoardSpace() - 30) * 60));
 		}
 	}
-}
-
-//*********************************
-Piece* Computer::findRandomPiece()
-{
-	//random number container
-	int random = 0;
-
-	//store number of pieces
-	int numPieces = pieces.size();
-
-	//seed timer
-	srand((unsigned)time(0));
-
-	//generate random number
-	random = rand() % numPieces;
-
-	//return piece at this position in the pieces vector
-	return pieces[random];
 }

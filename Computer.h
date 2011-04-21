@@ -20,11 +20,17 @@ public:
 	void addPiece(Piece* piece);
     void clearPiece(const int boardSpace);
     void clearPieces();
+	Piece* findPieceAtPosition(const int position);
 	void setPieces();
-	Piece* findRandomPiece();
+	inline int getNumPieces() const;
     
 private:
     std::vector<Piece*> pieces;
 };
+
+inline int Computer::getNumPieces() const
+{
+	return pieces.size();
+}
 
 #endif

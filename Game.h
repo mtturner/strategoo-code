@@ -9,8 +9,11 @@
 
 #include "SDL.h"
 #include "SDL_ttf.h"
+#include <cstdlib>
+#include <ctime>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "Player.h"
 #include "Computer.h"
 #include "Board.h"
