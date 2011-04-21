@@ -27,6 +27,10 @@ public:
 	void clearPiece(const int boardSpace);
 	void clearPieces();
 	Piece* findUnplacedPiece(const int buttonRank);
+	Piece* findPieceAtPosition(const int position);
+	inline int getNumPieces() const;
+
+	//statistics functions
 	bool loadStatistics();
 	bool saveStatistics();
 	void displayStatistics(SDL_Surface* background) const;
@@ -37,5 +41,10 @@ private:
 	std::vector<Piece*> pieces;
 	Statistics* stats;
 };
+
+inline int Player::getNumPieces() const
+{
+	return pieces.size();
+}
 
 #endif

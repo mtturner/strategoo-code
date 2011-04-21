@@ -66,6 +66,10 @@ Game::~Game()
 
 	//delete set piece finish
 	delete finishedSetPiece;
+
+	//delete game result images
+	delete playerWinsImage;
+	delete computerWinsImage;
 }
 
 //******************************************
@@ -859,6 +863,10 @@ bool Game::initialize()
 	//create set piece finish image
 	finishedSetPiece = new Sprite(260, 50, "gamestart.png");
 
+	//create game result images
+	playerWinsImage = new Sprite(260, 50, "playerwins.png");
+	computerWinsImage = new Sprite(260, 50, "computerwins.png");
+
 	if(getScreen() == 0)
 	{
 		return false;
@@ -906,6 +914,112 @@ void Game::setScreen(SDL_Surface* s)
 	if(s != 0)
 	{
 		screen = s;
+	}
+}
+
+//******************************************
+bool Game::checkPlayerWins()
+{
+	//flag exists and moveable piece exists booleans
+	bool flagExists = false,
+		 moveablePieceExists = false;
+
+	//counter
+	int j = 0;
+
+	//temporary piece
+	Piece* temp = 0;
+
+	//number of pieces computer has
+	int numPieces = gComputer->getNumPieces();
+
+	//check for existence of computer's flag
+	for(int i = 0; i < numPieces; i++)
+	{
+		temp = gComputer->findPieceAtPosition(i);
+
+		if(temp->getRank() == 12)
+		{
+			flagExists = true;
+		}
+	}
+
+	//check for existence of moveable piece
+	while(!moveablePieceExists && j < numPieces)
+	{
+		temp = gComputer->findPieceAtPosition(j);
+
+		if(isMoveablePiece(temp, 1))
+		{
+			moveablePieceExists = true;
+		}
+
+		if(!moveablePieceExists)
+		{
+			j++;
+		}
+	}
+
+	if(!flagExists || !moveablePieceExists)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+//******************************************
+bool Game::checkComputerWins()
+{
+	//flag exists and moveable piece exists booleans
+	bool flagExists = false,
+		 moveablePieceExists = false;
+
+	//counter
+	int j = 0;
+
+	//temporary piece
+	Piece* temp = 0;
+
+	//number of pieces player has
+	int numPieces = gPlayer->getNumPieces();
+
+	//check for existence of player's flag
+	for(int i = 0; i < numPieces; i++)
+	{
+		temp = gPlayer->findPieceAtPosition(i);
+
+		if(temp->getRank() == 12)
+		{
+			flagExists = true;
+		}
+	}
+
+	//check for existence of moveable piece
+	while(!moveablePieceExists && j < numPieces)
+	{
+		temp = gPlayer->findPieceAtPosition(j);
+
+		if(isMoveablePiece(temp, 0))
+		{
+			moveablePieceExists = true;
+		}
+
+		if(!moveablePieceExists)
+		{
+			j++;
+		}
+	}
+
+	if(!flagExists || !moveablePieceExists)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
@@ -1261,6 +1375,9 @@ bool Game::doPlayGame()
 	Piece* winner = 0;
 	Piece* temp = 0;
 
+	//win or loss sprite
+	Sprite* gameResult = 0;
+
 	//loop and overlay booleans
 	bool playingGame = true,
 		 showOverlay = false;
@@ -1268,10 +1385,13 @@ bool Game::doPlayGame()
 	//turn, 0 - player, 1 - computer
 	int turn = 0;
 
+	//game winner, 0 - player, 1 - computer
+	int winningTeam = -1;
+
 	while(playingGame)
 	{
-		//if it's player's turn
-		if(turn == 0)
+		//if it's player's turn and the game hasn't been won
+		if(turn == 0 && winningTeam == -1)
 		{
 			while(SDL_PollEvent(&gEvent))
 			{
@@ -1433,10 +1553,21 @@ bool Game::doPlayGame()
 							temp = 0;
 						}
 
-						//check to see if the game has been won
+						//check to see if the game has been won by player
+						if(checkPlayerWins())
+						{
+							//set winner to player
+							winningTeam = 0;
+
+							//set game result sprite to player wins
+							gameResult = playerWinsImage;
+						}
 
 						//if the game has not been won, set turn to computer's
-						turn = 1;
+						if(winningTeam == -1)
+						{
+							turn = 1;
+						}
 
 						//reset pieces
 						selected = 0;
@@ -1472,7 +1603,8 @@ bool Game::doPlayGame()
 				}
 			}
 		}
-		else
+		//else if it's computer's turn and the game hasn't been won
+		else if(turn == 1 && winningTeam == -1)
 		{
 			//do computer's turn
 			//delay two seconds to simulate computer thinking
@@ -1481,10 +1613,47 @@ bool Game::doPlayGame()
 			//move a piece of computer's
 			moveComputerPiece();
 
-			//check to see if the game has been won
+			//check to see if the game has been won by computer
+			if(checkComputerWins())
+			{
+				//set winner to computer
+				winningTeam = 1;
+
+				//set game result sprite to computer wins
+				gameResult = computerWinsImage;
+			}
 
 			//set turn to player's
-			turn = 0;
+			if(winningTeam == -1)
+			{
+				turn = 0;
+			}
+		}
+
+		//if the game has been won
+		if(winningTeam != -1)
+		{
+			while(SDL_PollEvent(&gEvent))
+			{
+				//if the user has exited the window
+				if(gEvent.type == SDL_QUIT)
+				{
+					//set next state to exit
+					setState(STATE_EXIT);
+
+					playingGame = false;
+				}
+				//else if the user has hit the enter key
+				else if(gEvent.type == SDL_KEYDOWN)
+				{
+					if(gEvent.key.keysym.sym == SDLK_RETURN)
+					{
+						setState(STATE_ENDGAME);
+
+						playingGame = false;
+					}
+				}
+			}
 		}
 
 		//apply the start menu image to the screen
@@ -1497,6 +1666,12 @@ bool Game::doPlayGame()
 		if(showOverlay)
 		{
 			pieceOverlay->show(getScreen());
+		}
+
+		//show game result sprite if needed
+		if(winningTeam != -1)
+		{
+			gameResult->show(getScreen());
 		}
 
 		//render to the screen

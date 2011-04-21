@@ -73,6 +73,12 @@ void Player::clearPieces()
 }
 
 //*******************************************************************
+Piece* Player::findPieceAtPosition(const int position)
+{
+	return pieces[position];
+}
+
+//*******************************************************************
 Piece* Player::findUnplacedPiece(const int buttonRank)
 {
 	//temp piece

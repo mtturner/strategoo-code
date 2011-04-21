@@ -56,6 +56,8 @@ public:
 	void setState(int gameState);
 	bool render() const;
 	void setScreen(SDL_Surface* s);
+	bool checkPlayerWins();
+	bool checkComputerWins();
 
 	//piece functions
 	void namePiece();
@@ -118,6 +120,10 @@ private:
 
 	//sprite for set piece finish
 	Sprite* finishedSetPiece;
+
+	//sprites for winner of game
+	Sprite* playerWinsImage;
+	Sprite* computerWinsImage;
 
 	//selector
 	Selector* gSelector;
