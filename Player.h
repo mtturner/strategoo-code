@@ -24,7 +24,7 @@ public:
 
 	void setName(const std::string& newPlayer);
 	void addPiece(Piece* piece);
-	void clearPiece();
+	void clearPiece(const int boardSpace);
 	void clearPieces();
 	Piece* findUnplacedPiece(const int buttonRank);
 	bool loadStatistics();

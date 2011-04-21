@@ -61,8 +61,9 @@ public:
 	bool setPiece();
 	void swapLocation(Piece* first, Piece* second);
 	bool movePiece();
-	bool isMoveablePiece(Piece* selected);
+	bool isMoveablePiece(Piece* selected, int mover);
 	bool isValidMove(Piece* selected, Piece* destination);
+	void moveComputerPiece();
 
 	//collection functions
 	void addPiece(Piece* piece);

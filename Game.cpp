@@ -451,9 +451,9 @@ bool Game::movePiece()
 }
 
 //******************************************
-bool Game::isMoveablePiece(Piece* selected)
+bool Game::isMoveablePiece(Piece* selected, int mover)
 {
-	return gBoard->isMoveablePiece(selected);
+	return gBoard->isMoveablePiece(selected, mover);
 }
 
 //******************************************
@@ -516,6 +516,155 @@ bool Game::isValidMove(Piece* selected, Piece* destination)
 		{
 			return false;
 		}
+	}
+}
+
+//******************************************
+void Game::moveComputerPiece()
+{
+	//pieces
+	Piece* selected = 0;
+	Piece* destination = 0;
+	Piece* winner = 0;
+	Piece* temp = 0;
+
+	//find piece and fine move booleans
+	bool isFindingPiece = true,
+		 isFindingMove = true;
+
+	//found boolean
+	bool found = false;
+
+	//counter
+	int i = 99;
+
+	//find moveable piece
+	while(isFindingPiece)
+	{
+		selected = gComputer->findRandomPiece();
+
+		if(isMoveablePiece(selected, 1))
+		{
+			isFindingPiece = false;
+		}
+	}
+
+	//find valid move
+	while(isFindingMove)
+	{
+		//search board from bottom to top to help keep
+		//the computer advancing
+		while(!found)
+		{
+			//skip over no man's land
+			if(i != 42 && i != 43 && i != 46 && i != 47 &&
+			   i != 52 && i != 53 && i != 56 && i != 57)
+			{
+				destination = gBoard->findPieceAtBoardSpace(i);
+
+				if(isValidMove(selected, destination))
+				{
+					found = true;
+
+					isFindingMove = false;
+				}
+			}
+
+			i--;
+		}
+	}
+
+	//move piece
+	winner = selected->move(destination);
+
+	//depending on the move outcome, remove defeated
+	//pieces from board's collection and owner's collection
+	//if needed and add emptyspace's where necessary
+	if(winner == 0)
+	{
+		temp = findEmptySpacePiece();
+
+		gBoard->addPiece(temp);
+
+		gBoard->clearPiece(destination->getBoardSpace());
+		gBoard->clearPiece(selected->getBoardSpace());
+
+		//remove pieces from player and computer collections
+		if(selected->getOwner() == 0)
+		{
+			gPlayer->clearPiece(selected->getBoardSpace());
+		}
+		else
+		{
+			gComputer->clearPiece(selected->getBoardSpace());
+		}
+
+		if(destination->getOwner() == 0)
+		{
+			gPlayer->clearPiece(destination->getBoardSpace());
+		}
+		else
+		{
+			gComputer->clearPiece(destination->getBoardSpace());
+		}
+
+		swapLocation(temp, selected);
+
+		temp = findEmptySpacePiece();
+
+		gBoard->addPiece(temp);
+
+		swapLocation(temp, destination);
+
+		temp = 0;
+	}
+	else if(winner->getRank() == 0)
+	{
+		//dont need to clear any pieces
+	}
+	else if(winner->getBoardSpace() == destination->getBoardSpace())
+	{
+		temp = findEmptySpacePiece();
+
+		gBoard->addPiece(temp);
+
+		gBoard->clearPiece(selected->getBoardSpace());
+
+		//remove pieces from player and computer collections
+		if(selected->getOwner() == 0)
+		{
+			gPlayer->clearPiece(selected->getBoardSpace());
+		}
+		else
+		{
+			gComputer->clearPiece(selected->getBoardSpace());
+		}
+
+		swapLocation(temp, selected);
+
+		temp = 0;
+	}
+	else
+	{
+		temp = findEmptySpacePiece();
+
+		gBoard->addPiece(temp);
+
+		gBoard->clearPiece(destination->getBoardSpace());
+
+		//remove pieces from player and computer collections
+		if(selected->getOwner() == 0)
+		{
+			gPlayer->clearPiece(destination->getBoardSpace());
+		}
+		else
+		{
+			gComputer->clearPiece(destination->getBoardSpace());
+		}
+
+		swapLocation(temp, destination);
+
+		temp = 0;
 	}
 }
 
@@ -1123,7 +1272,7 @@ bool Game::doPlayGame()
 			if(selected != 0)
 			{
 				//if the piece is moveable
-				if(isMoveablePiece(selected))
+				if(isMoveablePiece(selected, 0))
 				{
 					//reset selected variable
 					selected->setIsSelected(false);
@@ -1171,6 +1320,25 @@ bool Game::doPlayGame()
 						gBoard->clearPiece(destination->getBoardSpace());
 						gBoard->clearPiece(selected->getBoardSpace());
 
+						//remove pieces from player and computer collections
+						if(selected->getOwner() == 0)
+						{
+							gPlayer->clearPiece(selected->getBoardSpace());
+						}
+						else
+						{
+							gComputer->clearPiece(selected->getBoardSpace());
+						}
+
+						if(destination->getOwner() == 0)
+						{
+							gPlayer->clearPiece(destination->getBoardSpace());
+						}
+						else
+						{
+							gComputer->clearPiece(destination->getBoardSpace());
+						}
+
 						swapLocation(temp, selected);
 
 						temp = findEmptySpacePiece();
@@ -1193,6 +1361,16 @@ bool Game::doPlayGame()
 
 						gBoard->clearPiece(selected->getBoardSpace());
 
+						//remove pieces from player and computer collections
+						if(selected->getOwner() == 0)
+						{
+							gPlayer->clearPiece(selected->getBoardSpace());
+						}
+						else
+						{
+							gComputer->clearPiece(selected->getBoardSpace());
+						}
+
 						swapLocation(temp, selected);
 
 						temp = 0;
@@ -1205,6 +1383,16 @@ bool Game::doPlayGame()
 
 						gBoard->clearPiece(destination->getBoardSpace());
 
+						//remove pieces from player and computer collections
+						if(destination->getOwner() == 0)
+						{
+							gPlayer->clearPiece(destination->getBoardSpace());
+						}
+						else
+						{
+							gComputer->clearPiece(destination->getBoardSpace());
+						}
+
 						swapLocation(temp, destination);
 
 						temp = 0;
@@ -1212,7 +1400,8 @@ bool Game::doPlayGame()
 
 					//check to see if the game has been won
 
-					//move computer's piece
+					//do computer's turn
+					moveComputerPiece();
 
 					//check to see if the game has been won
 
@@ -1232,7 +1421,7 @@ bool Game::doPlayGame()
 			}
 			else if(destination != 0)
 			{
-				if(destination->getOwner() == selected->getOwner() && isMoveablePiece(destination))
+				if(destination->getOwner() == selected->getOwner() && isMoveablePiece(destination, 0))
 				{
 					//set selected to destination, reset destination,
 					//and update piece overlay

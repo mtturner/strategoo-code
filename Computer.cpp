@@ -5,6 +5,8 @@
 	class.
 ******************************************************/
 
+#include <cstdlib>
+#include <ctime>
 #include "Computer.h"
 
 Computer::Computer()
@@ -26,8 +28,28 @@ void Computer::addPiece(Piece* piece)
 }
 
 //*********************************
-void Computer::clearPiece()
+void Computer::clearPiece(const int boardSpace)
 {
+	//iterator
+	std::vector<Piece*>::iterator iter = pieces.begin();
+
+	//found boolean
+	bool found = false;
+
+	while(!found && iter != pieces.end())
+	{
+		if((*iter)->getBoardSpace() == boardSpace)
+		{
+			found = true;
+
+			pieces.erase(iter);
+		}
+
+		if(!found)
+		{
+			iter++;
+		}
+	}
 }
 
 //*********************************
@@ -46,6 +68,9 @@ void Computer::setPieces()
 
 	//counter
 	int i = 0;
+
+	//seed timer
+	srand(unsigned(time(0)));
 
 	for(int x = 0; x < 40; x++)
 	{
@@ -86,4 +111,23 @@ void Computer::setPieces()
 			(*iter)->setXPos(200 + (((*iter)->getBoardSpace() - 30) * 60));
 		}
 	}
+}
+
+//*********************************
+Piece* Computer::findRandomPiece()
+{
+	//random number container
+	int random = 0;
+
+	//store number of pieces
+	int numPieces = pieces.size();
+
+	//seed timer
+	srand((unsigned)time(0));
+
+	//generate random number
+	random = rand() % numPieces;
+
+	//return piece at this position in the pieces vector
+	return pieces[random];
 }

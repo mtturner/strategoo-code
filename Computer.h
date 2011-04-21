@@ -18,9 +18,10 @@ public:
     ~Computer();
     
 	void addPiece(Piece* piece);
-    void clearPiece();
+    void clearPiece(const int boardSpace);
     void clearPieces();
 	void setPieces();
+	Piece* findRandomPiece();
     
 private:
     std::vector<Piece*> pieces;

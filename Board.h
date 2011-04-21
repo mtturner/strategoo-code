@@ -25,7 +25,7 @@ public:
 	Piece* findPieceAtBoardSpace(const int boardSpace);
 
 	//piece functions
-	bool isMoveablePiece(Piece* selected);
+	bool isMoveablePiece(Piece* selected, int owner); //mover 0 - player, 1 computer
 	bool isValidScoutMove(Piece* scout, Piece* destination);
 
 	//input and render

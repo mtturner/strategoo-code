@@ -42,9 +42,28 @@ void Player::addPiece(Piece* piece)
 }
 
 //*******************************************************************
-void Player::clearPiece()
+void Player::clearPiece(const int boardSpace)
 {
-	//clear a single piece
+	//iterator
+	std::vector<Piece*>::iterator iter = pieces.begin();
+
+	//found boolean
+	bool found = false;
+
+	while(!found && iter != pieces.end())
+	{
+		if((*iter)->getBoardSpace() == boardSpace)
+		{
+			found = true;
+
+			pieces.erase(iter);
+		}
+
+		if(!found)
+		{
+			iter++;
+		}
+	}
 }
 
 //*******************************************************************
