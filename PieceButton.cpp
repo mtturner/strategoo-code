@@ -11,6 +11,7 @@ PieceButton::PieceButton()
 {
 	//create sprites
 	buttonImage = new Sprite();
+	buttonUnavailable = new Sprite();
 
 	//set isSelected and isAvailable to false
 	setIsAvailable(false);
@@ -23,6 +24,7 @@ PieceButton::PieceButton(const int x, const int y, const int rank,
 {
 	//create sprites
 	buttonImage = new Sprite(x, y, button.c_str());
+	buttonUnavailable = new Sprite(x, y, "piecebuttonunavailable.png");
 
 	//set button rank
 	setRank(rank);
@@ -37,6 +39,7 @@ PieceButton::~PieceButton()
 {
 	//delete sprites
 	delete buttonImage;
+	delete buttonUnavailable;
 }
 
 //******************************************
@@ -66,6 +69,7 @@ void PieceButton::setXPos(int xPos)
 	if(xPos > -1 && xPos < 800)
 	{
 		buttonImage->setXPos(xPos);
+		buttonUnavailable->setXPos(xPos);
 	}
 }
 
@@ -75,6 +79,7 @@ void PieceButton::setYPos(int yPos)
 	if(yPos > -1 && yPos < 600)
 	{
 		buttonImage->setYPos(yPos);
+		buttonUnavailable->setYPos(yPos);
 	}
 }
 
@@ -118,5 +123,9 @@ void PieceButton::show(SDL_Surface* screen) const
 	{
 		//show the button
 		buttonImage->show(screen);
+	}
+	else
+	{
+		buttonUnavailable->show(screen);
 	}
 }

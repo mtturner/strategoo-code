@@ -64,7 +64,6 @@ public:
 	void updatePlayByPlay(int firstRank, int secondRank, int mover, int winner);
 	void updatePlayByPlay(int firstRank, int mover);
 	void updateComputerPlayByPlay();
-	void initializePlayByPlay();
 	void shiftPlayByPlayDown();
 
 	//piece functions
@@ -135,6 +134,7 @@ private:
 
 	//play-by-play sprites
 	Sprite* playByPlayHeader;
+	Sprite* playByPlayArea;
 	Sprite* playByPlayOne;
 	Sprite* playByPlayTwo;
 	Sprite* playByPlayThree;

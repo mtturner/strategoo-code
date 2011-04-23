@@ -40,6 +40,7 @@ public:
 private:
 	//sprites
 	Sprite* buttonImage;
+	Sprite* buttonUnavailable;
 
 	int rank_;
 

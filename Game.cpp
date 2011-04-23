@@ -73,6 +73,7 @@ Game::~Game()
 
 	//delete play-by-plays
 	delete playByPlayHeader;
+	delete playByPlayArea;
 	delete playByPlayOne;
 	delete playByPlayTwo;
 	delete playByPlayThree;
@@ -883,6 +884,7 @@ bool Game::initialize()
 
 	//create play by plays
 	playByPlayHeader = new Sprite(0, 0, "playbyplay.png");
+	playByPlayArea = new Sprite(0, 50, "playbyplayarea.png");
 	playByPlayOne = new Sprite(5, 55);
 	playByPlayTwo = new Sprite(5, 80);
 	playByPlayThree = new Sprite(5, 105);
@@ -1130,12 +1132,30 @@ void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner
 		//if player won
 		else if(winner == 0)
 		{
-			ss << "defeats";
+			if(secondRank == 12)
+			{
+				ss << "captures";
+			}
+			else if(secondRank == 11)
+			{
+				ss << "defuses";
+			}
+			else
+			{
+				ss << "defeats";
+			}
 		}
 		//if computer won
 		else
 		{
-			ss << "is defeated by";
+			if(secondRank == 11)
+			{
+				ss << "is blown up by";
+			}
+			else
+			{
+				ss << "is defeated by";
+			}
 		}
 
 		//update play-by-play and clear stringstream
@@ -1269,15 +1289,33 @@ void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner
 		{
 			ss << "draws with";
 		}
-		//if player won
-		else if(winner == 0)
-		{
-			ss << "defeats";
-		}
 		//if computer won
+		else if(winner == 1)
+		{
+			if(secondRank == 12)
+			{
+				ss << "captures";
+			}
+			else if(secondRank == 11)
+			{
+				ss << "defuses";
+			}
+			else
+			{
+				ss << "defeats";
+			}
+		}
+		//if player won
 		else
 		{
-			ss << "is defeated by";
+			if(secondRank == 11)
+			{
+				ss << "is blown up by";
+			}
+			else
+			{
+				ss << "is defeated by";
+			}
 		}
 
 		//update play-by-play and clear stringstream
@@ -1498,47 +1536,6 @@ void Game::updateComputerPlayByPlay()
 
 	//update playByPlay image
 	playByPlayThree->setSurfaceNoFree(newMessage);
-}
-
-//******************************************
-void Game::initializePlayByPlay()
-{
-	//font for play-by-play
-	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
-
-	//SDL surface for new playByPlay message
-	SDL_Surface* newMessageOne = 0;
-	SDL_Surface* newMessageTwo = 0;
-	SDL_Surface* newMessageThree = 0;
-	SDL_Surface* newMessageFour = 0;
-	SDL_Surface* newMessageFive = 0;
-	SDL_Surface* newMessageSix = 0;
-	SDL_Surface* newMessageSeven = 0;
-	SDL_Surface* newMessageEight = 0;
-	SDL_Surface* newMessageNine = 0;
-
-	//text color
-	SDL_Color textColor = {0, 0, 0};
-
-	newMessageOne = TTF_RenderText_Solid(font, " ", textColor);
-	newMessageTwo = TTF_RenderText_Solid(font, " ", textColor);
-	newMessageThree = TTF_RenderText_Solid(font, " ", textColor);
-	newMessageFour = TTF_RenderText_Solid(font, " ", textColor);
-	newMessageFive = TTF_RenderText_Solid(font, " ", textColor);
-	newMessageSix = TTF_RenderText_Solid(font, " ", textColor);
-	newMessageSeven = TTF_RenderText_Solid(font, " ", textColor);
-	newMessageEight = TTF_RenderText_Solid(font, " ", textColor);
-	newMessageNine = TTF_RenderText_Solid(font, " ", textColor);
-
-	playByPlayOne->setSurface(newMessageOne);
-	playByPlayTwo->setSurface(newMessageTwo);
-	playByPlayThree->setSurface(newMessageThree);
-	playByPlayFour->setSurface(newMessageFour);
-	playByPlayFive->setSurface(newMessageFive);
-	playByPlaySix->setSurface(newMessageSix);
-	playByPlaySeven->setSurface(newMessageSeven);
-	playByPlayEight->setSurface(newMessageEight);
-	playByPlayNine->setSurface(newMessageNine);
 }
 
 //******************************************
@@ -2221,6 +2218,7 @@ bool Game::doPlayGame()
 
 		//render play-by-play
 		playByPlayHeader->show(getScreen());
+		playByPlayArea->show(getScreen());
 		playByPlayOne->show(getScreen());
 		playByPlayTwo->show(getScreen());
 		playByPlayThree->show(getScreen());
