@@ -5,8 +5,8 @@
 	Statistics class.
 ******************************************************/
 
-#include "SDL.h"
-#include "SDL_ttf.h"
+#include "SDL/SDL.h"
+#include "SDL/SDL_ttf.h"
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -25,13 +25,13 @@ Statistics::Statistics()
 	timesExtinct_ = 0;
 	genocide_ = 0;
 
-	gamesPlayedLine = new Sprite(300, 0);
-	gamesWonLine = new Sprite(300, 75);
-	gamesLostLine = new Sprite(300, 150);
-	flagsCapturedLine = new Sprite(300, 225);
-	capturedFlagsLine = new Sprite(300, 300);
-	timesExtinctLine = new Sprite(300, 375);
-	genocideLine = new Sprite(300, 450);
+	gamesPlayedLine = new Sprite(550, 200);
+	gamesWonLine = new Sprite(550, 250);
+	gamesLostLine = new Sprite(550, 300);
+	flagsCapturedLine = new Sprite(550, 350);
+	capturedFlagsLine = new Sprite(550, 400);
+	timesExtinctLine = new Sprite(550, 450);
+	genocideLine = new Sprite(550, 500);
 }
 
 //*******************************************************************
@@ -165,7 +165,7 @@ bool Statistics::setSprites() const
 	SDL_Color textColor = {0, 0, 0};
 
 	//open font file that will be referenced
-	font = TTF_OpenFont("armalite.ttf", 28);
+	font = TTF_OpenFont("nuschoolmunitions.ttf", 28);
 
 	//error checking
 	if(font == NULL)
