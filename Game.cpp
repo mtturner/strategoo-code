@@ -70,6 +70,18 @@ Game::~Game()
 	//delete game result images
 	delete playerWinsImage;
 	delete computerWinsImage;
+
+	//delete play-by-plays
+	delete playByPlayHeader;
+	delete playByPlayOne;
+	delete playByPlayTwo;
+	delete playByPlayThree;
+	delete playByPlayFour;
+	delete playByPlayFive;
+	delete playByPlaySix;
+	delete playByPlaySeven;
+	delete playByPlayEight;
+	delete playByPlayNine;
 }
 
 //******************************************
@@ -699,6 +711,8 @@ void Game::moveComputerPiece()
 
 		temp = 0;
 	}
+
+	updateComputerPlayByPlay();
 }
 
 //******************************************
@@ -867,6 +881,18 @@ bool Game::initialize()
 	playerWinsImage = new Sprite(260, 50, "playerwins.png");
 	computerWinsImage = new Sprite(260, 50, "computerwins.png");
 
+	//create play by plays
+	playByPlayHeader = new Sprite(0, 0, "playbyplay.png");
+	playByPlayOne = new Sprite(5, 55);
+	playByPlayTwo = new Sprite(5, 80);
+	playByPlayThree = new Sprite(5, 105);
+	playByPlayFour = new Sprite(5, 155);
+	playByPlayFive = new Sprite(5, 180);
+	playByPlaySix = new Sprite(5, 205);
+	playByPlaySeven = new Sprite(5, 255);
+	playByPlayEight = new Sprite(5, 280);
+	playByPlayNine = new Sprite(5, 305);
+
 	if(getScreen() == 0)
 	{
 		return false;
@@ -1021,6 +1047,471 @@ bool Game::checkComputerWins()
 	{
 		return false;
 	}
+}
+
+//******************************************
+void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner)
+{
+	//play-by-play stringstream
+	std::stringstream ss;
+
+	//font for play-by-play
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
+
+	//SDL surface for new playByPlay message
+	SDL_Surface* newMessage = 0;
+
+	//text color
+	SDL_Color textColor = {0, 0, 0};
+
+	//if player moved
+	if(mover == 0)
+	{
+		ss << "Player's ";
+
+		switch(firstRank)
+		{
+		//marshal
+		case 10:
+			ss << "Marshal";
+			break;
+		//general
+		case 9:
+			ss << "General";
+			break;
+		//colonel
+		case 8:
+			ss << "Colonel";
+			break;
+		//major
+		case 7:
+			ss << "Major";
+			break;
+		//captain
+		case 6:
+			ss << "Captain";
+			break;
+		//lieutenant
+		case 5:
+			ss << "Lieutenant";
+			break;
+		//sergeant
+		case 4:
+			ss << "Sergeant";
+			break;
+		//miner
+		case 3:
+			ss << "Miner";
+			break;
+		//scout
+		case 2:
+			ss << "Scout";
+			break;
+		//spy
+		case 1:
+			ss << "Spy";
+			break;
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayOne->setSurface(newMessage);
+
+		ss.str("");
+
+		//if draw
+		if(winner == -1)
+		{
+			ss << "draws with";
+		}
+		//if player won
+		else if(winner == 0)
+		{
+			ss << "defeats";
+		}
+		//if computer won
+		else
+		{
+			ss << "is defeated by";
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayTwo->setSurface(newMessage);
+
+		ss.str("");
+
+		switch(secondRank)
+		{
+		//flag
+		case 12:
+			ss << "Computer's Flag.";
+			break;
+		//bomb
+		case 11:
+			ss << "Computer's Bomb.";
+			break;
+		//marshal
+		case 10:
+			ss << "Computer's Marshal.";
+			break;
+		//general
+		case 9:
+			ss << "Computer's General.";
+			break;
+		//colonel
+		case 8:
+			ss << "Computer's Colonel.";
+			break;
+		//major
+		case 7:
+			ss << "Computer's Major.";
+			break;
+		//captain
+		case 6:
+			ss << "Computer's Captain.";
+			break;
+		//lieutenant
+		case 5:
+			ss << "Computer's Lieutenant.";
+			break;
+		//sergeant
+		case 4:
+			ss << "Computer's Sergeant.";
+			break;
+		//miner
+		case 3:
+			ss << "Computer's Miner.";
+			break;
+		//scout
+		case 2:
+			ss << "Computer's Scout.";
+			break;
+		//spy
+		case 1:
+			ss << "Computer's Spy.";
+			break;
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayThree->setSurface(newMessage);
+	}
+	//if computer moved
+	else
+	{
+		ss << "Computer's ";
+
+		switch(firstRank)
+		{
+		//marshal
+		case 10:
+			ss << "Marshal";
+			break;
+		//general
+		case 9:
+			ss << "General";
+			break;
+		//colonel
+		case 8:
+			ss << "Colonel";
+			break;
+		//major
+		case 7:
+			ss << "Major";
+			break;
+		//captain
+		case 6:
+			ss << "Captain";
+			break;
+		//lieutenant
+		case 5:
+			ss << "Lieutenant";
+			break;
+		//sergeant
+		case 4:
+			ss << "Sergeant";
+			break;
+		//miner
+		case 3:
+			ss << "Miner";
+			break;
+		//scout
+		case 2:
+			ss << "Scout";
+			break;
+		//spy
+		case 1:
+			ss << "Spy";
+			break;
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayOne->setSurface(newMessage);
+
+		ss.str("");
+
+		//if draw
+		if(winner == -1)
+		{
+			ss << "draws with";
+		}
+		//if player won
+		else if(winner == 0)
+		{
+			ss << "defeats";
+		}
+		//if computer won
+		else
+		{
+			ss << "is defeated by";
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayTwo->setSurface(newMessage);
+
+		ss.str("");
+
+		switch(secondRank)
+		{
+		//flag
+		case 12:
+			ss << "Player's Flag.";
+			break;
+		//bomb
+		case 11:
+			ss << "Player's Bomb.";
+			break;
+		//marshal
+		case 10:
+			ss << "Player's Marshal.";
+			break;
+		//general
+		case 9:
+			ss << "Player's General.";
+			break;
+		//colonel
+		case 8:
+			ss << "Player's Colonel.";
+			break;
+		//major
+		case 7:
+			ss << "Player's Major.";
+			break;
+		//captain
+		case 6:
+			ss << "Player's Captain.";
+			break;
+		//lieutenant
+		case 5:
+			ss << "Player's Lieutenant.";
+			break;
+		//sergeant
+		case 4:
+			ss << "Player's Sergeant.";
+			break;
+		//miner
+		case 3:
+			ss << "Player's Miner.";
+			break;
+		//scout
+		case 2:
+			ss << "Player's Scout.";
+			break;
+		//spy
+		case 1:
+			ss << "Player's Spy.";
+			break;
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayThree->setSurface(newMessage);
+	}
+}
+
+//******************************************
+void Game::updatePlayByPlay(int firstRank, int mover)
+{
+	//play-by-play stringstream
+	std::stringstream ss;
+
+	//font for play-by-play
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
+
+	//SDL surface for new playByPlay message
+	SDL_Surface* newMessage = 0;
+
+	//text color
+	SDL_Color textColor = {0, 0, 0};
+
+	if(mover == 0)
+	{
+		ss << "Player moves a ";
+	}
+	else
+	{
+		ss << "Computer moves.";
+	}
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayOne->setSurface(newMessage);
+
+	ss.str("");
+
+	if(mover == 0)
+	{
+		switch(firstRank)
+		{
+		//marshal
+		case 10:
+			ss << "Marshal.";
+			break;
+		//general
+		case 9:
+			ss << "General.";
+			break;
+		//colonel
+		case 8:
+			ss << "Colonel.";
+			break;
+		//major
+		case 7:
+			ss << "Major.";
+			break;
+		//captain
+		case 6:
+			ss << "Captain.";
+			break;
+		//lieutenant
+		case 5:
+			ss << "Lieutenant.";
+			break;
+		//sergeant
+		case 4:
+			ss << "Sergeant.";
+			break;
+		//miner
+		case 3:
+			ss << "Miner.";
+			break;
+		//scout
+		case 2:
+			ss << "Scout.";
+			break;
+		//spy
+		case 1:
+			ss << "Spy.";
+			break;
+		}
+	}
+	else
+	{
+		ss << " ";
+	}
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayTwo->setSurface(newMessage);
+
+	ss.str("");
+
+	ss << " ";
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayThree->setSurface(newMessage);
+}
+
+//******************************************
+void Game::updateComputerPlayByPlay()
+{
+	//play-by-play stringstream
+	std::stringstream ss;
+
+	//font for play-by-play
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
+
+	//SDL surface for new playByPlay message
+	SDL_Surface* newMessage = 0;
+
+	//text color
+	SDL_Color textColor = {0, 0, 0};
+
+	ss << "Computer moves.";
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayOne->setSurface(newMessage);
+
+	ss.str("");
+
+	ss << " ";
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayTwo->setSurface(newMessage);
+
+	ss.str("");
+
+	ss << " ";
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayThree->setSurface(newMessage);
+}
+
+//******************************************
+void Game::shiftPlayByPlayDown()
+{
+	//move block two down to block three
+	playByPlaySeven->setSurfaceNoFree(playByPlayFour->getSurface());
+	playByPlayEight->setSurfaceNoFree(playByPlayFive->getSurface());
+	playByPlayNine->setSurfaceNoFree(playByPlaySix->getSurface());
+
+	//move block one down to block two
+	playByPlayFour->setSurfaceNoFree(playByPlayOne->getSurface());
+	playByPlayFive->setSurfaceNoFree(playByPlayTwo->getSurface());
+	playByPlaySix->setSurfaceNoFree(playByPlayThree->getSurface());
 }
 
 //******************************************
@@ -1468,6 +1959,9 @@ bool Game::doPlayGame()
 						//add emptyspace's where necessary
 						if(winner == 0)
 						{
+							shiftPlayByPlayDown();
+							updatePlayByPlay(selected->getRank(), destination->getRank(), 0, -1);
+							
 							temp = findEmptySpacePiece();
 
 							gBoard->addPiece(temp);
@@ -1506,10 +2000,14 @@ bool Game::doPlayGame()
 						}
 						else if(winner->getRank() == 0)
 						{
-							//dont need to clear any pieces
+							shiftPlayByPlayDown();
+							updatePlayByPlay(selected->getRank(), 0);
 						}
 						else if(winner->getBoardSpace() == destination->getBoardSpace())
 						{
+							shiftPlayByPlayDown();
+							updatePlayByPlay(selected->getRank(), destination->getRank(), 0, 1);
+
 							temp = findEmptySpacePiece();
 
 							gBoard->addPiece(temp);
@@ -1532,6 +2030,9 @@ bool Game::doPlayGame()
 						}
 						else
 						{
+							shiftPlayByPlayDown();
+							updatePlayByPlay(selected->getRank(), destination->getRank(), 0, 0);
+
 							temp = findEmptySpacePiece();
 
 							gBoard->addPiece(temp);
@@ -1610,6 +2111,9 @@ bool Game::doPlayGame()
 			//delay two seconds to simulate computer thinking
 			SDL_Delay(2000);
 
+			//move play-by-play down
+			shiftPlayByPlayDown();
+
 			//move a piece of computer's
 			moveComputerPiece();
 
@@ -1673,6 +2177,18 @@ bool Game::doPlayGame()
 		{
 			gameResult->show(getScreen());
 		}
+
+		//render play-by-play
+		playByPlayHeader->show(getScreen());
+		playByPlayOne->show(getScreen());
+		playByPlayTwo->show(getScreen());
+		playByPlayThree->show(getScreen());
+		playByPlayFour->show(getScreen());
+		playByPlayFive->show(getScreen());
+		playByPlaySix->show(getScreen());
+		playByPlaySeven->show(getScreen());
+		playByPlayEight->show(getScreen());
+		playByPlayNine->show(getScreen());
 
 		//render to the screen
 		//if rendering was unsuccessful

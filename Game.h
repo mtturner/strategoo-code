@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 #include "Player.h"
 #include "Computer.h"
 #include "Board.h"
@@ -58,6 +59,12 @@ public:
 	void setScreen(SDL_Surface* s);
 	bool checkPlayerWins();
 	bool checkComputerWins();
+
+	//play-by-play
+	void updatePlayByPlay(int firstRank, int secondRank, int mover, int winner);
+	void updatePlayByPlay(int firstRank, int mover);
+	void updateComputerPlayByPlay();
+	void shiftPlayByPlayDown();
 
 	//piece functions
 	void namePiece();
@@ -124,6 +131,18 @@ private:
 	//sprites for winner of game
 	Sprite* playerWinsImage;
 	Sprite* computerWinsImage;
+
+	//play-by-play sprites
+	Sprite* playByPlayHeader;
+	Sprite* playByPlayOne;
+	Sprite* playByPlayTwo;
+	Sprite* playByPlayThree;
+	Sprite* playByPlayFour;
+	Sprite* playByPlayFive;
+	Sprite* playByPlaySix;
+	Sprite* playByPlaySeven;
+	Sprite* playByPlayEight;
+	Sprite* playByPlayNine;
 
 	//selector
 	Selector* gSelector;

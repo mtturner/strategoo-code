@@ -27,6 +27,7 @@ public:
 	void setYPos(int yPos);
 	inline SDL_Surface* getSurface() const;
 	void setSurface(SDL_Surface* surface);
+	void setSurfaceNoFree(SDL_Surface* surface);
 
 private:
 	SDL_Surface* image;

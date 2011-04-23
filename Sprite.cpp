@@ -118,3 +118,9 @@ void Sprite::setSurface(SDL_Surface* surface)
 		image = surface;
 	}
 }
+
+//******************************************
+void Sprite::setSurfaceNoFree(SDL_Surface* surface)
+{
+	image = surface;
+}
