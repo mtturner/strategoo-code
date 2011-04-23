@@ -64,6 +64,7 @@ public:
 	void updatePlayByPlay(int firstRank, int secondRank, int mover, int winner);
 	void updatePlayByPlay(int firstRank, int mover);
 	void updateComputerPlayByPlay();
+	void initializePlayByPlay();
 	void shiftPlayByPlayDown();
 
 	//piece functions

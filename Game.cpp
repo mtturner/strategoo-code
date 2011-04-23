@@ -1118,7 +1118,7 @@ void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner
 		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 		//update playByPlay image
-		playByPlayOne->setSurface(newMessage);
+		playByPlayOne->setSurfaceNoFree(newMessage);
 
 		ss.str("");
 
@@ -1143,7 +1143,7 @@ void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner
 		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 		//update playByPlay image
-		playByPlayTwo->setSurface(newMessage);
+		playByPlayTwo->setSurfaceNoFree(newMessage);
 
 		ss.str("");
 
@@ -1204,7 +1204,7 @@ void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner
 		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 		//update playByPlay image
-		playByPlayThree->setSurface(newMessage);
+		playByPlayThree->setSurfaceNoFree(newMessage);
 	}
 	//if computer moved
 	else
@@ -1260,7 +1260,7 @@ void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner
 		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 		//update playByPlay image
-		playByPlayOne->setSurface(newMessage);
+		playByPlayOne->setSurfaceNoFree(newMessage);
 
 		ss.str("");
 
@@ -1285,7 +1285,7 @@ void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner
 		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 		//update playByPlay image
-		playByPlayTwo->setSurface(newMessage);
+		playByPlayTwo->setSurfaceNoFree(newMessage);
 
 		ss.str("");
 
@@ -1346,7 +1346,7 @@ void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner
 		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 		//update playByPlay image
-		playByPlayThree->setSurface(newMessage);
+		playByPlayThree->setSurfaceNoFree(newMessage);
 	}
 }
 
@@ -1379,7 +1379,7 @@ void Game::updatePlayByPlay(int firstRank, int mover)
 	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 	//update playByPlay image
-	playByPlayOne->setSurface(newMessage);
+	playByPlayOne->setSurfaceNoFree(newMessage);
 
 	ss.str("");
 
@@ -1439,7 +1439,7 @@ void Game::updatePlayByPlay(int firstRank, int mover)
 	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 	//update playByPlay image
-	playByPlayTwo->setSurface(newMessage);
+	playByPlayTwo->setSurfaceNoFree(newMessage);
 
 	ss.str("");
 
@@ -1450,7 +1450,7 @@ void Game::updatePlayByPlay(int firstRank, int mover)
 	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 	//update playByPlay image
-	playByPlayThree->setSurface(newMessage);
+	playByPlayThree->setSurfaceNoFree(newMessage);
 }
 
 //******************************************
@@ -1475,7 +1475,7 @@ void Game::updateComputerPlayByPlay()
 	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 	//update playByPlay image
-	playByPlayOne->setSurface(newMessage);
+	playByPlayOne->setSurfaceNoFree(newMessage);
 
 	ss.str("");
 
@@ -1486,7 +1486,7 @@ void Game::updateComputerPlayByPlay()
 	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 	//update playByPlay image
-	playByPlayTwo->setSurface(newMessage);
+	playByPlayTwo->setSurfaceNoFree(newMessage);
 
 	ss.str("");
 
@@ -1497,16 +1497,57 @@ void Game::updateComputerPlayByPlay()
 	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
 
 	//update playByPlay image
-	playByPlayThree->setSurface(newMessage);
+	playByPlayThree->setSurfaceNoFree(newMessage);
+}
+
+//******************************************
+void Game::initializePlayByPlay()
+{
+	//font for play-by-play
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
+
+	//SDL surface for new playByPlay message
+	SDL_Surface* newMessageOne = 0;
+	SDL_Surface* newMessageTwo = 0;
+	SDL_Surface* newMessageThree = 0;
+	SDL_Surface* newMessageFour = 0;
+	SDL_Surface* newMessageFive = 0;
+	SDL_Surface* newMessageSix = 0;
+	SDL_Surface* newMessageSeven = 0;
+	SDL_Surface* newMessageEight = 0;
+	SDL_Surface* newMessageNine = 0;
+
+	//text color
+	SDL_Color textColor = {0, 0, 0};
+
+	newMessageOne = TTF_RenderText_Solid(font, " ", textColor);
+	newMessageTwo = TTF_RenderText_Solid(font, " ", textColor);
+	newMessageThree = TTF_RenderText_Solid(font, " ", textColor);
+	newMessageFour = TTF_RenderText_Solid(font, " ", textColor);
+	newMessageFive = TTF_RenderText_Solid(font, " ", textColor);
+	newMessageSix = TTF_RenderText_Solid(font, " ", textColor);
+	newMessageSeven = TTF_RenderText_Solid(font, " ", textColor);
+	newMessageEight = TTF_RenderText_Solid(font, " ", textColor);
+	newMessageNine = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayOne->setSurface(newMessageOne);
+	playByPlayTwo->setSurface(newMessageTwo);
+	playByPlayThree->setSurface(newMessageThree);
+	playByPlayFour->setSurface(newMessageFour);
+	playByPlayFive->setSurface(newMessageFive);
+	playByPlaySix->setSurface(newMessageSix);
+	playByPlaySeven->setSurface(newMessageSeven);
+	playByPlayEight->setSurface(newMessageEight);
+	playByPlayNine->setSurface(newMessageNine);
 }
 
 //******************************************
 void Game::shiftPlayByPlayDown()
 {
 	//move block two down to block three
-	playByPlaySeven->setSurfaceNoFree(playByPlayFour->getSurface());
-	playByPlayEight->setSurfaceNoFree(playByPlayFive->getSurface());
-	playByPlayNine->setSurfaceNoFree(playByPlaySix->getSurface());
+	playByPlaySeven->setSurface(playByPlayFour->getSurface());
+	playByPlayEight->setSurface(playByPlayFive->getSurface());
+	playByPlayNine->setSurface(playByPlaySix->getSurface());
 
 	//move block one down to block two
 	playByPlayFour->setSurfaceNoFree(playByPlayOne->getSurface());
