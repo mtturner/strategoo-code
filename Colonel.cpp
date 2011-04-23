@@ -30,6 +30,13 @@ Piece* Colonel::move(Piece* destination)
 
 		return destination;
 	}
+	//else if the piece is the flag
+	else if(destination->getRank() == 12)
+	{
+		swapLocation(destination);
+
+		return this;
+	}
 	//else need to battle pieces to the death
 	else
 	{

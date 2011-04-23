@@ -30,6 +30,13 @@ Piece* Spy::move(Piece* destination)
 
 		return destination;
 	}
+	//else if the piece is the flag
+	else if(destination->getRank() == 12)
+	{
+		swapLocation(destination);
+
+		return this;
+	}
 	//else if the piece is a marshal
 	else if(destination->getRank() == 10)
 	{

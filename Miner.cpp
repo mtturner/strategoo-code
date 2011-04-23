@@ -30,6 +30,13 @@ Piece* Miner::move(Piece* destination)
 
 		return destination;
 	}
+	//else if the piece is the flag
+	else if(destination->getRank() == 12)
+	{
+		swapLocation(destination);
+
+		return this;
+	}
 	//else if the piece is a bomb
 	else if(destination->getRank() == 11)
 	{
