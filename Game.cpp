@@ -27,7 +27,6 @@ Game::Game() : screen(0)
 	startMenuBG = new Sprite();
 	setPieceBG = new Sprite();
 	playGameBG = new Sprite();
-	endGameBG = new Sprite();
 	menuBG = new Sprite();
 	statisticsBG = new Sprite();
 }
@@ -41,7 +40,6 @@ Game::~Game()
 	delete startMenuBG;
 	delete setPieceBG;
 	delete playGameBG;
-	delete endGameBG;
 	delete menuBG;
 	delete statisticsBG;
 
@@ -628,6 +626,8 @@ void Game::moveComputerPiece()
 	//if needed and add emptyspace's where necessary
 	if(winner == 0)
 	{
+		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, -1);
+
 		temp = findEmptySpacePiece();
 
 		gBoard->addPiece(temp);
@@ -666,10 +666,12 @@ void Game::moveComputerPiece()
 	}
 	else if(winner->getRank() == 0)
 	{
-		//dont need to clear any pieces
+		updatePlayByPlay(selected->getRank(), 1);
 	}
 	else if(winner->getBoardSpace() == destination->getBoardSpace())
 	{
+		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, 0);
+
 		temp = findEmptySpacePiece();
 
 		gBoard->addPiece(temp);
@@ -692,6 +694,8 @@ void Game::moveComputerPiece()
 	}
 	else
 	{
+		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, 1);
+
 		temp = findEmptySpacePiece();
 
 		gBoard->addPiece(temp);
@@ -712,8 +716,6 @@ void Game::moveComputerPiece()
 
 		temp = 0;
 	}
-
-	updateComputerPlayByPlay();
 }
 
 //******************************************
@@ -832,11 +834,6 @@ bool Game::initialize()
 	}
 
 	if(!playGameBG->load("board.png"))
-	{
-		return false;
-	}
-
-	if(!endGameBG->load("endGame.png"))
 	{
 		return false;
 	}
@@ -1409,7 +1406,7 @@ void Game::updatePlayByPlay(int firstRank, int mover)
 	}
 	else
 	{
-		ss << "Computer moves.";
+		ss << "Computer moves a ";
 	}
 
 	//update play-by-play and clear stringstream
@@ -1421,7 +1418,7 @@ void Game::updatePlayByPlay(int firstRank, int mover)
 
 	ss.str("");
 
-	if(mover == 0)
+	if(mover == 0 || mover == 1)
 	{
 		switch(firstRank)
 		{
@@ -1937,7 +1934,7 @@ bool Game::doPlayGame()
 				{
 					if(gEvent.key.keysym.sym == SDLK_RETURN)
 					{
-						setState(STATE_ENDGAME);
+						setState(STATE_MENU);
 
 						playingGame = false;
 					}
@@ -2190,7 +2187,7 @@ bool Game::doPlayGame()
 				{
 					if(gEvent.key.keysym.sym == SDLK_RETURN)
 					{
-						setState(STATE_ENDGAME);
+						setState(STATE_MENU);
 
 						playingGame = false;
 					}
@@ -2236,42 +2233,6 @@ bool Game::doPlayGame()
 			//return 1, closing the program
 			return false;
 		}
-	}
-
-	return true;
-}
-
-//******************************************
-bool Game::doEndGame()
-{
-	while(SDL_PollEvent(&gEvent))
-	{
-		//if the user has exited the window
-		if(gEvent.type == SDL_QUIT)
-		{
-			//set next state to exit
-			setState(STATE_EXIT);
-		}
-		//else if the user has hit the enter key
-		else if(gEvent.type == SDL_KEYDOWN)
-		{
-			if(gEvent.key.keysym.sym == SDLK_RETURN)
-			{
-				//reset the game
-				setState(STATE_MENU);
-			}
-		}
-	}
-
-	//apply the end game image to the screen
-	endGameBG->show(getScreen());
-
-	//render to the screen
-	//if rendering was unsuccessful
-	if(!render())
-	{
-		//return 1, closing the program
-		return false;
 	}
 
 	return true;

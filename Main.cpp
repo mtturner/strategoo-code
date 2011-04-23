@@ -14,8 +14,8 @@ int main(int argc, char* args[])
 
 	//enumeration of all game states
 	enum GameStates {STATE_INTRO, STATE_LOGIN, STATE_STARTMENU,
-		             STATE_SETPIECE, STATE_PLAYGAME, STATE_ENDGAME,
-					 STATE_MENU, STATE_STATISTICS, STATE_EXIT};
+		             STATE_SETPIECE, STATE_PLAYGAME, STATE_MENU,
+					 STATE_STATISTICS, STATE_EXIT};
 
 	//initialize SDL and load images
 	if(!controller.initialize())
@@ -66,14 +66,6 @@ int main(int argc, char* args[])
 
 		case STATE_PLAYGAME:
 			if(!controller.doPlayGame())
-			{
-				return 1;
-			}
-
-			break;
-
-		case STATE_ENDGAME:
-			if(!controller.doEndGame())
 			{
 				return 1;
 			}

@@ -166,8 +166,8 @@ private:
 
 	//enumeration of all game states
 	enum GameStates {STATE_INTRO, STATE_LOGIN, STATE_STARTMENU,
-		             STATE_SETPIECE, STATE_PLAYGAME, STATE_ENDGAME,
-					 STATE_MENU, STATE_STATISTICS, STATE_EXIT};
+		             STATE_SETPIECE, STATE_PLAYGAME, STATE_MENU,
+					 STATE_STATISTICS, STATE_EXIT};
 };
 
 //******************************************
