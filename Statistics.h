@@ -52,47 +52,47 @@ private:
 //******************************************************************************
 inline void Statistics::setGamesPlayed(const int input)
 {
-	gamesPlayed_ = input;
+	gamesPlayed_ += input;
 }
 
 //******************************************************************************
 inline void Statistics::setGamesWon(const int input)
 {
-	gamesWon_ = input;
+	gamesWon_ += input;
 }
 
 //******************************************************************************
 inline void Statistics::setGamesLost(const int input)
 {
-	gamesLost_ = input;
+	gamesLost_ += input;
 }
 
 //******************************************************************************
 
 inline void Statistics::setFlagsCaptured(const int input)
 {
-	flagsCaptured_ = input;
+	flagsCaptured_ += input;
 }
 
 //******************************************************************************
 
 inline void Statistics::setCapturedFlags(const int input)
 {
-	capturedFlags_ = input;
+	capturedFlags_ += input;
 }
 
 //******************************************************************************
 
 inline void Statistics::setTimesExtinct(const int input)
 {
-	timesExtinct_ = input;
+	timesExtinct_ += input;
 }
 
 //******************************************************************************
 
 inline void Statistics::setGenocide(const int input)
 {
-	genocide_ = input;
+	genocide_ += input;
 }
 
 #endif
