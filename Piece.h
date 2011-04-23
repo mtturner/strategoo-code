@@ -7,12 +7,13 @@
 #ifndef PIECE_H
 #define PIECE_H
 
+#include <string>
 #include "Sprite.h"
 
 class Piece
 {
 public:
-	Piece(int x = 0, int y = 0, int owner = 0);
+	Piece(int x = 0, int y = 0, int owner = 0, const std::string& name = "john doe");
 	Piece(int x, int y, std::string filename, int owner);
     virtual ~Piece();
 
@@ -34,6 +35,8 @@ public:
 	void setIsSelected(const bool selected);
 	inline int getOwner() const;
 	void setOwner(const int owner);
+	inline std::string getName() const;
+	void setName(const std::string& name);
 
 	//piece maintenance
 	void namePiece();
@@ -52,6 +55,8 @@ private:
 		rank_,
 		owner_; //0 for player, 1 for computer, -1 for emptyspace
 	bool isSelected;
+
+	std::string name_;
 };
 
 //*********************************
@@ -88,6 +93,12 @@ inline bool Piece::getIsSelected() const
 inline int Piece::getOwner() const
 {
 	return owner_;
+}
+
+//*********************************
+inline std::string Piece::getName() const
+{
+    return name_;
 }
 
 //*********************************

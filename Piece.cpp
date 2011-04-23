@@ -1,18 +1,19 @@
 /******************************************************
 	Piece.cpp
 
-	This is the implementation file for the Piece 
+	This is the implementation file for the Piece
 	class.
 ******************************************************/
 
 #include "Piece.h"
 
-Piece::Piece(int x, int y, int owner)
+Piece::Piece(int x, int y, int owner, const std::string& name)
 {
 	pieceImage = new Sprite(x, y);
 
 	setOwner(owner);
 	setIsSelected(false);
+	setName(name);
 }
 
 //*********************************
@@ -70,7 +71,7 @@ void Piece::handleInput(SDL_Event& gEvent)
 	}
 }
 
-//*********************************       
+//*********************************
 void Piece::show(SDL_Surface* destination) const
 {
 	pieceImage->show(destination);
@@ -106,6 +107,11 @@ void Piece::setOwner(const int owner)
 	{
 		owner_ = owner;
 	}
+}
+
+void Piece::setName(const std::string& name)
+{
+    name_ = name;
 }
 
 //*********************************
