@@ -7,13 +7,13 @@
 
 #include "Piece.h"
 
-Piece::Piece(int x, int y, int owner, const std::string& name)
+Piece::Piece(int x, int y, int owner)
 {
 	pieceImage = new Sprite(x, y);
 
 	setOwner(owner);
 	setIsSelected(false);
-	setName(name);
+	name_ = 'l';
 }
 
 //*********************************

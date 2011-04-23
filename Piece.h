@@ -13,7 +13,7 @@
 class Piece
 {
 public:
-	Piece(int x = 0, int y = 0, int owner = 0, const std::string& name = "john doe");
+	Piece(int x = 0, int y = 0, int owner = 0);
 	Piece(int x, int y, std::string filename, int owner);
     virtual ~Piece();
 
