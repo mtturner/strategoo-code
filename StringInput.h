@@ -24,16 +24,18 @@ public:
 	void setInput(std::string newInput);
 	inline SDL_Surface* getMessageSurface() const;
 	void setMessageSurface(SDL_Surface* surface);
+	void setMessageSurface(const std::string& message);
 	inline TTF_Font* getFont() const;
 	void setFont(TTF_Font* newFont);
 	inline SDL_Color* getFontColor() const;
 	void setFontColor(SDL_Color* color);
-	
+
 	void handleInput(SDL_Event& gEvent);
 
     //Shows the message on screen
     void show(SDL_Surface* screen);
-    
+    void show(SDL_Surface* screen, int xPos, int yPos);
+
 
 private:
 	//The storage string

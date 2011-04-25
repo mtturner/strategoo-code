@@ -13,7 +13,7 @@ Piece::Piece(int x, int y, int owner)
 
 	setOwner(owner);
 	setIsSelected(false);
-	name_ = 'l';
+	name_ = "john doe";
 }
 
 //*********************************

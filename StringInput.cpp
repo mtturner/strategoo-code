@@ -1,7 +1,7 @@
 /******************************************************
 	StringInput.cpp
 
-	This is the implementation file for the 
+	This is the implementation file for the
 	StringInput class.
 ******************************************************/
 
@@ -59,6 +59,21 @@ void StringInput::setMessageSurface(SDL_Surface* surface)
 }
 
 //****************************************
+void StringInput::setMessageSurface(const std::string& message)
+{
+    setInput(message);
+
+    //temporary surface for new input surface
+    SDL_Surface* newInput;
+
+    //render a new text surface
+    newInput = TTF_RenderText_Solid(getFont(), getInput().c_str(), *(getFontColor()));
+
+    setMessageSurface(newInput);
+
+}
+
+//****************************************
 void StringInput::setFont(TTF_Font* newFont)
 {
 	TTF_CloseFont(font);
@@ -87,21 +102,21 @@ void StringInput::handleInput(SDL_Event& gEvent)
         if(temp.length() <= 16)
         {
             //if the key is a number
-            if((gEvent.key.keysym.unicode >= static_cast<Uint16>('0')) && 
+            if((gEvent.key.keysym.unicode >= static_cast<Uint16>('0')) &&
 					(gEvent.key.keysym.unicode <= static_cast<Uint16>('9')))
             {
                 //append the character
                 temp += static_cast<char>(gEvent.key.keysym.unicode);
             }
             //if the key is an uppercase letter
-            else if((gEvent.key.keysym.unicode >= static_cast<Uint16>('A')) && 
+            else if((gEvent.key.keysym.unicode >= static_cast<Uint16>('A')) &&
 				    (gEvent.key.keysym.unicode <= static_cast<Uint16>('Z')))
             {
                 //append the character
                 temp += static_cast<char>(gEvent.key.keysym.unicode);
             }
             //if the key is a lowercase letter
-            else if((gEvent.key.keysym.unicode >= static_cast<Uint16>('a')) && 
+            else if((gEvent.key.keysym.unicode >= static_cast<Uint16>('a')) &&
 				    (gEvent.key.keysym.unicode <= static_cast<Uint16>('z')))
             {
                 //append the character
@@ -146,6 +161,24 @@ void StringInput::show(SDL_Surface* screen)
         //get offsets
         offset.x = (800 - getMessageSurface()->w) / 2;
         offset.y = (600 - getMessageSurface()->h) / 2;
+
+        //blit
+        SDL_BlitSurface(getMessageSurface(), 0, screen, &offset);
+    }
+}
+
+//****************************************
+void StringInput::show(SDL_Surface* screen, int xPos, int yPos)
+{
+   //if the surface isn't blank
+    if(getMessageSurface() != 0)
+    {
+        //holds offsets
+        SDL_Rect offset;
+
+        //get offsets
+        offset.x = xPos;
+        offset.y = yPos;
 
         //blit
         SDL_BlitSurface(getMessageSurface(), 0, screen, &offset);
