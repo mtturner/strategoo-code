@@ -82,6 +82,13 @@ void StringInput::setFont(TTF_Font* newFont)
 }
 
 //****************************************
+void StringInput::setFont(const std::string& fontName, int fontSize)
+{
+    TTF_Font* temp = TTF_OpenFont(fontName.c_str(), fontSize);
+    setFont(temp);
+}
+
+//****************************************
 void StringInput::setFontColor(SDL_Color* color)
 {
 	delete textColor;

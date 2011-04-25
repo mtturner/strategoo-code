@@ -1729,8 +1729,6 @@ bool Game::doSetPiece()
 	Piece* clickedPiece = 0;
 	Piece* unplacedPiece = 0;
 
-	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 58);
-
 	//button rank
 	int buttonRank = -1;
 
@@ -1739,7 +1737,7 @@ bool Game::doSetPiece()
 		 finished = false,
 		 namingPiece = false;
 
-    name->setFont(font);
+    name->setFont("Therfont.ttf", 58);
     name->setMessageSurface("Default");
 
 	while(isSettingPiece)
@@ -1943,7 +1941,7 @@ bool Game::doPlayGame()
 	//win or loss sprite
 	Sprite* gameResult = 0;
 
-	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
+    //class to display the piece name
     StringInput pieceName;
 
 	//loop and overlay booleans
@@ -1958,7 +1956,7 @@ bool Game::doPlayGame()
 	//game winner, 0 - player, 1 - computer
 	int winningTeam = -1;
 
-	pieceName.setFont(font);
+	pieceName.setFont("Therfont.ttf", 18);
 
 	while(playingGame)
 	{

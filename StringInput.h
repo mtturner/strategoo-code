@@ -27,6 +27,7 @@ public:
 	void setMessageSurface(const std::string& message);
 	inline TTF_Font* getFont() const;
 	void setFont(TTF_Font* newFont);
+	void setFont(const std::string& fontName, int fontSize);
 	inline SDL_Color* getFontColor() const;
 	void setFontColor(SDL_Color* color);
 
