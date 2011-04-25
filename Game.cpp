@@ -1,7 +1,7 @@
 /******************************************************
 	Game.cpp
 
-	This is the implementation file for the Game 
+	This is the implementation file for the Game
 	class.
 ******************************************************/
 
@@ -57,13 +57,15 @@ Game::~Game()
 	{
 		delete buttons[i];
 	}
-	
+
 	//delete overlays
 	delete pieceOverlay;
 	delete buttonOverlay;
 
 	//delete set piece finish
 	delete finishedSetPiece;
+
+	delete namePieceBG;
 
 	//delete game result images
 	delete playerWinsImage;
@@ -874,6 +876,7 @@ bool Game::initialize()
 
 	//create set piece finish image
 	finishedSetPiece = new Sprite(260, 50, "gamestart.png");
+	namePieceBG = new Sprite(260, 50, "namingpiece.png");
 
 	//create game result images
 	playerWinsImage = new Sprite(260, 50, "playerwins.png");
@@ -926,7 +929,7 @@ bool Game::render() const
 	{
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -1642,10 +1645,10 @@ bool Game::login()
 			return false;
 		}
 	}
-	
+
 	//getting current user's name
 	inputtedName = name->getInput();
-	
+
 	//create new player with name that was input
 	gPlayer = new Player(inputtedName);
 
@@ -1665,7 +1668,7 @@ bool Game::doStartMenu()
 			//set next state to exit
 			setState(STATE_EXIT);
 		}
-				
+
 		//handle start menu selector input
 		gSelector->handleInput(gEvent);
 
@@ -1726,12 +1729,18 @@ bool Game::doSetPiece()
 	Piece* clickedPiece = 0;
 	Piece* unplacedPiece = 0;
 
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 58);
+
 	//button rank
 	int buttonRank = -1;
 
 	//setPiece loop boolean and finished boolean
 	bool isSettingPiece = true,
-		 finished = false;
+		 finished = false,
+		 namingPiece = false;
+
+    name->setFont(font);
+    name->setMessageSurface("DEFAULT");
 
 	while(isSettingPiece)
 	{
@@ -1754,8 +1763,12 @@ bool Game::doSetPiece()
 
 					isSettingPiece = false;
 				}
+				else if(gEvent.key.keysym.sym == SDLK_RCTRL || gEvent.key.keysym.sym == SDLK_LCTRL)
+				{
+					namingPiece = false;
+				}
 			}
-	
+
 			//handle piece button input
 			for(int i = 0; i < 12; i++)
 			{
@@ -1764,6 +1777,13 @@ bool Game::doSetPiece()
 
 			//handle board piece input
 			gBoard->handlePieceInput(gEvent);
+
+			//if the player is naming a piece
+			if(namingPiece)
+			{
+                //handle string input for naming of pieces
+                name->handleInput(gEvent);
+			}
 		}
 
 		//check to see if a button was selected
@@ -1797,19 +1817,22 @@ bool Game::doSetPiece()
 		if(clickedPiece != 0 && (clickedPiece->getBoardSpace() > 59) &&
 		   (clickedPiece->getRank() == 0) && (currentButton != 0) &&
 		   currentButton->getIsAvailable())
-		{	
+		{
 			//set currently selected piece
 			currentPiece = clickedPiece;
 
 			//set isPieceSelected to true
 			setIsPieceSelected(true);
 
+			//set namingPiece to true
+			namingPiece = true;
+
 			//reset clickedPiece
 			clickedPiece = 0;
 		}
 
 		//check to see if a piece was set
-		if(isPieceSelected && isButtonSelected)
+		if(isPieceSelected && isButtonSelected && !namingPiece)
 		{
 			//find an unplaced piece of the correct type
 			unplacedPiece = gPlayer->findUnplacedPiece(buttonRank);
@@ -1817,6 +1840,12 @@ bool Game::doSetPiece()
 			//if there's a piece to set
 			if(unplacedPiece != 0)
 			{
+			    //name the piece
+			    unplacedPiece->setName(name->getInput());
+
+                //reset the StringInput string
+			    name->setMessageSurface("DEFAULT");
+
 				//swap boardspace and rendering coordinates with emptyspace
 				swapLocation(currentPiece, unplacedPiece);
 
@@ -1880,6 +1909,13 @@ bool Game::doSetPiece()
 			finishedSetPiece->show(getScreen());
 		}
 
+		//render namingPieceBG and piece name if needed
+		if(namingPiece)
+		{
+		    namePieceBG->show(getScreen());
+		    name->show(getScreen(), 370, 135);
+		}
+
 		//render to the screen
 		//if rendering was unsuccessful
 		if(!render())
@@ -1904,15 +1940,22 @@ bool Game::doPlayGame()
 	//win or loss sprite
 	Sprite* gameResult = 0;
 
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 12);
+    StringInput pieceName;
+
 	//loop and overlay booleans
 	bool playingGame = true,
 		 showOverlay = false;
 
 	//turn, 0 - player, 1 - computer
-	int turn = 0;
+	int turn = 0,
+	x,
+	y;
 
 	//game winner, 0 - player, 1 - computer
 	int winningTeam = -1;
+
+	pieceName.setFont(font);
 
 	while(playingGame)
 	{
@@ -1964,6 +2007,10 @@ bool Game::doPlayGame()
 						//move overlay to this piece
 						pieceOverlay->setXPos(selected->getXPos());
 						pieceOverlay->setYPos(selected->getYPos());
+						x = selected->getXPos() + 2;
+						y = selected->getYPos();
+
+						pieceName.setMessageSurface(selected->getName());
 					}
 					else
 					{
@@ -1979,9 +2026,10 @@ bool Game::doPlayGame()
 
 				//if a piece was found and it isn't the same piece
 				//as the first selected piece and the owners are not identical
-				if(destination != 0 && destination->getBoardSpace() !=
+				if((destination != 0 && destination->getBoardSpace() !=
 				  selected->getBoardSpace() && destination->getOwner() !=
-				  selected->getOwner())
+				  selected->getOwner()) || (destination != 0 && destination->getBoardSpace() !=
+				  selected->getBoardSpace() && destination->getRank() == 0))
 				{
 					//if the move is valid
 					if(isValidMove(selected, destination))
@@ -1996,7 +2044,7 @@ bool Game::doPlayGame()
 						{
 							shiftPlayByPlayDown();
 							updatePlayByPlay(selected->getRank(), destination->getRank(), 0, -1);
-							
+
 							temp = findEmptySpacePiece();
 
 							gBoard->addPiece(temp);
@@ -2130,6 +2178,10 @@ bool Game::doPlayGame()
 
 						pieceOverlay->setXPos(selected->getXPos());
 						pieceOverlay->setYPos(selected->getYPos());
+						x = selected->getXPos() + 2;
+						y = selected->getYPos();
+
+						pieceName.setMessageSurface(selected->getName());
 					}
 					else
 					{
@@ -2205,6 +2257,7 @@ bool Game::doPlayGame()
 		if(showOverlay)
 		{
 			pieceOverlay->show(getScreen());
+			pieceName.show(getScreen(), x, y);
 		}
 
 		//show game result sprite if needed
@@ -2249,7 +2302,7 @@ bool Game::doInGameMenu()
 			//set next state to exit
 			setState(STATE_EXIT);
 		}
-				
+
 		//handle start menu selector input
 		gSelector->handleInput(gEvent);
 

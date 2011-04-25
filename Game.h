@@ -127,6 +127,8 @@ private:
 
 	//sprite for set piece finish
 	Sprite* finishedSetPiece;
+	//sprite for naming pieces
+	Sprite* namePieceBG;
 
 	//sprites for winner of game
 	Sprite* playerWinsImage;
@@ -153,7 +155,7 @@ private:
 
 	//string input class for login
 	StringInput* name;
-	
+
 	//current game state
 	int gameState_;
 
