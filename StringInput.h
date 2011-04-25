@@ -30,7 +30,7 @@ public:
 	inline SDL_Color* getFontColor() const;
 	void setFontColor(SDL_Color* color);
 
-	void handleInput(SDL_Event& gEvent);
+	void handleInput(SDL_Event& gEvent, unsigned int maxLength = 16);
 
     //Shows the message on screen
     void show(SDL_Surface* screen);

@@ -1740,7 +1740,7 @@ bool Game::doSetPiece()
 		 namingPiece = false;
 
     name->setFont(font);
-    name->setMessageSurface("DEFAULT");
+    name->setMessageSurface("Default");
 
 	while(isSettingPiece)
 	{
@@ -1759,9 +1759,12 @@ bool Game::doSetPiece()
 			{
 				if(gEvent.key.keysym.sym == SDLK_RETURN)
 				{
-					setState(STATE_PLAYGAME);
+				    if(finished)
+				    {
+                        setState(STATE_PLAYGAME);
 
-					isSettingPiece = false;
+                        isSettingPiece = false;
+				    }
 				}
 				else if(gEvent.key.keysym.sym == SDLK_RCTRL || gEvent.key.keysym.sym == SDLK_LCTRL)
 				{
@@ -1782,7 +1785,7 @@ bool Game::doSetPiece()
 			if(namingPiece)
 			{
                 //handle string input for naming of pieces
-                name->handleInput(gEvent);
+                name->handleInput(gEvent, 6);
 			}
 		}
 
@@ -1844,7 +1847,7 @@ bool Game::doSetPiece()
 			    unplacedPiece->setName(name->getInput());
 
                 //reset the StringInput string
-			    name->setMessageSurface("DEFAULT");
+			    name->setMessageSurface("Default");
 
 				//swap boardspace and rendering coordinates with emptyspace
 				swapLocation(currentPiece, unplacedPiece);
@@ -1913,7 +1916,7 @@ bool Game::doSetPiece()
 		if(namingPiece)
 		{
 		    namePieceBG->show(getScreen());
-		    name->show(getScreen(), 370, 135);
+		    name->show(getScreen(), 415, 135);
 		}
 
 		//render to the screen
@@ -1940,7 +1943,7 @@ bool Game::doPlayGame()
 	//win or loss sprite
 	Sprite* gameResult = 0;
 
-	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 12);
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
     StringInput pieceName;
 
 	//loop and overlay booleans
@@ -2008,7 +2011,7 @@ bool Game::doPlayGame()
 						pieceOverlay->setXPos(selected->getXPos());
 						pieceOverlay->setYPos(selected->getYPos());
 						x = selected->getXPos() + 2;
-						y = selected->getYPos();
+						y = selected->getYPos() + 1;
 
 						pieceName.setMessageSurface(selected->getName());
 					}
@@ -2179,7 +2182,7 @@ bool Game::doPlayGame()
 						pieceOverlay->setXPos(selected->getXPos());
 						pieceOverlay->setYPos(selected->getYPos());
 						x = selected->getXPos() + 2;
-						y = selected->getYPos();
+						y = selected->getYPos() + 1;
 
 						pieceName.setMessageSurface(selected->getName());
 					}

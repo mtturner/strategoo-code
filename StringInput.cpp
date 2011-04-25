@@ -90,7 +90,7 @@ void StringInput::setFontColor(SDL_Color* color)
 }
 
 //****************************************
-void StringInput::handleInput(SDL_Event& gEvent)
+void StringInput::handleInput(SDL_Event& gEvent, unsigned int maxLength)
 {
     //if a key was pressed
     if(gEvent.type == SDL_KEYDOWN)
@@ -99,7 +99,7 @@ void StringInput::handleInput(SDL_Event& gEvent)
         std::string temp = getInput();
 
         //if the string less than maximum size
-        if(temp.length() <= 16)
+        if(temp.length() <= maxLength)
         {
             //if the key is a number
             if((gEvent.key.keysym.unicode >= static_cast<Uint16>('0')) &&
