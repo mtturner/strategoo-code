@@ -5,6 +5,7 @@
 	class.
 ******************************************************/
 
+#include <fstream>
 #include "Game.h"
 
 Game::Game() : screen(0)
@@ -1835,8 +1836,18 @@ bool Game::doSetPiece()
 		 finished = false,
 		 namingPiece = false;
 
+    std::ifstream infile;
+    char temp[7];
+    std::string* temp2;
+
+    infile.open("names.txt");
+
+    infile.getline(temp, 8);
+    temp2 = new std::string(temp, 7);
+
     name->setFont("Therfont.ttf", 58);
-    name->setMessageSurface("Default");
+    name->setMessageSurface(*temp2);
+    delete temp2;
 
 	while(isSettingPiece)
 	{
@@ -1942,8 +1953,12 @@ bool Game::doSetPiece()
 			    //name the piece
 			    unplacedPiece->setName(name->getInput());
 
+                infile.getline(temp, 8);
+                temp2 = new std::string(temp, 7);
+
                 //reset the StringInput string
-			    name->setMessageSurface("Default");
+			    name->setMessageSurface(*temp2);
+			    delete temp2;
 
 				//swap boardspace and rendering coordinates with emptyspace
 				swapLocation(currentPiece, unplacedPiece);
@@ -2502,7 +2517,7 @@ bool Game::doStatistics()
 						//set state to start menu
 						setState(STATE_STARTMENU);
 					}
-					else if(getPreviousState() == STATE_MENU || 
+					else if(getPreviousState() == STATE_MENU ||
 						    getPreviousState() == STATE_PLAYGAME)
 					{
 						setState(STATE_MENU);
