@@ -1837,17 +1837,14 @@ bool Game::doSetPiece()
 		 namingPiece = false;
 
     std::ifstream infile;
-    char temp[7];
-    std::string* temp2;
+    std::string temp;
 
     infile.open("names.txt");
 
-    infile.getline(temp, 8);
-    temp2 = new std::string(temp, 7);
+    getline(infile, temp);
 
     name->setFont("Therfont.ttf", 58);
-    name->setMessageSurface(*temp2);
-    delete temp2;
+    name->setMessageSurface(temp);
 
 	while(isSettingPiece)
 	{
@@ -1953,12 +1950,10 @@ bool Game::doSetPiece()
 			    //name the piece
 			    unplacedPiece->setName(name->getInput());
 
-                infile.getline(temp, 8);
-                temp2 = new std::string(temp, 7);
+                getline(infile, temp);
 
                 //reset the StringInput string
-			    name->setMessageSurface(*temp2);
-			    delete temp2;
+			    name->setMessageSurface(temp);
 
 				//swap boardspace and rendering coordinates with emptyspace
 				swapLocation(currentPiece, unplacedPiece);
