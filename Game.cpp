@@ -2039,14 +2039,14 @@ bool Game::doPlayGame()
 	//win or loss sprite
 	Sprite* gameResult = 0;
 
-    //class to display the piece name
+    //object to display the piece name
     StringInput pieceName;
 
 	//loop and overlay booleans
 	bool playingGame = true,
 		 showOverlay = false;
 
-	//x, y
+	//coordinates for displaying piece name
 	int x,
 	    y;
 
