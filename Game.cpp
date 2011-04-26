@@ -15,7 +15,11 @@ Game::Game() : screen(0)
 	gBoard = 0;
 
 	//set initial game state
-	setState(0);
+	setState(STATE_INTRO);
+	setPreviousState(STATE_INTRO);
+
+	//set turn
+	setTurn(0);
 
 	//set booleans to false
 	setIsPieceSelected(false);
@@ -416,6 +420,28 @@ std::string Game::promptName()
 //******************************************
 void Game::resetGame()
 {
+	//delete all pieces in game's collection
+	for(int i = 0; i < 92; i++)
+	{
+		delete pieces[i];
+	}
+
+	//clear game's collection of pieces
+	pieces.clear();
+
+	//clear board's, player's, and computer's collections of pieces
+	gBoard->clearPieces();
+	gPlayer->clearPieces();
+	gComputer->clearPieces();
+
+	//reset piece buttons
+	for(int i = 0; i < 12; i++)
+	{
+		buttons[i]->setIsAvailable(true);
+	}
+
+	//reset play-by-play
+	resetPlayByPlay();
 }
 
 //******************************************
@@ -915,10 +941,29 @@ void Game::cleanUp()
 //******************************************
 void Game::setState(int gameState)
 {
-	//state must be a number from 0 to 8
-	if(gameState > -1 && gameState < 9)
+	//state must be a number from 0 to 7
+	if(gameState > -1 && gameState < 8)
 	{
 		gameState_ = gameState;
+	}
+}
+
+//******************************************
+void Game::setPreviousState(int gameState)
+{
+	//state must be a number from 0 to 7
+	if(gameState > -1 && gameState < 8)
+	{
+		previousState_ = gameState;
+	}
+}
+
+//******************************************
+void Game::setTurn(const int turn)
+{
+	if(turn == 0 || turn == 1)
+	{
+		turn_ = turn;
 	}
 }
 
@@ -1553,6 +1598,58 @@ void Game::shiftPlayByPlayDown()
 }
 
 //******************************************
+void Game::resetPlayByPlay()
+{
+	//play-by-play stringstream
+	std::stringstream ss;
+
+	//font for play-by-play
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
+
+	//SDL surface for new playByPlay message
+	SDL_Surface* newMessage = 0;
+
+	//text color
+	SDL_Color textColor = {0, 0, 0};
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayOne->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayTwo->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayThree->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayFour->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayFive->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlaySix->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlaySeven->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayEight->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayNine->setSurface(newMessage);
+}
+
+//******************************************
 void Game::setIsPieceSelected(const bool selected)
 {
 	isPieceSelected = selected;
@@ -1686,6 +1783,7 @@ bool Game::doStartMenu()
 				else if(gSelector->getChoice() == 1)
 				{
 					setState(STATE_STATISTICS);
+					setPreviousState(STATE_STARTMENU);
 
 					gSelector->reset();
 				}
@@ -1948,10 +2046,9 @@ bool Game::doPlayGame()
 	bool playingGame = true,
 		 showOverlay = false;
 
-	//turn, 0 - player, 1 - computer
-	int turn = 0,
-	x,
-	y;
+	//x, y
+	int x,
+	    y;
 
 	//game winner, 0 - player, 1 - computer
 	int winningTeam = -1;
@@ -1961,7 +2058,7 @@ bool Game::doPlayGame()
 	while(playingGame)
 	{
 		//if it's player's turn and the game hasn't been won
-		if(turn == 0 && winningTeam == -1)
+		if(getTurn() == 0 && winningTeam == -1)
 		{
 			while(SDL_PollEvent(&gEvent))
 			{
@@ -1976,9 +2073,10 @@ bool Game::doPlayGame()
 				//else if the user has hit the enter key
 				else if(gEvent.type == SDL_KEYDOWN)
 				{
-					if(gEvent.key.keysym.sym == SDLK_RETURN)
+					if(gEvent.key.keysym.sym == SDLK_m)
 					{
 						setState(STATE_MENU);
+						setPreviousState(STATE_MENU);
 
 						playingGame = false;
 					}
@@ -2147,11 +2245,19 @@ bool Game::doPlayGame()
 							//set game result sprite to player wins
 							gameResult = playerWinsImage;
 						}
+						else if(checkComputerWins())
+						{
+							//set winner to computer
+							winningTeam = 1;
+
+							//set game result sprite to computer wins
+							gameResult = computerWinsImage;
+						}
 
 						//if the game has not been won, set turn to computer's
 						if(winningTeam == -1)
 						{
-							turn = 1;
+							setTurn(1);
 						}
 
 						//reset pieces
@@ -2193,7 +2299,7 @@ bool Game::doPlayGame()
 			}
 		}
 		//else if it's computer's turn and the game hasn't been won
-		else if(turn == 1 && winningTeam == -1)
+		else if(getTurn() == 1 && winningTeam == -1)
 		{
 			//do computer's turn
 			//delay two seconds to simulate computer thinking
@@ -2205,20 +2311,28 @@ bool Game::doPlayGame()
 			//move a piece of computer's
 			moveComputerPiece();
 
-			//check to see if the game has been won by computer
-			if(checkComputerWins())
-			{
-				//set winner to computer
-				winningTeam = 1;
+			//check to see if the game has been won by player
+						if(checkPlayerWins())
+						{
+							//set winner to player
+							winningTeam = 0;
 
-				//set game result sprite to computer wins
-				gameResult = computerWinsImage;
-			}
+							//set game result sprite to player wins
+							gameResult = playerWinsImage;
+						}
+						else if(checkComputerWins())
+						{
+							//set winner to computer
+							winningTeam = 1;
+
+							//set game result sprite to computer wins
+							gameResult = computerWinsImage;
+						}
 
 			//set turn to player's
 			if(winningTeam == -1)
 			{
-				turn = 0;
+				setTurn(0);
 			}
 		}
 
@@ -2241,6 +2355,7 @@ bool Game::doPlayGame()
 					if(gEvent.key.keysym.sym == SDLK_RETURN)
 					{
 						setState(STATE_MENU);
+						setPreviousState(STATE_PLAYGAME);
 
 						playingGame = false;
 					}
@@ -2323,6 +2438,18 @@ bool Game::doInGameMenu()
 					setState(STATE_STARTMENU);
 
 					gSelector->reset();
+
+					//reset game
+					resetGame();
+				}
+			}
+			else if(gEvent.key.keysym.sym == SDLK_m)
+			{
+				if(getPreviousState() == STATE_MENU)
+				{
+					setState(STATE_PLAYGAME);
+
+					gSelector->reset();
 				}
 			}
 		}
@@ -2370,8 +2497,16 @@ bool Game::doStatistics()
 			{
 				if(gEvent.key.keysym.sym == SDLK_RETURN)
 				{
-					//set state to start menu
-					setState(STATE_INTRO);
+					if(getPreviousState() == STATE_STARTMENU)
+					{
+						//set state to start menu
+						setState(STATE_STARTMENU);
+					}
+					else if(getPreviousState() == STATE_MENU || 
+						    getPreviousState() == STATE_PLAYGAME)
+					{
+						setState(STATE_MENU);
+					}
 				}
 
 				showingStatistics = false;

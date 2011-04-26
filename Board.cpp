@@ -44,7 +44,7 @@ void Board::clearPiece(const int boardSpace)
 //*******************************************************************
 void Board::clearPieces()
 {
-	//clear pieces
+	pieces.clear();
 }
 
 //*******************************************************************

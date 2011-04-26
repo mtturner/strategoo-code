@@ -55,6 +55,7 @@ void Computer::clearPiece(const int boardSpace)
 //*********************************
 void Computer::clearPieces()
 {
+	pieces.clear();
 }
 
 //*********************************

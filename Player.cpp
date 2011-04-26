@@ -69,7 +69,7 @@ void Player::clearPiece(const int boardSpace)
 //*******************************************************************
 void Player::clearPieces()
 {
-	//clear players pieces
+	pieces.clear();
 }
 
 //*******************************************************************

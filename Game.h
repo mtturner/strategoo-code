@@ -54,7 +54,6 @@ public:
 	void displayResults() const;
 	bool initialize();
 	void cleanUp();
-	void setState(int gameState);
 	bool render() const;
 	void setScreen(SDL_Surface* s);
 	bool checkPlayerWins();
@@ -65,6 +64,7 @@ public:
 	void updatePlayByPlay(int firstRank, int mover);
 	void updateComputerPlayByPlay();
 	void shiftPlayByPlayDown();
+	void resetPlayByPlay();
 
 	//piece functions
 	void namePiece();
@@ -83,6 +83,11 @@ public:
 
 	//getters and setters
 	inline int getState() const;
+	void setState(int gameState);
+	inline int getPreviousState() const;
+	void setPreviousState(int gameState);
+	inline int getTurn() const;
+	void setTurn(const int turn);
 	inline SDL_Surface* getScreen() const;
 	inline bool getIsPieceSelected() const;
 	void setIsPieceSelected(const bool selected);
@@ -156,8 +161,12 @@ private:
 	//string input class for login
 	StringInput* name;
 
-	//current game state
-	int gameState_;
+	//current and previous game states
+	int gameState_,
+		previousState_;
+
+	//turn
+	int turn_;
 
 	//piece buttons for set piece
 	PieceButton* buttons[12];
@@ -176,6 +185,18 @@ private:
 inline int Game::getState() const
 {
 	return gameState_;
+}
+
+//******************************************
+inline int Game::getPreviousState() const
+{
+	return previousState_;
+}
+
+//******************************************
+inline int Game::getTurn() const
+{
+	return turn_;
 }
 
 //******************************************
