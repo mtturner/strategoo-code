@@ -1,7 +1,7 @@
 /******************************************************
 	Sprite.cpp
 
-	This is the implementation file for the Sprite 
+	This is the implementation file for the Sprite
 	class.
 ******************************************************/
 
@@ -35,7 +35,7 @@ Sprite::Sprite(int x, int y, std::string filename, int alpha) : image(0)
 {
 	setXPos(x);
 	setYPos(y);
-	
+
 	load(filename.c_str());
 
 	SDL_SetAlpha(getSurface(), SDL_SRCALPHA, alpha);
@@ -67,6 +67,35 @@ bool Sprite::load(std::string filename)
 		if(image != 0)
 		{
 			Uint32 colorkey = SDL_MapRGB(image->format, 255, 0, 255);
+
+			SDL_SetColorKey(image, SDL_SRCCOLORKEY, colorkey);
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool Sprite::load(std::string filename, int r, int g, int b)
+{
+    	//temporary SDL surfaces
+	SDL_Surface* loaded = 0;
+
+	//delete old image
+	delete image;
+
+	loaded = IMG_Load(filename.c_str());
+
+	if(loaded)
+	{
+		image = SDL_DisplayFormat(loaded);
+
+		SDL_FreeSurface(loaded);
+
+		if(image != 0)
+		{
+			Uint32 colorkey = SDL_MapRGB(image->format, r, g, b);
 
 			SDL_SetColorKey(image, SDL_SRCCOLORKEY, colorkey);
 

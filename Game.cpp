@@ -2049,6 +2049,8 @@ bool Game::doPlayGame()
 	//win or loss sprite
 	Sprite* gameResult = 0;
 
+	Sprite* man = new Sprite(5, 400);
+
     //object to display the piece name
     StringInput pieceName;
 
@@ -2405,6 +2407,11 @@ bool Game::doPlayGame()
 		playByPlayEight->show(getScreen());
 		playByPlayNine->show(getScreen());
 
+		if(man->load("man.png", 255, 255, 255))
+		{
+            man->show(getScreen());
+		}
+
 		//render to the screen
 		//if rendering was unsuccessful
 		if(!render())
@@ -2413,6 +2420,8 @@ bool Game::doPlayGame()
 			return false;
 		}
 	}
+
+	delete man;
 
 	return true;
 }

@@ -20,6 +20,7 @@ public:
 	~Sprite();
 
 	bool load(std::string filename);
+	bool load(std::string filename, int r, int g, int b);
 	void show(SDL_Surface* destination) const;
 	inline int getXPos() const;
 	inline int getYPos() const;
