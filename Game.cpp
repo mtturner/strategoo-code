@@ -2008,6 +2008,7 @@ bool Game::doPlayGame()
 	Sprite* gameResult = 0;
 
 	Sprite* man = new Sprite(5, 400);
+	man->load("man.png", 255, 255, 255);
 
     //object to display the piece name
     StringInput pieceName;
@@ -2365,9 +2366,9 @@ bool Game::doPlayGame()
 		playByPlayEight->show(getScreen());
 		playByPlayNine->show(getScreen());
 
-		if(man->load("man.png", 255, 255, 255))
+		if(man != 0)
 		{
-            man->show(getScreen());
+            		man->show(getScreen());
 		}
 
 		//render to the screen
