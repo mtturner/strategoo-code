@@ -36,7 +36,7 @@ Game::Game() : screen(0)
 	statisticsBG = new Sprite();
 }
 
-//******************************************
+//*****************************************************
 Game::~Game()
 {
 	//delete dynamically allocated sprites
@@ -90,7 +90,7 @@ Game::~Game()
 	delete playByPlayNine;
 }
 
-//******************************************
+//*****************************************************
 void Game::startGame()
 {
 	//create player, computer, and board
@@ -412,13 +412,13 @@ void Game::startGame()
 	}
 }
 
-//******************************************
+//*****************************************************
 std::string Game::promptName()
 {
 	return "placeholder";
 }
 
-//******************************************
+//*****************************************************
 void Game::resetGame()
 {
 	//delete all pieces in game's collection
@@ -428,7 +428,7 @@ void Game::resetGame()
 	}
 
 	//clear game's collection of pieces
-	pieces.clear();
+	clearPieces();
 
 	//clear board's, player's, and computer's collections of pieces
 	gBoard->clearPieces();
@@ -445,13 +445,7 @@ void Game::resetGame()
 	resetPlayByPlay();
 }
 
-//******************************************
-bool Game::findPiece() const
-{
-	return false;
-}
-
-//******************************************
+//*****************************************************
 Piece* Game::findEmptySpacePiece()
 {
 	//temp piece
@@ -482,25 +476,13 @@ Piece* Game::findEmptySpacePiece()
 	return temp;
 }
 
-//******************************************
-bool Game::setPiece()
-{
-	return false;
-}
-
-//******************************************
-bool Game::movePiece()
-{
-	return false;
-}
-
-//******************************************
+//*****************************************************
 bool Game::isMoveablePiece(Piece* selected, int mover)
 {
 	return gBoard->isMoveablePiece(selected, mover);
 }
 
-//******************************************
+//*****************************************************
 bool Game::isValidMove(Piece* selected, Piece* destination)
 {
 	//if the selected piece is not a scout
@@ -563,7 +545,7 @@ bool Game::isValidMove(Piece* selected, Piece* destination)
 	}
 }
 
-//******************************************
+//*****************************************************
 void Game::moveComputerPiece()
 {
 	//pieces
@@ -747,7 +729,7 @@ void Game::moveComputerPiece()
 	}
 }
 
-//******************************************
+//*****************************************************
 void Game::swapLocation(Piece* first, Piece* second)
 {
 	//x, y, and boardspace
@@ -771,12 +753,7 @@ void Game::swapLocation(Piece* first, Piece* second)
 	second->setBoardSpace(boardSpace);
 }
 
-//******************************************
-void Game::namePiece()
-{
-}
-
-//******************************************
+//*****************************************************
 void Game::addPiece(Piece* piece)
 {
 	if(piece != 0)
@@ -785,18 +762,19 @@ void Game::addPiece(Piece* piece)
 	}
 }
 
-//******************************************
+//*****************************************************
+void Game::clearPieces()
+{
+	pieces.clear();
+}
+
+//*****************************************************
 std::string Game::getPieceName() const
 {
 	return "placeholder";
 }
 
-//******************************************
-void Game::loadMenu()
-{
-}
-
-//******************************************
+//*****************************************************
 SDL_Rect* Game::getMouseCoords()
 {
 	SDL_Rect* rect = 0;
@@ -804,27 +782,7 @@ SDL_Rect* Game::getMouseCoords()
 	return rect;
 }
 
-//******************************************
-/*Piece* Game::getNewLocationPiece() const
-{
-}*/
-
-//******************************************
-void Game::displayStatistics() const
-{
-}
-
-//******************************************
-void Game::displayResults() const
-{
-}
-
-//******************************************
-void Game::clearPieces()
-{
-}
-
-//******************************************
+//*****************************************************
 bool Game::initialize()
 {
 	//initialize SDL
@@ -930,7 +888,7 @@ bool Game::initialize()
 	return true;
 }
 
-//******************************************
+//*****************************************************
 void Game::cleanUp()
 {
 	//quit SDL_ttf
@@ -939,7 +897,7 @@ void Game::cleanUp()
 	//quit SDL
 	SDL_Quit();
 }
-//******************************************
+//*****************************************************
 void Game::setState(int gameState)
 {
 	//state must be a number from 0 to 7
@@ -949,7 +907,7 @@ void Game::setState(int gameState)
 	}
 }
 
-//******************************************
+//*****************************************************
 void Game::setPreviousState(int gameState)
 {
 	//state must be a number from 0 to 7
@@ -959,7 +917,7 @@ void Game::setPreviousState(int gameState)
 	}
 }
 
-//******************************************
+//*****************************************************
 void Game::setTurn(const int turn)
 {
 	if(turn == 0 || turn == 1)
@@ -968,7 +926,7 @@ void Game::setTurn(const int turn)
 	}
 }
 
-//******************************************
+//*****************************************************
 bool Game::render() const
 {
 	if(SDL_Flip(getScreen()) == -1)
@@ -979,7 +937,7 @@ bool Game::render() const
 	return true;
 }
 
-//******************************************
+//*****************************************************
 void Game::setScreen(SDL_Surface* s)
 {
 	//delete old screen
@@ -991,7 +949,7 @@ void Game::setScreen(SDL_Surface* s)
 	}
 }
 
-//******************************************
+//*****************************************************
 bool Game::checkPlayerWins()
 {
 	//flag exists and moveable piece exists booleans
@@ -1044,7 +1002,7 @@ bool Game::checkPlayerWins()
 	}
 }
 
-//******************************************
+//*****************************************************
 bool Game::checkComputerWins()
 {
 	//flag exists and moveable piece exists booleans
@@ -1097,7 +1055,7 @@ bool Game::checkComputerWins()
 	}
 }
 
-//******************************************
+//*****************************************************
 void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner)
 {
 	//play-by-play stringstream
@@ -1434,7 +1392,7 @@ void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner
 	}
 }
 
-//******************************************
+//*****************************************************
 void Game::updatePlayByPlay(int firstRank, int mover)
 {
 	//play-by-play stringstream
@@ -1537,7 +1495,7 @@ void Game::updatePlayByPlay(int firstRank, int mover)
 	playByPlayThree->setSurfaceNoFree(newMessage);
 }
 
-//******************************************
+//*****************************************************
 void Game::updateComputerPlayByPlay()
 {
 	//play-by-play stringstream
@@ -1584,7 +1542,7 @@ void Game::updateComputerPlayByPlay()
 	playByPlayThree->setSurfaceNoFree(newMessage);
 }
 
-//******************************************
+//*****************************************************
 void Game::shiftPlayByPlayDown()
 {
 	//move block two down to block three
@@ -1598,7 +1556,7 @@ void Game::shiftPlayByPlayDown()
 	playByPlaySix->setSurfaceNoFree(playByPlayThree->getSurface());
 }
 
-//******************************************
+//*****************************************************
 void Game::resetPlayByPlay()
 {
 	//play-by-play stringstream
@@ -1650,19 +1608,19 @@ void Game::resetPlayByPlay()
 	playByPlayNine->setSurface(newMessage);
 }
 
-//******************************************
+//*****************************************************
 void Game::setIsPieceSelected(const bool selected)
 {
 	isPieceSelected = selected;
 }
 
-//******************************************
+//*****************************************************
 void Game::setIsButtonSelected(const bool selected)
 {
 	isButtonSelected = selected;
 }
 
-//******************************************
+//*****************************************************
 bool Game::doIntro()
 {
 	while(SDL_PollEvent(&gEvent))
@@ -1697,7 +1655,7 @@ bool Game::doIntro()
 	return true;
 }
 
-//******************************************
+//*****************************************************
 bool Game::login()
 {
 	bool isLoggingIn = true;
@@ -1755,7 +1713,7 @@ bool Game::login()
 	return true;
 }
 
-//******************************************
+//*****************************************************
 bool Game::doStartMenu()
 {
 	while(SDL_PollEvent(&gEvent))
@@ -1810,7 +1768,7 @@ bool Game::doStartMenu()
 	return true;
 }
 
-//******************************************
+//*****************************************************
 bool Game::doSetPiece()
 {
 	//start the game
@@ -2037,7 +1995,7 @@ bool Game::doSetPiece()
 	return true;
 }
 
-//******************************************
+//*****************************************************
 bool Game::doPlayGame()
 {
 	//pieces
@@ -2426,7 +2384,7 @@ bool Game::doPlayGame()
 	return true;
 }
 
-//******************************************
+//*****************************************************
 bool Game::doInGameMenu()
 {
 	while(SDL_PollEvent(&gEvent))
@@ -2492,7 +2450,7 @@ bool Game::doInGameMenu()
 	return true;
 }
 
-//******************************************
+//*****************************************************
 bool Game::doStatistics()
 {
 	bool showingStatistics = true;

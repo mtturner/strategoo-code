@@ -47,11 +47,7 @@ public:
 	std::string promptName();
 	void resetGame();
 	std::string getPieceName() const;
-	void loadMenu();
 	SDL_Rect* getMouseCoords();
-	//Piece* getNewLocationPiece() const;
-	void displayStatistics() const;
-	void displayResults() const;
 	bool initialize();
 	void cleanUp();
 	bool render() const;
@@ -67,12 +63,8 @@ public:
 	void resetPlayByPlay();
 
 	//piece functions
-	void namePiece();
-	bool findPiece() const;
 	Piece* findEmptySpacePiece();
-	bool setPiece();
 	void swapLocation(Piece* first, Piece* second);
-	bool movePiece();
 	bool isMoveablePiece(Piece* selected, int mover);
 	bool isValidMove(Piece* selected, Piece* destination);
 	void moveComputerPiece();
@@ -181,37 +173,37 @@ private:
 					 STATE_STATISTICS, STATE_EXIT};
 };
 
-//******************************************
+//*****************************************************
 inline int Game::getState() const
 {
 	return gameState_;
 }
 
-//******************************************
+//*****************************************************
 inline int Game::getPreviousState() const
 {
 	return previousState_;
 }
 
-//******************************************
+//*****************************************************
 inline int Game::getTurn() const
 {
 	return turn_;
 }
 
-//******************************************
+//*****************************************************
 inline SDL_Surface* Game::getScreen() const
 {
 	return screen;
 }
 
-//******************************************
+//*****************************************************
 inline bool Game::getIsPieceSelected() const
 {
 	return isPieceSelected;
 }
 
-//******************************************
+//*****************************************************
 inline bool Game::getIsButtonSelected() const
 {
 	return isButtonSelected;
