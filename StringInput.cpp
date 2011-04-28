@@ -32,7 +32,7 @@ StringInput::StringInput() : text(0), font(0), textColor(0)
     SDL_EnableUNICODE(SDL_ENABLE);
 }
 
-//****************************************
+//*****************************************************
 StringInput::~StringInput()
 {
     //free text surface
@@ -44,21 +44,21 @@ StringInput::~StringInput()
     SDL_EnableUNICODE(SDL_DISABLE);
 }
 
-//****************************************
-void StringInput::setInput(std::string newInput)
+//*****************************************************
+void StringInput::setInput(const std::string& newInput)
 {
 	input = newInput;
 }
 
-//****************************************
-void StringInput::setMessageSurface(SDL_Surface* surface)
+//*****************************************************
+void StringInput::setMessageSurface(SDL_Surface* const surface)
 {
 	SDL_FreeSurface(text);
 
 	text = surface;
 }
 
-//****************************************
+//*****************************************************
 void StringInput::setMessageSurface(const std::string& message)
 {
     setInput(message);
@@ -73,31 +73,31 @@ void StringInput::setMessageSurface(const std::string& message)
 
 }
 
-//****************************************
-void StringInput::setFont(TTF_Font* newFont)
+//*****************************************************
+void StringInput::setFont(TTF_Font* const newFont)
 {
 	TTF_CloseFont(font);
 
 	font = newFont;
 }
 
-//****************************************
-void StringInput::setFont(const std::string& fontName, int fontSize)
+//*****************************************************
+void StringInput::setFont(const std::string& fontName, const int fontSize)
 {
     TTF_Font* temp = TTF_OpenFont(fontName.c_str(), fontSize);
     setFont(temp);
 }
 
-//****************************************
-void StringInput::setFontColor(SDL_Color* color)
+//*****************************************************
+void StringInput::setFontColor(SDL_Color* const color)
 {
 	delete textColor;
 
 	textColor = color;
 }
 
-//****************************************
-void StringInput::handleInput(SDL_Event& gEvent, unsigned int maxLength)
+//*****************************************************
+void StringInput::handleInput(SDL_Event& gEvent, const unsigned int maxLength)
 {
     //if a key was pressed
     if(gEvent.type == SDL_KEYDOWN)
@@ -156,8 +156,8 @@ void StringInput::handleInput(SDL_Event& gEvent, unsigned int maxLength)
     }
 }
 
-//****************************************
-void StringInput::show(SDL_Surface* screen)
+//*****************************************************
+void StringInput::show(SDL_Surface* const screen) const
 {
     //if the surface isn't blank
     if(getMessageSurface() != 0)
@@ -174,8 +174,9 @@ void StringInput::show(SDL_Surface* screen)
     }
 }
 
-//****************************************
-void StringInput::show(SDL_Surface* screen, int xPos, int yPos)
+//*****************************************************
+void StringInput::show(SDL_Surface* const screen, const int xPos, 
+	                   const int yPos) const
 {
    //if the surface isn't blank
     if(getMessageSurface() != 0)

@@ -12,61 +12,64 @@
 #include "SDL_ttf.h"
 #include <string>
 
-//The key press interpreter
 class StringInput
 {
 public:
+	//constructor and destructor
 	StringInput();
 	~StringInput();
 
 	//getters and setters
 	inline std::string getInput() const;
-	void setInput(std::string newInput);
+	void setInput(const std::string& newInput);
 	inline SDL_Surface* getMessageSurface() const;
-	void setMessageSurface(SDL_Surface* surface);
+	void setMessageSurface(SDL_Surface* const surface);
 	void setMessageSurface(const std::string& message);
 	inline TTF_Font* getFont() const;
-	void setFont(TTF_Font* newFont);
-	void setFont(const std::string& fontName, int fontSize);
+	void setFont(TTF_Font* const newFont);
+	void setFont(const std::string& fontName, const int fontSize);
 	inline SDL_Color* getFontColor() const;
-	void setFontColor(SDL_Color* color);
+	void setFontColor(SDL_Color* const color);
 
-	void handleInput(SDL_Event& gEvent, unsigned int maxLength = 16);
-
-    //Shows the message on screen
-    void show(SDL_Surface* screen);
-    void show(SDL_Surface* screen, int xPos, int yPos);
+    //input and rendering
+	void handleInput(SDL_Event& gEvent,  const unsigned int maxLength = 16);
+    void show(SDL_Surface* const screen) const;
+    void show(SDL_Surface* const screen, const int xPos, const int yPos) const;
 
 
 private:
-	//The storage string
+	//input
     std::string input;
 
-    //The text surface
+    //image surface
     SDL_Surface* text;
+
+	//font
     TTF_Font* font;
+
+	//text color
     SDL_Color* textColor;
 };
 
-//****************************************
+//*****************************************************
 inline std::string StringInput::getInput() const
 {
 	return input;
 }
 
-//****************************************
+//*****************************************************
 inline SDL_Surface* StringInput::getMessageSurface() const
 {
 	return text;
 }
 
-//****************************************
+//*****************************************************
 inline TTF_Font* StringInput::getFont() const
 {
 	return font;
 }
 
-//****************************************
+//*****************************************************
 inline SDL_Color* StringInput::getFontColor() const
 {
 	return textColor;

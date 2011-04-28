@@ -10,30 +10,26 @@
 Player::Player()
 {
 	setName(" ");
+
 	stats = new Statistics();
 }
 
-//*******************************************************************
+//*****************************************************
 Player::Player(std::string& currentPlayer)
 {
 	setName(currentPlayer);
+
 	stats = new Statistics();
 }
 
-//*******************************************************************
+//*****************************************************
 Player::~Player()
 {
 	delete stats;
 }
 
-//*******************************************************************
-void Player::setName(const std::string& newPlayer)
-{
-	name = newPlayer;
-}
-
-//*******************************************************************
-void Player::addPiece(Piece* piece)
+//*****************************************************
+void Player::addPiece(Piece* const piece)
 {
 	if(piece != 0)
 	{
@@ -41,7 +37,7 @@ void Player::addPiece(Piece* piece)
 	}
 }
 
-//*******************************************************************
+//*****************************************************
 void Player::clearPiece(const int boardSpace)
 {
 	//iterator
@@ -66,19 +62,13 @@ void Player::clearPiece(const int boardSpace)
 	}
 }
 
-//*******************************************************************
-void Player::clearPieces()
-{
-	pieces.clear();
-}
-
-//*******************************************************************
+//*****************************************************
 Piece* Player::findPieceAtPosition(const int position)
 {
 	return pieces[position];
 }
 
-//*******************************************************************
+//*****************************************************
 Piece* Player::findUnplacedPiece(const int buttonRank)
 {
 	//temp piece
@@ -108,25 +98,26 @@ Piece* Player::findUnplacedPiece(const int buttonRank)
 	return temp;
 }
 
-//*******************************************************************
-bool Player::loadStatistics()
+//*****************************************************
+void Player::setStatisticsSprites() const
 {
-	return(stats->load(name));
+	stats->setSprites();
 }
 
-//*******************************************************************
-bool Player::saveStatistics()
+//*****************************************************
+bool Player::loadStatistics() const
 {
-	return(stats->save(name));
+	return (stats->load(name));
 }
 
-//*******************************************************************
+//*****************************************************
+bool Player::saveStatistics() const
+{
+	return (stats->save(name));
+}
+
+//*****************************************************
 void Player::displayStatistics(SDL_Surface* background) const
 {
 	stats->display(background);
-}
-
-void Player::setStatisticsSprites()
-{
-	stats->setSprites();
 }

@@ -14,26 +14,33 @@
 class Board
 {
 public:
+	//constructor
 	Board();
-	~Board();
 
 	//collection functions
-	void addPiece(Piece* piece);
+	void addPiece(Piece* const piece);
 	void clearPiece(const int boardSpace);
-	void clearPieces();
+	inline void clearPieces();
 	Piece* findSelectedPiece();
 	Piece* findPieceAtBoardSpace(const int boardSpace);
 
 	//piece functions
-	bool isMoveablePiece(Piece* selected, int owner); //mover 0 - player, 1 computer
-	bool isValidScoutMove(Piece* scout, Piece* destination);
+	bool isMoveablePiece(Piece* const selected,  const int owner); //mover 0 - player, 1 computer
+	bool isValidScoutMove(Piece* const scout, Piece* const destination);
 
 	//input and render
 	void handlePieceInput(SDL_Event& gEvent);
-	void show(SDL_Surface* destination) const;
+	void show(SDL_Surface* const destination) const;
 
 private:
+	//collection of pieces
 	std::vector<Piece*> pieces;
 };
+
+//*****************************************************
+inline void Board::clearPieces()
+{
+	pieces.clear();
+}
 
 #endif

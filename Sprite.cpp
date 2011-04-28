@@ -14,15 +14,15 @@ Sprite::Sprite() : image(0)
 	setYPos(0);
 }
 
-//******************************************
-Sprite::Sprite(int x, int y) : image(0)
+//*****************************************************
+Sprite::Sprite(const int x, const int y) : image(0)
 {
 	setXPos(x);
 	setYPos(y);
 }
 
-//******************************************
-Sprite::Sprite(int x, int y, std::string filename) : image(0)
+//*****************************************************
+Sprite::Sprite(const int x, const int y, const std::string filename) : image(0)
 {
 	setXPos(x);
 	setYPos(y);
@@ -30,8 +30,9 @@ Sprite::Sprite(int x, int y, std::string filename) : image(0)
 	load(filename.c_str());
 }
 
-//******************************************
-Sprite::Sprite(int x, int y, std::string filename, int alpha) : image(0)
+//*****************************************************
+Sprite::Sprite(const int x, const int y, const std::string filename, 
+			   const int alpha) : image(0)
 {
 	setXPos(x);
 	setYPos(y);
@@ -41,14 +42,45 @@ Sprite::Sprite(int x, int y, std::string filename, int alpha) : image(0)
 	SDL_SetAlpha(getSurface(), SDL_SRCALPHA, alpha);
 }
 
-//******************************************
+//*****************************************************
 Sprite::~Sprite()
 {
 	SDL_FreeSurface(image);
 }
 
-//******************************************
-bool Sprite::load(std::string filename)
+//*****************************************************
+void Sprite::setXPos(int xPos)
+{
+	//x must be greater than -1 and less than 800
+	if(xPos > -1 && xPos < 800)
+	{
+		xPos_ = xPos;
+	}
+}
+
+//*****************************************************
+void Sprite::setYPos(int yPos)
+{
+	//y must be greater than -1 and less than 600
+	if(yPos > -1 && yPos < 600)
+	{
+		yPos_ = yPos;
+	}
+}
+
+//*****************************************************
+void Sprite::setSurface(SDL_Surface* const surface)
+{
+	if(surface != 0)
+	{
+		SDL_FreeSurface(image);
+
+		image = surface;
+	}
+}
+
+//*****************************************************
+bool Sprite::load(const std::string& filename)
 {
 	//temporary SDL surfaces
 	SDL_Surface* loaded = 0;
@@ -77,7 +109,9 @@ bool Sprite::load(std::string filename)
 	return false;
 }
 
-bool Sprite::load(std::string filename, int r, int g, int b)
+//*****************************************************
+bool Sprite::load(const std::string& filename, const int r, const int g, 
+	              const int b)
 {
     	//temporary SDL surfaces
 	SDL_Surface* loaded = 0;
@@ -106,8 +140,8 @@ bool Sprite::load(std::string filename, int r, int g, int b)
 	return false;
 }
 
-//******************************************
-void Sprite::show(SDL_Surface* destination) const
+//*****************************************************
+void Sprite::show(SDL_Surface* const destination) const
 {
 	SDL_Rect position;
 
@@ -115,41 +149,4 @@ void Sprite::show(SDL_Surface* destination) const
 	position.y = getYPos();
 
 	SDL_BlitSurface(image, 0, destination, &position);
-}
-
-//******************************************
-void Sprite::setXPos(int xPos)
-{
-	//x must be greater than -1 and less than 800
-	if(xPos > -1 && xPos < 800)
-	{
-		xPos_ = xPos;
-	}
-}
-
-//******************************************
-void Sprite::setYPos(int yPos)
-{
-	//y must be greater than -1 and less than 600
-	if(yPos > -1 && yPos < 600)
-	{
-		yPos_ = yPos;
-	}
-}
-
-//******************************************
-void Sprite::setSurface(SDL_Surface* surface)
-{
-	if(surface != 0)
-	{
-		SDL_FreeSurface(image);
-
-		image = surface;
-	}
-}
-
-//******************************************
-void Sprite::setSurfaceNoFree(SDL_Surface* surface)
-{
-	image = surface;
 }

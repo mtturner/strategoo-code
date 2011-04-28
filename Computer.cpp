@@ -11,15 +11,11 @@
 
 Computer::Computer()
 {
+	//nothing to do
 }
 
-//*********************************
-Computer::~Computer()
-{
-}
-
-//*********************************
-void Computer::addPiece(Piece* piece)
+//*****************************************************
+void Computer::addPiece(Piece* const piece)
 {
 	if(piece != 0)
 	{
@@ -27,7 +23,7 @@ void Computer::addPiece(Piece* piece)
 	}
 }
 
-//*********************************
+//*****************************************************
 void Computer::clearPiece(const int boardSpace)
 {
 	//iterator
@@ -52,19 +48,13 @@ void Computer::clearPiece(const int boardSpace)
 	}
 }
 
-//*********************************
-void Computer::clearPieces()
-{
-	pieces.clear();
-}
-
-//*********************************
+//*****************************************************
 Piece* Computer::findPieceAtPosition(const int position)
 {
 	return pieces[position];
 }
 
-//*********************************
+//*****************************************************
 void Computer::setPieces()
 {
 	//vector to hold board spaces

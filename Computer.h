@@ -14,20 +14,31 @@
 class Computer
 {
 public:
+	//constructor and destructor
     Computer();
-    ~Computer();
     
-	void addPiece(Piece* piece);
+	//collection functions
+	void addPiece(Piece* const piece);
     void clearPiece(const int boardSpace);
-    void clearPieces();
+    inline void clearPieces();
 	Piece* findPieceAtPosition(const int position);
-	void setPieces();
 	inline int getNumPieces() const;
+	
+	//piece functions
+	void setPieces();
     
 private:
+	//collection of pieces
     std::vector<Piece*> pieces;
 };
 
+//*****************************************************
+inline void Computer::clearPieces()
+{
+	pieces.clear();
+}
+
+//*****************************************************
 inline int Computer::getNumPieces() const
 {
 	return pieces.size();

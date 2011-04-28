@@ -19,14 +19,14 @@ Selector::Selector()
 	setMoved(false);
 }
 
-//******************************************
+//*****************************************************
 Selector::~Selector()
 {
 	delete selectorImage;
 }
 
-//******************************************
-void Selector::setChoice(int choice)
+//*****************************************************
+void Selector::setChoice(const int choice)
 {
 	//choice must be 0 or 1
 	if(choice == 0 || choice == 1)
@@ -35,20 +35,14 @@ void Selector::setChoice(int choice)
 	}
 }
 
-//******************************************
-void Selector::setMoved(bool moved)
-{
-	isMoved = moved;
-}
-
-//******************************************
+//*****************************************************
 void Selector::reset()
 {
 	setChoice(1);
 	setMoved(true);
 }
 
-//******************************************
+//*****************************************************
 void Selector::handleInput(SDL_Event& gEvent)
 {
 	if(gEvent.type == SDL_KEYDOWN)
@@ -66,15 +60,15 @@ void Selector::handleInput(SDL_Event& gEvent)
 	}
 }
 
-//******************************************
+//*****************************************************
 void Selector::move()
 {
 	//if the selector was moved
 	if(isMoved)
 	{
-		if(choice_ == 0)
+		if(getChoice() == 0)
 		{
-			choice_ = 1;
+			setChoice(1);
 
 			selectorImage->setYPos(290);
 
@@ -82,17 +76,11 @@ void Selector::move()
 		}
 		else
 		{
-			choice_ = 0;
+			setChoice(0);
 
 			selectorImage->setYPos(237);
 
 			setMoved(false);
 		}
 	}
-}
-
-//******************************************
-void Selector::show(SDL_Surface* destination) const
-{
-	selectorImage->show(destination);
 }

@@ -40,51 +40,28 @@
 class Game
 {
 public:
+	//constructor and destructor
 	Game();
 	~Game();
 
-	void startGame();
-	std::string promptName();
-	void resetGame();
-	std::string getPieceName() const;
-	SDL_Rect* getMouseCoords();
-	bool initialize();
-	void cleanUp();
-	bool render() const;
-	void setScreen(SDL_Surface* s);
-	bool checkPlayerWins();
-	bool checkComputerWins();
-
-	//play-by-play
-	void updatePlayByPlay(int firstRank, int secondRank, int mover, int winner);
-	void updatePlayByPlay(int firstRank, int mover);
-	void updateComputerPlayByPlay();
-	void shiftPlayByPlayDown();
-	void resetPlayByPlay();
-
-	//piece functions
-	Piece* findEmptySpacePiece();
-	void swapLocation(Piece* first, Piece* second);
-	bool isMoveablePiece(Piece* selected, int mover);
-	bool isValidMove(Piece* selected, Piece* destination);
-	void moveComputerPiece();
-
-	//collection functions
-	void addPiece(Piece* piece);
-	void clearPieces();
-
 	//getters and setters
 	inline int getState() const;
-	void setState(int gameState);
+	void setState(const int gameState);
 	inline int getPreviousState() const;
-	void setPreviousState(int gameState);
+	void setPreviousState(const int gameState);
 	inline int getTurn() const;
 	void setTurn(const int turn);
 	inline SDL_Surface* getScreen() const;
+	void setScreen(SDL_Surface* s);
 	inline bool getIsPieceSelected() const;
 	void setIsPieceSelected(const bool selected);
 	inline bool getIsButtonSelected() const;
 	void setIsButtonSelected(const bool selected);
+
+	//start up, closing, and render
+	bool initialize();
+	void cleanUp() const;
+	bool render() const;
 
 	//main loop functions
 	bool doIntro();
@@ -95,6 +72,31 @@ public:
 	bool doEndGame();
 	bool doInGameMenu();
 	bool doStatistics();
+
+	//game functions
+	void startGame();
+	void resetGame();
+	bool checkPlayerWins();
+	bool checkComputerWins();
+
+	//collection functions
+	void addPiece(Piece* const piece);
+	inline void clearPieces();
+
+	//piece functions
+	Piece* findEmptySpacePiece();
+	void swapLocation(Piece* const first, Piece* const second) const;
+	bool isMoveablePiece(Piece* const selected, const int mover) const;
+	bool isValidMove(Piece* const selected, Piece* const destination) const;
+	void moveComputerPiece();
+
+	//play-by-play
+	void updatePlayByPlay(const int firstRank, const int secondRank, 
+						  const int mover, const int winner) const;
+	void updatePlayByPlay(const int firstRank, const int mover) const;
+	void updateComputerPlayByPlay() const;
+	void shiftPlayByPlayDown() const;
+	void resetPlayByPlay() const;
 
 private:
 	//SDL_Event structure
@@ -207,6 +209,12 @@ inline bool Game::getIsPieceSelected() const
 inline bool Game::getIsButtonSelected() const
 {
 	return isButtonSelected;
+}
+
+//*****************************************************
+inline void Game::clearPieces()
+{
+	pieces.clear();
 }
 
 #endif

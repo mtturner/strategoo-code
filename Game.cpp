@@ -48,6 +48,12 @@ Game::~Game()
 	delete menuBG;
 	delete statisticsBG;
 
+	//delete all pieces
+	for(int i = 0; i < static_cast<int>(pieces.size()); i++)
+	{
+		delete pieces[i];
+	}
+
 	//delete player, computer, and board
 	delete gPlayer;
 	delete gComputer;
@@ -91,695 +97,56 @@ Game::~Game()
 }
 
 //*****************************************************
-void Game::startGame()
+void Game::setState(const int gameState)
 {
-	//create player, computer, and board
-	gComputer = new Computer();
-	gBoard = new Board();
-
-	//temporary piece for creation
-	Piece* temp = 0;
-
-	//piece coordinates
-	int x = 200,
-		y = 240;
-
-	//create emptyspace's and add to appropriate collections
-	for(int i = 0; i < 100; i++)
+	//state must be a number from 0 to 7
+	if(gameState > -1 && gameState < 8)
 	{
-		//skip over no man's land
-		if(i == 42)
-		{
-			i = 44;
-		}
-		else if(i == 46)
-		{
-			i = 48;
-		}
-		else if(i == 52)
-		{
-			i = 54;
-		}
-		else if(i == 56)
-		{
-			i = 58;
-		}
-
-		//if 40 pieces have been created
-		if(i > 39)
-		{
-			temp = new EmptySpace(x, y, i);
-
-			//add to board's collection along with game's collection
-			gBoard->addPiece(temp);
-			addPiece(temp);
-
-			//update coordinates
-			x += 60;
-
-			if(x == 800)
-			{
-				x = 200;
-				y += 60;
-			}
-
-			//skip over no man's land
-			if((x == 320) && (y == 240))
-			{
-				x = 440;
-			}
-			else if((x == 560) && (y == 240))
-			{
-				x = 680;
-			}
-			else if((x == 320) && (y == 300))
-			{
-				x = 440;
-			}
-			else if((x == 560) && (y == 300))
-			{
-				x = 680;
-			}
-		}
-		//if the first 40 pieces have already been created,
-		//only add piece to game's collection
-		else
-		{
-			temp = new EmptySpace();
-
-			addPiece(temp);
-		}
-	}
-
-	//create marshals and add to appropriate collections
-	for(int i = 0; i < 2; i++)
-	{
-		if(i == 0)
-		{
-			temp = new Marshal();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new Marshal("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
-	}
-
-	//create generals and add to appropriate collections
-	for(int i = 0; i < 2; i++)
-	{
-		if(i == 0)
-		{
-			temp = new General();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new General("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
-	}
-
-	//create colonels and add to appropriate collections
-	for(int i = 0; i < 4; i++)
-	{
-		if(i < 2)
-		{
-			temp = new Colonel();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new Colonel("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
-	}
-
-	//create majors and add to appropriate collections
-	for(int i = 0; i < 6; i++)
-	{
-		if(i < 3)
-		{
-			temp = new Major();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new Major("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
-	}
-
-	//create captains and add to appropriate collections
-	for(int i = 0; i < 8; i++)
-	{
-		if(i < 4)
-		{
-			temp = new Captain();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new Captain("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
-	}
-
-	//create lieutenants and add to appropriate collections
-	for(int i = 0; i < 8; i++)
-	{
-		if(i < 4)
-		{
-			temp = new Lieutenant();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new Lieutenant("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
-	}
-
-	//create sergeants and add to appropriate collections
-	for(int i = 0; i < 8; i++)
-	{
-		if(i < 4)
-		{
-			temp = new Sergeant();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new Sergeant("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
-	}
-
-	//create miners and add to appropriate collections
-	for(int i = 0; i < 10; i++)
-	{
-		if(i < 5)
-		{
-			temp = new Miner();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new Miner("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
-	}
-
-	//create scouts and add to appropriate collections
-	for(int i = 0; i < 16; i++)
-	{
-		if(i < 8)
-		{
-			temp = new Scout();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new Scout("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
-	}
-
-	//create spys and add to appropriate collections
-	for(int i = 0; i < 2; i++)
-	{
-		if(i == 0)
-		{
-			temp = new Spy();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new Spy("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
-	}
-
-	//create bombs and add to appropriate collections
-	for(int i = 0; i < 12; i++)
-	{
-		if(i < 6)
-		{
-			temp = new Bomb();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new Bomb("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
-	}
-
-	//create flags and add to appropriate collections
-	for(int i = 0; i < 2; i++)
-	{
-		if(i == 0)
-		{
-			temp = new Flag();
-
-			addPiece(temp);
-			gPlayer->addPiece(temp);
-		}
-		else
-		{
-			temp = new Flag("cpiece.png");
-
-			addPiece(temp);
-			gComputer->addPiece(temp);
-			gBoard->addPiece(temp);
-		}
+		gameState_ = gameState;
 	}
 }
 
 //*****************************************************
-std::string Game::promptName()
+void Game::setPreviousState(const int gameState)
 {
-	return "placeholder";
-}
-
-//*****************************************************
-void Game::resetGame()
-{
-	//delete all pieces in game's collection
-	for(int i = 0; i < 92; i++)
+	//state must be a number from 0 to 7
+	if(gameState > -1 && gameState < 8)
 	{
-		delete pieces[i];
-	}
-
-	//clear game's collection of pieces
-	clearPieces();
-
-	//clear board's, player's, and computer's collections of pieces
-	gBoard->clearPieces();
-	gPlayer->clearPieces();
-	gComputer->clearPieces();
-
-	//reset piece buttons
-	for(int i = 0; i < 12; i++)
-	{
-		buttons[i]->setIsAvailable(true);
-	}
-
-	//reset play-by-play
-	resetPlayByPlay();
-}
-
-//*****************************************************
-Piece* Game::findEmptySpacePiece()
-{
-	//temp piece
-	Piece* temp = 0;
-
-	//found boolean
-	bool found = false;
-
-	//iterator
-	std::vector<Piece*>::iterator iter = pieces.begin();
-
-	while(iter != pieces.end() && !found)
-	{
-		//if the piece has been selected
-		if((*iter)->getRank() == 0 && (*iter)->getBoardSpace() == -1)
-		{
-			temp = *iter;
-
-			found = true;
-		}
-
-		if(!found)
-		{
-			iter++;
-		}
-	}
-
-	return temp;
-}
-
-//*****************************************************
-bool Game::isMoveablePiece(Piece* selected, int mover)
-{
-	return gBoard->isMoveablePiece(selected, mover);
-}
-
-//*****************************************************
-bool Game::isValidMove(Piece* selected, Piece* destination)
-{
-	//if the selected piece is not a scout
-	if(selected->getRank() != 2)
-	{
-		//make sure destination is one space away above,
-		//below, to the left of, or to the right of the
-		//selected piece
-		if(selected->getBoardSpace() != (destination->getBoardSpace() - 10) &&
-		   selected->getBoardSpace() != (destination->getBoardSpace() + 10) &&
-		   selected->getBoardSpace() != (destination->getBoardSpace() - 1) &&
-		   selected->getBoardSpace() != (destination->getBoardSpace() + 1))
-		{
-			return false;
-		}
-		else
-		{
-			//check to see if destination is emptyspace, and if not
-			//check to see if pieces have different owners
-			if(destination->getRank() != 0)
-			{
-				if(selected->getOwner() == destination->getOwner())
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-			}
-			else
-			{
-				return true;
-			}
-		}
-	}
-	//else if piece is a scout
-	else
-	{
-		//check to see if destination piece is directly
-		//above, below, to the left of, or to the right
-		//of the selected piece
-		if((destination->getBoardSpace() % 10) == (selected->getBoardSpace() % 10) ||
-		   (destination->getBoardSpace() / 10) == (selected->getBoardSpace() / 10))
-		{
-			//check to see if it is a valid scout move
-			if(gBoard->isValidScoutMove(selected, destination))
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		else
-		{
-			return false;
-		}
+		previousState_ = gameState;
 	}
 }
 
 //*****************************************************
-void Game::moveComputerPiece()
+void Game::setTurn(const int turn)
 {
-	//pieces
-	Piece* selected = 0;
-	Piece* destination = 0;
-	Piece* winner = 0;
-	Piece* temp = 0;
-
-	//vector of integers
-	std::vector<int> numbers;
-
-	//vector of int's iterator
-	std::vector<int>::iterator iter;
-
-	//number of pieces that computer has
-	int numPieces = gComputer->getNumPieces();
-
-	//find piece and fine move booleans
-	bool isFindingPiece = true,
-		 isFindingMove = true;
-
-	//found boolean
-	bool found = false;
-
-	//counter
-	int i = 99;
-
-	//seed time
-	srand(unsigned(time(0)));
-
-	//populate numbers vector with integers from 0
-	//to the number of pieces computer has
-	for(int j = 0; j < numPieces; j++)
+	if(turn == 0 || turn == 1)
 	{
-		numbers.push_back(j);
-	}
-
-	//shuffle numbers
-	random_shuffle(numbers.begin(), numbers.end());
-
-	iter = numbers.begin();
-
-	//find moveable piece
-	while(isFindingPiece)
-	{
-		selected = gComputer->findPieceAtPosition(*iter);
-
-		if(isMoveablePiece(selected, 1))
-		{
-			isFindingPiece = false;
-		}
-
-		if(isFindingPiece)
-		{
-			iter++;
-		}
-	}
-
-	//find valid move
-	while(isFindingMove)
-	{
-		//search board from bottom to top to help keep
-		//the computer advancing
-		while(!found)
-		{
-			//skip over no man's land
-			if(i != 42 && i != 43 && i != 46 && i != 47 &&
-			   i != 52 && i != 53 && i != 56 && i != 57)
-			{
-				destination = gBoard->findPieceAtBoardSpace(i);
-
-				if(isValidMove(selected, destination))
-				{
-					found = true;
-
-					isFindingMove = false;
-				}
-			}
-
-			i--;
-		}
-	}
-
-	//move piece
-	winner = selected->move(destination);
-
-	//depending on the move outcome, remove defeated
-	//pieces from board's collection and owner's collection
-	//if needed and add emptyspace's where necessary
-	if(winner == 0)
-	{
-		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, -1);
-
-		temp = findEmptySpacePiece();
-
-		gBoard->addPiece(temp);
-
-		gBoard->clearPiece(destination->getBoardSpace());
-		gBoard->clearPiece(selected->getBoardSpace());
-
-		//remove pieces from player and computer collections
-		if(selected->getOwner() == 0)
-		{
-			gPlayer->clearPiece(selected->getBoardSpace());
-		}
-		else
-		{
-			gComputer->clearPiece(selected->getBoardSpace());
-		}
-
-		if(destination->getOwner() == 0)
-		{
-			gPlayer->clearPiece(destination->getBoardSpace());
-		}
-		else
-		{
-			gComputer->clearPiece(destination->getBoardSpace());
-		}
-
-		swapLocation(temp, selected);
-
-		temp = findEmptySpacePiece();
-
-		gBoard->addPiece(temp);
-
-		swapLocation(temp, destination);
-
-		temp = 0;
-	}
-	else if(winner->getRank() == 0)
-	{
-		updatePlayByPlay(selected->getRank(), 1);
-	}
-	else if(winner->getBoardSpace() == destination->getBoardSpace())
-	{
-		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, 0);
-
-		temp = findEmptySpacePiece();
-
-		gBoard->addPiece(temp);
-
-		gBoard->clearPiece(selected->getBoardSpace());
-
-		//remove pieces from player and computer collections
-		if(selected->getOwner() == 0)
-		{
-			gPlayer->clearPiece(selected->getBoardSpace());
-		}
-		else
-		{
-			gComputer->clearPiece(selected->getBoardSpace());
-		}
-
-		swapLocation(temp, selected);
-
-		temp = 0;
-	}
-	else
-	{
-		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, 1);
-
-		temp = findEmptySpacePiece();
-
-		gBoard->addPiece(temp);
-
-		gBoard->clearPiece(destination->getBoardSpace());
-
-		//remove pieces from player and computer collections
-		if(selected->getOwner() == 0)
-		{
-			gPlayer->clearPiece(destination->getBoardSpace());
-		}
-		else
-		{
-			gComputer->clearPiece(destination->getBoardSpace());
-		}
-
-		swapLocation(temp, destination);
-
-		temp = 0;
+		turn_ = turn;
 	}
 }
 
 //*****************************************************
-void Game::swapLocation(Piece* first, Piece* second)
+void Game::setScreen(SDL_Surface* s)
 {
-	//x, y, and boardspace
-	int x = 0,
-		y = 0,
-		boardSpace = 0;
+	//delete old screen
+	SDL_FreeSurface(screen);
 
-	//hold first's position
-	x = first->getXPos();
-	y = first->getYPos();
-	boardSpace = first->getBoardSpace();
-
-	//set first's position to second's position
-	first->setXPos(second->getXPos());
-	first->setYPos(second->getYPos());
-	first->setBoardSpace(second->getBoardSpace());
-
-	//set second's position with first's position
-	second->setXPos(x);
-	second->setYPos(y);
-	second->setBoardSpace(boardSpace);
-}
-
-//*****************************************************
-void Game::addPiece(Piece* piece)
-{
-	if(piece != 0)
+	if(s != 0)
 	{
-		pieces.push_back(piece);
+		screen = s;
 	}
 }
 
 //*****************************************************
-void Game::clearPieces()
+void Game::setIsPieceSelected(const bool selected)
 {
-	pieces.clear();
+	isPieceSelected = selected;
 }
 
 //*****************************************************
-std::string Game::getPieceName() const
+void Game::setIsButtonSelected(const bool selected)
 {
-	return "placeholder";
-}
-
-//*****************************************************
-SDL_Rect* Game::getMouseCoords()
-{
-	SDL_Rect* rect = 0;
-
-	return rect;
+	isButtonSelected = selected;
 }
 
 //*****************************************************
@@ -889,41 +256,13 @@ bool Game::initialize()
 }
 
 //*****************************************************
-void Game::cleanUp()
+void Game::cleanUp() const
 {
 	//quit SDL_ttf
 	TTF_Quit();
 
 	//quit SDL
 	SDL_Quit();
-}
-//*****************************************************
-void Game::setState(int gameState)
-{
-	//state must be a number from 0 to 7
-	if(gameState > -1 && gameState < 8)
-	{
-		gameState_ = gameState;
-	}
-}
-
-//*****************************************************
-void Game::setPreviousState(int gameState)
-{
-	//state must be a number from 0 to 7
-	if(gameState > -1 && gameState < 8)
-	{
-		previousState_ = gameState;
-	}
-}
-
-//*****************************************************
-void Game::setTurn(const int turn)
-{
-	if(turn == 0 || turn == 1)
-	{
-		turn_ = turn;
-	}
 }
 
 //*****************************************************
@@ -935,689 +274,6 @@ bool Game::render() const
 	}
 
 	return true;
-}
-
-//*****************************************************
-void Game::setScreen(SDL_Surface* s)
-{
-	//delete old screen
-	SDL_FreeSurface(screen);
-
-	if(s != 0)
-	{
-		screen = s;
-	}
-}
-
-//*****************************************************
-bool Game::checkPlayerWins()
-{
-	//flag exists and moveable piece exists booleans
-	bool flagExists = false,
-		 moveablePieceExists = false;
-
-	//counter
-	int j = 0;
-
-	//temporary piece
-	Piece* temp = 0;
-
-	//number of pieces computer has
-	int numPieces = gComputer->getNumPieces();
-
-	//check for existence of computer's flag
-	for(int i = 0; i < numPieces; i++)
-	{
-		temp = gComputer->findPieceAtPosition(i);
-
-		if(temp->getRank() == 12)
-		{
-			flagExists = true;
-		}
-	}
-
-	//check for existence of moveable piece
-	while(!moveablePieceExists && j < numPieces)
-	{
-		temp = gComputer->findPieceAtPosition(j);
-
-		if(isMoveablePiece(temp, 1))
-		{
-			moveablePieceExists = true;
-		}
-
-		if(!moveablePieceExists)
-		{
-			j++;
-		}
-	}
-
-	if(!flagExists || !moveablePieceExists)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-//*****************************************************
-bool Game::checkComputerWins()
-{
-	//flag exists and moveable piece exists booleans
-	bool flagExists = false,
-		 moveablePieceExists = false;
-
-	//counter
-	int j = 0;
-
-	//temporary piece
-	Piece* temp = 0;
-
-	//number of pieces player has
-	int numPieces = gPlayer->getNumPieces();
-
-	//check for existence of player's flag
-	for(int i = 0; i < numPieces; i++)
-	{
-		temp = gPlayer->findPieceAtPosition(i);
-
-		if(temp->getRank() == 12)
-		{
-			flagExists = true;
-		}
-	}
-
-	//check for existence of moveable piece
-	while(!moveablePieceExists && j < numPieces)
-	{
-		temp = gPlayer->findPieceAtPosition(j);
-
-		if(isMoveablePiece(temp, 0))
-		{
-			moveablePieceExists = true;
-		}
-
-		if(!moveablePieceExists)
-		{
-			j++;
-		}
-	}
-
-	if(!flagExists || !moveablePieceExists)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-//*****************************************************
-void Game::updatePlayByPlay(int firstRank, int secondRank, int mover, int winner)
-{
-	//play-by-play stringstream
-	std::stringstream ss;
-
-	//font for play-by-play
-	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
-
-	//SDL surface for new playByPlay message
-	SDL_Surface* newMessage = 0;
-
-	//text color
-	SDL_Color textColor = {0, 0, 0};
-
-	//if player moved
-	if(mover == 0)
-	{
-		ss << "Player's ";
-
-		switch(firstRank)
-		{
-		//marshal
-		case 10:
-			ss << "Marshal";
-			break;
-		//general
-		case 9:
-			ss << "General";
-			break;
-		//colonel
-		case 8:
-			ss << "Colonel";
-			break;
-		//major
-		case 7:
-			ss << "Major";
-			break;
-		//captain
-		case 6:
-			ss << "Captain";
-			break;
-		//lieutenant
-		case 5:
-			ss << "Lieutenant";
-			break;
-		//sergeant
-		case 4:
-			ss << "Sergeant";
-			break;
-		//miner
-		case 3:
-			ss << "Miner";
-			break;
-		//scout
-		case 2:
-			ss << "Scout";
-			break;
-		//spy
-		case 1:
-			ss << "Spy";
-			break;
-		}
-
-		//update play-by-play and clear stringstream
-		//create new playByPlay image
-		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-		//update playByPlay image
-		playByPlayOne->setSurfaceNoFree(newMessage);
-
-		ss.str("");
-
-		//if draw
-		if(winner == -1)
-		{
-			ss << "draws with";
-		}
-		//if player won
-		else if(winner == 0)
-		{
-			if(secondRank == 12)
-			{
-				ss << "captures";
-			}
-			else if(secondRank == 11)
-			{
-				ss << "defuses";
-			}
-			else
-			{
-				ss << "defeats";
-			}
-		}
-		//if computer won
-		else
-		{
-			if(secondRank == 11)
-			{
-				ss << "is blown up by";
-			}
-			else
-			{
-				ss << "is defeated by";
-			}
-		}
-
-		//update play-by-play and clear stringstream
-		//create new playByPlay image
-		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-		//update playByPlay image
-		playByPlayTwo->setSurfaceNoFree(newMessage);
-
-		ss.str("");
-
-		switch(secondRank)
-		{
-		//flag
-		case 12:
-			ss << "Computer's Flag.";
-			break;
-		//bomb
-		case 11:
-			ss << "Computer's Bomb.";
-			break;
-		//marshal
-		case 10:
-			ss << "Computer's Marshal.";
-			break;
-		//general
-		case 9:
-			ss << "Computer's General.";
-			break;
-		//colonel
-		case 8:
-			ss << "Computer's Colonel.";
-			break;
-		//major
-		case 7:
-			ss << "Computer's Major.";
-			break;
-		//captain
-		case 6:
-			ss << "Computer's Captain.";
-			break;
-		//lieutenant
-		case 5:
-			ss << "Computer's Lieutenant.";
-			break;
-		//sergeant
-		case 4:
-			ss << "Computer's Sergeant.";
-			break;
-		//miner
-		case 3:
-			ss << "Computer's Miner.";
-			break;
-		//scout
-		case 2:
-			ss << "Computer's Scout.";
-			break;
-		//spy
-		case 1:
-			ss << "Computer's Spy.";
-			break;
-		}
-
-		//update play-by-play and clear stringstream
-		//create new playByPlay image
-		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-		//update playByPlay image
-		playByPlayThree->setSurfaceNoFree(newMessage);
-	}
-	//if computer moved
-	else
-	{
-		ss << "Computer's ";
-
-		switch(firstRank)
-		{
-		//marshal
-		case 10:
-			ss << "Marshal";
-			break;
-		//general
-		case 9:
-			ss << "General";
-			break;
-		//colonel
-		case 8:
-			ss << "Colonel";
-			break;
-		//major
-		case 7:
-			ss << "Major";
-			break;
-		//captain
-		case 6:
-			ss << "Captain";
-			break;
-		//lieutenant
-		case 5:
-			ss << "Lieutenant";
-			break;
-		//sergeant
-		case 4:
-			ss << "Sergeant";
-			break;
-		//miner
-		case 3:
-			ss << "Miner";
-			break;
-		//scout
-		case 2:
-			ss << "Scout";
-			break;
-		//spy
-		case 1:
-			ss << "Spy";
-			break;
-		}
-
-		//update play-by-play and clear stringstream
-		//create new playByPlay image
-		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-		//update playByPlay image
-		playByPlayOne->setSurfaceNoFree(newMessage);
-
-		ss.str("");
-
-		//if draw
-		if(winner == -1)
-		{
-			ss << "draws with";
-		}
-		//if computer won
-		else if(winner == 1)
-		{
-			if(secondRank == 12)
-			{
-				ss << "captures";
-			}
-			else if(secondRank == 11)
-			{
-				ss << "defuses";
-			}
-			else
-			{
-				ss << "defeats";
-			}
-		}
-		//if player won
-		else
-		{
-			if(secondRank == 11)
-			{
-				ss << "is blown up by";
-			}
-			else
-			{
-				ss << "is defeated by";
-			}
-		}
-
-		//update play-by-play and clear stringstream
-		//create new playByPlay image
-		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-		//update playByPlay image
-		playByPlayTwo->setSurfaceNoFree(newMessage);
-
-		ss.str("");
-
-		switch(secondRank)
-		{
-		//flag
-		case 12:
-			ss << "Player's Flag.";
-			break;
-		//bomb
-		case 11:
-			ss << "Player's Bomb.";
-			break;
-		//marshal
-		case 10:
-			ss << "Player's Marshal.";
-			break;
-		//general
-		case 9:
-			ss << "Player's General.";
-			break;
-		//colonel
-		case 8:
-			ss << "Player's Colonel.";
-			break;
-		//major
-		case 7:
-			ss << "Player's Major.";
-			break;
-		//captain
-		case 6:
-			ss << "Player's Captain.";
-			break;
-		//lieutenant
-		case 5:
-			ss << "Player's Lieutenant.";
-			break;
-		//sergeant
-		case 4:
-			ss << "Player's Sergeant.";
-			break;
-		//miner
-		case 3:
-			ss << "Player's Miner.";
-			break;
-		//scout
-		case 2:
-			ss << "Player's Scout.";
-			break;
-		//spy
-		case 1:
-			ss << "Player's Spy.";
-			break;
-		}
-
-		//update play-by-play and clear stringstream
-		//create new playByPlay image
-		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-		//update playByPlay image
-		playByPlayThree->setSurfaceNoFree(newMessage);
-	}
-}
-
-//*****************************************************
-void Game::updatePlayByPlay(int firstRank, int mover)
-{
-	//play-by-play stringstream
-	std::stringstream ss;
-
-	//font for play-by-play
-	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
-
-	//SDL surface for new playByPlay message
-	SDL_Surface* newMessage = 0;
-
-	//text color
-	SDL_Color textColor = {0, 0, 0};
-
-	if(mover == 0)
-	{
-		ss << "Player moves a ";
-	}
-	else
-	{
-		ss << "Computer moves a ";
-	}
-
-	//update play-by-play and clear stringstream
-	//create new playByPlay image
-	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-	//update playByPlay image
-	playByPlayOne->setSurfaceNoFree(newMessage);
-
-	ss.str("");
-
-	if(mover == 0 || mover == 1)
-	{
-		switch(firstRank)
-		{
-		//marshal
-		case 10:
-			ss << "Marshal.";
-			break;
-		//general
-		case 9:
-			ss << "General.";
-			break;
-		//colonel
-		case 8:
-			ss << "Colonel.";
-			break;
-		//major
-		case 7:
-			ss << "Major.";
-			break;
-		//captain
-		case 6:
-			ss << "Captain.";
-			break;
-		//lieutenant
-		case 5:
-			ss << "Lieutenant.";
-			break;
-		//sergeant
-		case 4:
-			ss << "Sergeant.";
-			break;
-		//miner
-		case 3:
-			ss << "Miner.";
-			break;
-		//scout
-		case 2:
-			ss << "Scout.";
-			break;
-		//spy
-		case 1:
-			ss << "Spy.";
-			break;
-		}
-	}
-	else
-	{
-		ss << " ";
-	}
-
-	//update play-by-play and clear stringstream
-	//create new playByPlay image
-	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-	//update playByPlay image
-	playByPlayTwo->setSurfaceNoFree(newMessage);
-
-	ss.str("");
-
-	ss << " ";
-
-	//update play-by-play and clear stringstream
-	//create new playByPlay image
-	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-	//update playByPlay image
-	playByPlayThree->setSurfaceNoFree(newMessage);
-}
-
-//*****************************************************
-void Game::updateComputerPlayByPlay()
-{
-	//play-by-play stringstream
-	std::stringstream ss;
-
-	//font for play-by-play
-	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
-
-	//SDL surface for new playByPlay message
-	SDL_Surface* newMessage = 0;
-
-	//text color
-	SDL_Color textColor = {0, 0, 0};
-
-	ss << "Computer moves.";
-
-	//update play-by-play and clear stringstream
-	//create new playByPlay image
-	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-	//update playByPlay image
-	playByPlayOne->setSurfaceNoFree(newMessage);
-
-	ss.str("");
-
-	ss << " ";
-
-	//update play-by-play and clear stringstream
-	//create new playByPlay image
-	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-	//update playByPlay image
-	playByPlayTwo->setSurfaceNoFree(newMessage);
-
-	ss.str("");
-
-	ss << " ";
-
-	//update play-by-play and clear stringstream
-	//create new playByPlay image
-	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
-
-	//update playByPlay image
-	playByPlayThree->setSurfaceNoFree(newMessage);
-}
-
-//*****************************************************
-void Game::shiftPlayByPlayDown()
-{
-	//move block two down to block three
-	playByPlaySeven->setSurface(playByPlayFour->getSurface());
-	playByPlayEight->setSurface(playByPlayFive->getSurface());
-	playByPlayNine->setSurface(playByPlaySix->getSurface());
-
-	//move block one down to block two
-	playByPlayFour->setSurfaceNoFree(playByPlayOne->getSurface());
-	playByPlayFive->setSurfaceNoFree(playByPlayTwo->getSurface());
-	playByPlaySix->setSurfaceNoFree(playByPlayThree->getSurface());
-}
-
-//*****************************************************
-void Game::resetPlayByPlay()
-{
-	//play-by-play stringstream
-	std::stringstream ss;
-
-	//font for play-by-play
-	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
-
-	//SDL surface for new playByPlay message
-	SDL_Surface* newMessage = 0;
-
-	//text color
-	SDL_Color textColor = {0, 0, 0};
-
-	newMessage = TTF_RenderText_Solid(font, " ", textColor);
-
-	playByPlayOne->setSurface(newMessage);
-
-	newMessage = TTF_RenderText_Solid(font, " ", textColor);
-
-	playByPlayTwo->setSurface(newMessage);
-
-	newMessage = TTF_RenderText_Solid(font, " ", textColor);
-
-	playByPlayThree->setSurface(newMessage);
-
-	newMessage = TTF_RenderText_Solid(font, " ", textColor);
-
-	playByPlayFour->setSurface(newMessage);
-
-	newMessage = TTF_RenderText_Solid(font, " ", textColor);
-
-	playByPlayFive->setSurface(newMessage);
-
-	newMessage = TTF_RenderText_Solid(font, " ", textColor);
-
-	playByPlaySix->setSurface(newMessage);
-
-	newMessage = TTF_RenderText_Solid(font, " ", textColor);
-
-	playByPlaySeven->setSurface(newMessage);
-
-	newMessage = TTF_RenderText_Solid(font, " ", textColor);
-
-	playByPlayEight->setSurface(newMessage);
-
-	newMessage = TTF_RenderText_Solid(font, " ", textColor);
-
-	playByPlayNine->setSurface(newMessage);
-}
-
-//*****************************************************
-void Game::setIsPieceSelected(const bool selected)
-{
-	isPieceSelected = selected;
-}
-
-//*****************************************************
-void Game::setIsButtonSelected(const bool selected)
-{
-	isButtonSelected = selected;
 }
 
 //*****************************************************
@@ -2507,4 +1163,1333 @@ bool Game::doStatistics()
 	}
 
 	return true;
+}
+
+//*****************************************************
+void Game::startGame()
+{
+	//create player, computer, and board
+	gComputer = new Computer();
+	gBoard = new Board();
+
+	//temporary piece for creation
+	Piece* temp = 0;
+
+	//piece coordinates
+	int x = 200,
+		y = 240;
+
+	//create emptyspace's and add to appropriate collections
+	for(int i = 0; i < 100; i++)
+	{
+		//skip over no man's land
+		if(i == 42)
+		{
+			i = 44;
+		}
+		else if(i == 46)
+		{
+			i = 48;
+		}
+		else if(i == 52)
+		{
+			i = 54;
+		}
+		else if(i == 56)
+		{
+			i = 58;
+		}
+
+		//if 40 pieces have been created
+		if(i > 39)
+		{
+			temp = new EmptySpace(x, y, i);
+
+			//add to board's collection along with game's collection
+			gBoard->addPiece(temp);
+			addPiece(temp);
+
+			//update coordinates
+			x += 60;
+
+			if(x == 800)
+			{
+				x = 200;
+				y += 60;
+			}
+
+			//skip over no man's land
+			if((x == 320) && (y == 240))
+			{
+				x = 440;
+			}
+			else if((x == 560) && (y == 240))
+			{
+				x = 680;
+			}
+			else if((x == 320) && (y == 300))
+			{
+				x = 440;
+			}
+			else if((x == 560) && (y == 300))
+			{
+				x = 680;
+			}
+		}
+		//if the first 40 pieces have already been created,
+		//only add piece to game's collection
+		else
+		{
+			temp = new EmptySpace();
+
+			addPiece(temp);
+		}
+	}
+
+	//create marshals and add to appropriate collections
+	for(int i = 0; i < 2; i++)
+	{
+		if(i == 0)
+		{
+			temp = new Marshal();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new Marshal("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+
+	//create generals and add to appropriate collections
+	for(int i = 0; i < 2; i++)
+	{
+		if(i == 0)
+		{
+			temp = new General();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new General("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+
+	//create colonels and add to appropriate collections
+	for(int i = 0; i < 4; i++)
+	{
+		if(i < 2)
+		{
+			temp = new Colonel();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new Colonel("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+
+	//create majors and add to appropriate collections
+	for(int i = 0; i < 6; i++)
+	{
+		if(i < 3)
+		{
+			temp = new Major();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new Major("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+
+	//create captains and add to appropriate collections
+	for(int i = 0; i < 8; i++)
+	{
+		if(i < 4)
+		{
+			temp = new Captain();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new Captain("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+
+	//create lieutenants and add to appropriate collections
+	for(int i = 0; i < 8; i++)
+	{
+		if(i < 4)
+		{
+			temp = new Lieutenant();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new Lieutenant("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+
+	//create sergeants and add to appropriate collections
+	for(int i = 0; i < 8; i++)
+	{
+		if(i < 4)
+		{
+			temp = new Sergeant();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new Sergeant("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+
+	//create miners and add to appropriate collections
+	for(int i = 0; i < 10; i++)
+	{
+		if(i < 5)
+		{
+			temp = new Miner();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new Miner("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+
+	//create scouts and add to appropriate collections
+	for(int i = 0; i < 16; i++)
+	{
+		if(i < 8)
+		{
+			temp = new Scout();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new Scout("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+
+	//create spys and add to appropriate collections
+	for(int i = 0; i < 2; i++)
+	{
+		if(i == 0)
+		{
+			temp = new Spy();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new Spy("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+
+	//create bombs and add to appropriate collections
+	for(int i = 0; i < 12; i++)
+	{
+		if(i < 6)
+		{
+			temp = new Bomb();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new Bomb("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+
+	//create flags and add to appropriate collections
+	for(int i = 0; i < 2; i++)
+	{
+		if(i == 0)
+		{
+			temp = new Flag();
+
+			addPiece(temp);
+			gPlayer->addPiece(temp);
+		}
+		else
+		{
+			temp = new Flag("cpiece.png");
+
+			addPiece(temp);
+			gComputer->addPiece(temp);
+			gBoard->addPiece(temp);
+		}
+	}
+}
+
+//*****************************************************
+void Game::resetGame()
+{
+	//delete all pieces in game's collection
+	for(int i = 0; i < 92; i++)
+	{
+		delete pieces[i];
+	}
+
+	//clear game's collection of pieces
+	clearPieces();
+
+	//clear board's, player's, and computer's collections of pieces
+	gBoard->clearPieces();
+	gPlayer->clearPieces();
+	gComputer->clearPieces();
+
+	//reset piece buttons
+	for(int i = 0; i < 12; i++)
+	{
+		buttons[i]->setIsAvailable(true);
+	}
+
+	//reset turn
+	setTurn(0);
+
+	//reset play-by-play
+	resetPlayByPlay();
+}
+
+//*****************************************************
+bool Game::checkPlayerWins()
+{
+	//flag exists and moveable piece exists booleans
+	bool flagExists = false,
+		 moveablePieceExists = false;
+
+	//counter
+	int j = 0;
+
+	//temporary piece
+	Piece* temp = 0;
+
+	//number of pieces computer has
+	int numPieces = gComputer->getNumPieces();
+
+	//check for existence of computer's flag
+	for(int i = 0; i < numPieces; i++)
+	{
+		temp = gComputer->findPieceAtPosition(i);
+
+		if(temp->getRank() == 12)
+		{
+			flagExists = true;
+		}
+	}
+
+	//check for existence of moveable piece
+	while(!moveablePieceExists && j < numPieces)
+	{
+		temp = gComputer->findPieceAtPosition(j);
+
+		if(isMoveablePiece(temp, 1))
+		{
+			moveablePieceExists = true;
+		}
+
+		if(!moveablePieceExists)
+		{
+			j++;
+		}
+	}
+
+	if(!flagExists || !moveablePieceExists)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+//*****************************************************
+bool Game::checkComputerWins()
+{
+	//flag exists and moveable piece exists booleans
+	bool flagExists = false,
+		 moveablePieceExists = false;
+
+	//counter
+	int j = 0;
+
+	//temporary piece
+	Piece* temp = 0;
+
+	//number of pieces player has
+	int numPieces = gPlayer->getNumPieces();
+
+	//check for existence of player's flag
+	for(int i = 0; i < numPieces; i++)
+	{
+		temp = gPlayer->findPieceAtPosition(i);
+
+		if(temp->getRank() == 12)
+		{
+			flagExists = true;
+		}
+	}
+
+	//check for existence of moveable piece
+	while(!moveablePieceExists && j < numPieces)
+	{
+		temp = gPlayer->findPieceAtPosition(j);
+
+		if(isMoveablePiece(temp, 0))
+		{
+			moveablePieceExists = true;
+		}
+
+		if(!moveablePieceExists)
+		{
+			j++;
+		}
+	}
+
+	if(!flagExists || !moveablePieceExists)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+//*****************************************************
+void Game::addPiece(Piece* const piece)
+{
+	if(piece != 0)
+	{
+		pieces.push_back(piece);
+	}
+}
+
+//*****************************************************
+Piece* Game::findEmptySpacePiece()
+{
+	//temp piece
+	Piece* temp = 0;
+
+	//found boolean
+	bool found = false;
+
+	//iterator
+	std::vector<Piece*>::iterator iter = pieces.begin();
+
+	while(iter != pieces.end() && !found)
+	{
+		//if the piece has been selected
+		if((*iter)->getRank() == 0 && (*iter)->getBoardSpace() == -1)
+		{
+			temp = *iter;
+
+			found = true;
+		}
+
+		if(!found)
+		{
+			iter++;
+		}
+	}
+
+	return temp;
+}
+
+//*****************************************************
+void Game::swapLocation(Piece* const first, Piece* const second) const
+{
+	//x, y, and boardspace
+	int x = 0,
+		y = 0,
+		boardSpace = 0;
+
+	//hold first's position
+	x = first->getXPos();
+	y = first->getYPos();
+	boardSpace = first->getBoardSpace();
+
+	//set first's position to second's position
+	first->setXPos(second->getXPos());
+	first->setYPos(second->getYPos());
+	first->setBoardSpace(second->getBoardSpace());
+
+	//set second's position with first's position
+	second->setXPos(x);
+	second->setYPos(y);
+	second->setBoardSpace(boardSpace);
+}
+
+//*****************************************************
+bool Game::isMoveablePiece(Piece* const selected, const int mover) const
+{
+	return gBoard->isMoveablePiece(selected, mover);
+}
+
+//*****************************************************
+bool Game::isValidMove(Piece* const selected, Piece* const destination) const
+{
+	//if the selected piece is not a scout
+	if(selected->getRank() != 2)
+	{
+		//make sure destination is one space away above,
+		//below, to the left of, or to the right of the
+		//selected piece
+		if(selected->getBoardSpace() != (destination->getBoardSpace() - 10) &&
+		   selected->getBoardSpace() != (destination->getBoardSpace() + 10) &&
+		   selected->getBoardSpace() != (destination->getBoardSpace() - 1) &&
+		   selected->getBoardSpace() != (destination->getBoardSpace() + 1))
+		{
+			return false;
+		}
+		else
+		{
+			//check to see if destination is emptyspace, and if not
+			//check to see if pieces have different owners
+			if(destination->getRank() != 0)
+			{
+				if(selected->getOwner() == destination->getOwner())
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+			else
+			{
+				return true;
+			}
+		}
+	}
+	//else if piece is a scout
+	else
+	{
+		//check to see if destination piece is directly
+		//above, below, to the left of, or to the right
+		//of the selected piece
+		if((destination->getBoardSpace() % 10) == (selected->getBoardSpace() % 10) ||
+		   (destination->getBoardSpace() / 10) == (selected->getBoardSpace() / 10))
+		{
+			//check to see if it is a valid scout move
+			if(gBoard->isValidScoutMove(selected, destination))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+
+//*****************************************************
+void Game::moveComputerPiece()
+{
+	//pieces
+	Piece* selected = 0;
+	Piece* destination = 0;
+	Piece* winner = 0;
+	Piece* temp = 0;
+
+	//vector of integers
+	std::vector<int> numbers;
+
+	//vector of int's iterator
+	std::vector<int>::iterator iter;
+
+	//number of pieces that computer has
+	int numPieces = gComputer->getNumPieces();
+
+	//find piece and fine move booleans
+	bool isFindingPiece = true,
+		 isFindingMove = true;
+
+	//found boolean
+	bool found = false;
+
+	//counter
+	int i = 99;
+
+	//seed time
+	srand(unsigned(time(0)));
+
+	//populate numbers vector with integers from 0
+	//to the number of pieces computer has
+	for(int j = 0; j < numPieces; j++)
+	{
+		numbers.push_back(j);
+	}
+
+	//shuffle numbers
+	random_shuffle(numbers.begin(), numbers.end());
+
+	iter = numbers.begin();
+
+	//find moveable piece
+	while(isFindingPiece)
+	{
+		selected = gComputer->findPieceAtPosition(*iter);
+
+		if(isMoveablePiece(selected, 1))
+		{
+			isFindingPiece = false;
+		}
+
+		if(isFindingPiece)
+		{
+			iter++;
+		}
+	}
+
+	//find valid move
+	while(isFindingMove)
+	{
+		//search board from bottom to top to help keep
+		//the computer advancing
+		while(!found)
+		{
+			//skip over no man's land
+			if(i != 42 && i != 43 && i != 46 && i != 47 &&
+			   i != 52 && i != 53 && i != 56 && i != 57)
+			{
+				destination = gBoard->findPieceAtBoardSpace(i);
+
+				if(isValidMove(selected, destination))
+				{
+					found = true;
+
+					isFindingMove = false;
+				}
+			}
+
+			i--;
+		}
+	}
+
+	//move piece
+	winner = selected->move(destination);
+
+	//depending on the move outcome, remove defeated
+	//pieces from board's collection and owner's collection
+	//if needed and add emptyspace's where necessary
+	if(winner == 0)
+	{
+		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, -1);
+
+		temp = findEmptySpacePiece();
+
+		gBoard->addPiece(temp);
+
+		gBoard->clearPiece(destination->getBoardSpace());
+		gBoard->clearPiece(selected->getBoardSpace());
+
+		//remove pieces from player and computer collections
+		if(selected->getOwner() == 0)
+		{
+			gPlayer->clearPiece(selected->getBoardSpace());
+		}
+		else
+		{
+			gComputer->clearPiece(selected->getBoardSpace());
+		}
+
+		if(destination->getOwner() == 0)
+		{
+			gPlayer->clearPiece(destination->getBoardSpace());
+		}
+		else
+		{
+			gComputer->clearPiece(destination->getBoardSpace());
+		}
+
+		swapLocation(temp, selected);
+
+		temp = findEmptySpacePiece();
+
+		gBoard->addPiece(temp);
+
+		swapLocation(temp, destination);
+
+		temp = 0;
+	}
+	else if(winner->getRank() == 0)
+	{
+		updatePlayByPlay(selected->getRank(), 1);
+	}
+	else if(winner->getBoardSpace() == destination->getBoardSpace())
+	{
+		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, 0);
+
+		temp = findEmptySpacePiece();
+
+		gBoard->addPiece(temp);
+
+		gBoard->clearPiece(selected->getBoardSpace());
+
+		//remove pieces from player and computer collections
+		if(selected->getOwner() == 0)
+		{
+			gPlayer->clearPiece(selected->getBoardSpace());
+		}
+		else
+		{
+			gComputer->clearPiece(selected->getBoardSpace());
+		}
+
+		swapLocation(temp, selected);
+
+		temp = 0;
+	}
+	else
+	{
+		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, 1);
+
+		temp = findEmptySpacePiece();
+
+		gBoard->addPiece(temp);
+
+		gBoard->clearPiece(destination->getBoardSpace());
+
+		//remove pieces from player and computer collections
+		if(selected->getOwner() == 0)
+		{
+			gPlayer->clearPiece(destination->getBoardSpace());
+		}
+		else
+		{
+			gComputer->clearPiece(destination->getBoardSpace());
+		}
+
+		swapLocation(temp, destination);
+
+		temp = 0;
+	}
+}
+
+//*****************************************************
+void Game::updatePlayByPlay(const int firstRank, const int secondRank, 
+					        const int mover, const int winner) const
+{
+	//play-by-play stringstream
+	std::stringstream ss;
+
+	//font for play-by-play
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
+
+	//SDL surface for new playByPlay message
+	SDL_Surface* newMessage = 0;
+
+	//text color
+	SDL_Color textColor = {0, 0, 0};
+
+	//if player moved
+	if(mover == 0)
+	{
+		ss << "Player's ";
+
+		switch(firstRank)
+		{
+		//marshal
+		case 10:
+			ss << "Marshal";
+			break;
+		//general
+		case 9:
+			ss << "General";
+			break;
+		//colonel
+		case 8:
+			ss << "Colonel";
+			break;
+		//major
+		case 7:
+			ss << "Major";
+			break;
+		//captain
+		case 6:
+			ss << "Captain";
+			break;
+		//lieutenant
+		case 5:
+			ss << "Lieutenant";
+			break;
+		//sergeant
+		case 4:
+			ss << "Sergeant";
+			break;
+		//miner
+		case 3:
+			ss << "Miner";
+			break;
+		//scout
+		case 2:
+			ss << "Scout";
+			break;
+		//spy
+		case 1:
+			ss << "Spy";
+			break;
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayOne->setSurfaceNoFree(newMessage);
+
+		ss.str("");
+
+		//if draw
+		if(winner == -1)
+		{
+			ss << "draws with";
+		}
+		//if player won
+		else if(winner == 0)
+		{
+			if(secondRank == 12)
+			{
+				ss << "captures";
+			}
+			else if(secondRank == 11)
+			{
+				ss << "defuses";
+			}
+			else
+			{
+				ss << "defeats";
+			}
+		}
+		//if computer won
+		else
+		{
+			if(secondRank == 11)
+			{
+				ss << "is blown up by";
+			}
+			else
+			{
+				ss << "is defeated by";
+			}
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayTwo->setSurfaceNoFree(newMessage);
+
+		ss.str("");
+
+		switch(secondRank)
+		{
+		//flag
+		case 12:
+			ss << "Computer's Flag.";
+			break;
+		//bomb
+		case 11:
+			ss << "Computer's Bomb.";
+			break;
+		//marshal
+		case 10:
+			ss << "Computer's Marshal.";
+			break;
+		//general
+		case 9:
+			ss << "Computer's General.";
+			break;
+		//colonel
+		case 8:
+			ss << "Computer's Colonel.";
+			break;
+		//major
+		case 7:
+			ss << "Computer's Major.";
+			break;
+		//captain
+		case 6:
+			ss << "Computer's Captain.";
+			break;
+		//lieutenant
+		case 5:
+			ss << "Computer's Lieutenant.";
+			break;
+		//sergeant
+		case 4:
+			ss << "Computer's Sergeant.";
+			break;
+		//miner
+		case 3:
+			ss << "Computer's Miner.";
+			break;
+		//scout
+		case 2:
+			ss << "Computer's Scout.";
+			break;
+		//spy
+		case 1:
+			ss << "Computer's Spy.";
+			break;
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayThree->setSurfaceNoFree(newMessage);
+	}
+	//if computer moved
+	else
+	{
+		ss << "Computer's ";
+
+		switch(firstRank)
+		{
+		//marshal
+		case 10:
+			ss << "Marshal";
+			break;
+		//general
+		case 9:
+			ss << "General";
+			break;
+		//colonel
+		case 8:
+			ss << "Colonel";
+			break;
+		//major
+		case 7:
+			ss << "Major";
+			break;
+		//captain
+		case 6:
+			ss << "Captain";
+			break;
+		//lieutenant
+		case 5:
+			ss << "Lieutenant";
+			break;
+		//sergeant
+		case 4:
+			ss << "Sergeant";
+			break;
+		//miner
+		case 3:
+			ss << "Miner";
+			break;
+		//scout
+		case 2:
+			ss << "Scout";
+			break;
+		//spy
+		case 1:
+			ss << "Spy";
+			break;
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayOne->setSurfaceNoFree(newMessage);
+
+		ss.str("");
+
+		//if draw
+		if(winner == -1)
+		{
+			ss << "draws with";
+		}
+		//if computer won
+		else if(winner == 1)
+		{
+			if(secondRank == 12)
+			{
+				ss << "captures";
+			}
+			else if(secondRank == 11)
+			{
+				ss << "defuses";
+			}
+			else
+			{
+				ss << "defeats";
+			}
+		}
+		//if player won
+		else
+		{
+			if(secondRank == 11)
+			{
+				ss << "is blown up by";
+			}
+			else
+			{
+				ss << "is defeated by";
+			}
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayTwo->setSurfaceNoFree(newMessage);
+
+		ss.str("");
+
+		switch(secondRank)
+		{
+		//flag
+		case 12:
+			ss << "Player's Flag.";
+			break;
+		//bomb
+		case 11:
+			ss << "Player's Bomb.";
+			break;
+		//marshal
+		case 10:
+			ss << "Player's Marshal.";
+			break;
+		//general
+		case 9:
+			ss << "Player's General.";
+			break;
+		//colonel
+		case 8:
+			ss << "Player's Colonel.";
+			break;
+		//major
+		case 7:
+			ss << "Player's Major.";
+			break;
+		//captain
+		case 6:
+			ss << "Player's Captain.";
+			break;
+		//lieutenant
+		case 5:
+			ss << "Player's Lieutenant.";
+			break;
+		//sergeant
+		case 4:
+			ss << "Player's Sergeant.";
+			break;
+		//miner
+		case 3:
+			ss << "Player's Miner.";
+			break;
+		//scout
+		case 2:
+			ss << "Player's Scout.";
+			break;
+		//spy
+		case 1:
+			ss << "Player's Spy.";
+			break;
+		}
+
+		//update play-by-play and clear stringstream
+		//create new playByPlay image
+		newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+		//update playByPlay image
+		playByPlayThree->setSurfaceNoFree(newMessage);
+	}
+}
+
+//*****************************************************
+void Game::updatePlayByPlay(const int firstRank, const int mover) const
+{
+	//play-by-play stringstream
+	std::stringstream ss;
+
+	//font for play-by-play
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
+
+	//SDL surface for new playByPlay message
+	SDL_Surface* newMessage = 0;
+
+	//text color
+	SDL_Color textColor = {0, 0, 0};
+
+	if(mover == 0)
+	{
+		ss << "Player moves a ";
+	}
+	else
+	{
+		ss << "Computer moves a ";
+	}
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayOne->setSurfaceNoFree(newMessage);
+
+	ss.str("");
+
+	if(mover == 0 || mover == 1)
+	{
+		switch(firstRank)
+		{
+		//marshal
+		case 10:
+			ss << "Marshal.";
+			break;
+		//general
+		case 9:
+			ss << "General.";
+			break;
+		//colonel
+		case 8:
+			ss << "Colonel.";
+			break;
+		//major
+		case 7:
+			ss << "Major.";
+			break;
+		//captain
+		case 6:
+			ss << "Captain.";
+			break;
+		//lieutenant
+		case 5:
+			ss << "Lieutenant.";
+			break;
+		//sergeant
+		case 4:
+			ss << "Sergeant.";
+			break;
+		//miner
+		case 3:
+			ss << "Miner.";
+			break;
+		//scout
+		case 2:
+			ss << "Scout.";
+			break;
+		//spy
+		case 1:
+			ss << "Spy.";
+			break;
+		}
+	}
+	else
+	{
+		ss << " ";
+	}
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayTwo->setSurfaceNoFree(newMessage);
+
+	ss.str("");
+
+	ss << " ";
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayThree->setSurfaceNoFree(newMessage);
+}
+
+//*****************************************************
+void Game::updateComputerPlayByPlay() const
+{
+	//play-by-play stringstream
+	std::stringstream ss;
+
+	//font for play-by-play
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
+
+	//SDL surface for new playByPlay message
+	SDL_Surface* newMessage = 0;
+
+	//text color
+	SDL_Color textColor = {0, 0, 0};
+
+	ss << "Computer moves.";
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayOne->setSurfaceNoFree(newMessage);
+
+	ss.str("");
+
+	ss << " ";
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayTwo->setSurfaceNoFree(newMessage);
+
+	ss.str("");
+
+	ss << " ";
+
+	//update play-by-play and clear stringstream
+	//create new playByPlay image
+	newMessage = TTF_RenderText_Solid(font, ss.str().c_str(), textColor);
+
+	//update playByPlay image
+	playByPlayThree->setSurfaceNoFree(newMessage);
+}
+
+//*****************************************************
+void Game::shiftPlayByPlayDown() const
+{
+	//move block two down to block three
+	playByPlaySeven->setSurface(playByPlayFour->getSurface());
+	playByPlayEight->setSurface(playByPlayFive->getSurface());
+	playByPlayNine->setSurface(playByPlaySix->getSurface());
+
+	//move block one down to block two
+	playByPlayFour->setSurfaceNoFree(playByPlayOne->getSurface());
+	playByPlayFive->setSurfaceNoFree(playByPlayTwo->getSurface());
+	playByPlaySix->setSurfaceNoFree(playByPlayThree->getSurface());
+}
+
+//*****************************************************
+void Game::resetPlayByPlay() const
+{
+	//play-by-play stringstream
+	std::stringstream ss;
+
+	//font for play-by-play
+	TTF_Font* font = TTF_OpenFont("Therfont.ttf", 18);
+
+	//SDL surface for new playByPlay message
+	SDL_Surface* newMessage = 0;
+
+	//text color
+	SDL_Color textColor = {0, 0, 0};
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayOne->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayTwo->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayThree->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayFour->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayFive->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlaySix->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlaySeven->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayEight->setSurface(newMessage);
+
+	newMessage = TTF_RenderText_Solid(font, " ", textColor);
+
+	playByPlayNine->setSurface(newMessage);
 }

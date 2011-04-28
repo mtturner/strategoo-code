@@ -34,7 +34,7 @@ Statistics::Statistics()
 	genocideLine = new Sprite(550, 500);
 }
 
-//*******************************************************************
+//*****************************************************
 Statistics::~Statistics()
 {
 	delete gamesPlayedLine;
@@ -46,113 +46,7 @@ Statistics::~Statistics()
 	delete genocideLine;
 }
 
-//*******************************************************************
-bool Statistics::save(const string& currentPlayer)
-{
-	//declaring local variables
-	ifstream search;
-	ofstream output;
-	string playerName;
-	long readPos;
-	bool newPlayer = true;
-
-	//opening input stream to search player data
-	search.open("statistics.txt", ios::in);
-	
-	//reading through data
-	while(search >> playerName)
-	{
-		if(playerName == currentPlayer)
-		{
-			//catching current position
-			readPos = search.tellg();
-			//current player is not new
-			newPlayer = false;
-		}
-	}
-
-	//closing input stream
-	search.close();
-
-	//opening output stream to record new data
-	output.open("statistics.txt", ios::out|ios::in);
-
-	//if current player is not new go to their prior saved data
-	if(newPlayer == false)
-	{
-		output.seekp(readPos, ios::beg);
-	}
-	//if current player is new go to the end of the file
-	else
-	{
-		output.seekp(0L, ios::end);
-		output << "\n" << currentPlayer;
-	}
-
-	//writing out current player's stats
-	output << "\n" << gamesPlayed_;
-	output << "\n" << gamesWon_;
-	output << "\n" << gamesLost_;
-	output << "\n" << flagsCaptured_;
-	output << "\n" << capturedFlags_;
-	output << "\n" << timesExtinct_;
-	output << "\n" << genocide_;
-
-	//closing output stream
-	output.close();
-
-	//relay whether current player is new
-	if(newPlayer)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
-}
-
-//*******************************************************************
-bool Statistics::load(const string& currentPlayer)
-{
-	//declaring local variables
-	fstream statsFile;
-	string playerName;
-
-	//opening stats file
-	statsFile.open("statistics.txt", ios::in);
-
-	//reading through data
-	while(statsFile >> playerName)
-	{
-		//loading data if stored data exists
-		if(playerName == currentPlayer)
-		{
-			statsFile >> gamesPlayed_;
-			statsFile >> gamesWon_;
-			statsFile >> gamesLost_;
-			statsFile >> flagsCaptured_;
-			statsFile >> capturedFlags_;
-			statsFile >> timesExtinct_;
-			statsFile >> genocide_;
-		}
-	}
-	
-	//closing input stream
-	statsFile.close();
-
-	//relaying if player had stored data
-	if(gamesPlayed_ == 0)
-	{
-		return 0;
-	}
-	else
-	{
-		return 1;
-	}	
-}
-
-//*******************************************************************
+//*****************************************************
 bool Statistics::setSprites() const
 {
 	//creating surface for statistics text
@@ -241,8 +135,114 @@ bool Statistics::setSprites() const
 	}
 }
 
-//******************************************************************************
-void Statistics::display(SDL_Surface* background) const
+//*****************************************************
+bool Statistics::save(const string& currentPlayer) const
+{
+	//declaring local variables
+	ifstream search;
+	ofstream output;
+	string playerName;
+	long readPos;
+	bool newPlayer = true;
+
+	//opening input stream to search player data
+	search.open("statistics.txt", ios::in);
+	
+	//reading through data
+	while(search >> playerName)
+	{
+		if(playerName == currentPlayer)
+		{
+			//catching current position
+			readPos = static_cast<long>(search.tellg());
+			//current player is not new
+			newPlayer = false;
+		}
+	}
+
+	//closing input stream
+	search.close();
+
+	//opening output stream to record new data
+	output.open("statistics.txt", ios::out|ios::in);
+
+	//if current player is not new go to their prior saved data
+	if(newPlayer == false)
+	{
+		output.seekp(readPos, ios::beg);
+	}
+	//if current player is new go to the end of the file
+	else
+	{
+		output.seekp(0L, ios::end);
+		output << "\n" << currentPlayer;
+	}
+
+	//writing out current player's stats
+	output << "\n" << gamesPlayed_;
+	output << "\n" << gamesWon_;
+	output << "\n" << gamesLost_;
+	output << "\n" << flagsCaptured_;
+	output << "\n" << capturedFlags_;
+	output << "\n" << timesExtinct_;
+	output << "\n" << genocide_;
+
+	//closing output stream
+	output.close();
+
+	//relay whether current player is new
+	if(newPlayer)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+//*****************************************************
+bool Statistics::load(const string& currentPlayer)
+{
+	//declaring local variables
+	fstream statsFile;
+	string playerName;
+
+	//opening stats file
+	statsFile.open("statistics.txt", ios::in);
+
+	//reading through data
+	while(statsFile >> playerName)
+	{
+		//loading data if stored data exists
+		if(playerName == currentPlayer)
+		{
+			statsFile >> gamesPlayed_;
+			statsFile >> gamesWon_;
+			statsFile >> gamesLost_;
+			statsFile >> flagsCaptured_;
+			statsFile >> capturedFlags_;
+			statsFile >> timesExtinct_;
+			statsFile >> genocide_;
+		}
+	}
+	
+	//closing input stream
+	statsFile.close();
+
+	//relaying if player had stored data
+	if(gamesPlayed_ == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}	
+}
+
+//*****************************************************
+void Statistics::display(SDL_Surface* const background) const
 {
 	//setting individual stat surfaces to display
 	gamesPlayedLine->show(background);
