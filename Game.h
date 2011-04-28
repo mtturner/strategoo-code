@@ -69,7 +69,6 @@ public:
 	bool doStartMenu();
 	bool doSetPiece();
 	bool doPlayGame();
-	bool doEndGame();
 	bool doInGameMenu();
 	bool doStatistics();
 

@@ -26,9 +26,9 @@ public:
 	inline void setGenocide(const int input);
 	bool setSprites() const;
 
-	//save, load, and display
-    bool save(const std::string& currentPlayer) const;
+	//load, save and display
     bool load(const std::string& currentPlayer);
+	bool save(const std::string& currentPlayer) const;
     void display(SDL_Surface* const background) const;
 
 private:

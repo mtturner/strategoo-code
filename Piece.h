@@ -38,8 +38,8 @@ public:
 	void swapLocation(Piece* const other);
 
 	//input logic, and rendering
-	virtual Piece* move(Piece* const destination) = 0;
 	void handleInput(SDL_Event& gEvent);
+	virtual Piece* move(Piece* const destination) = 0;
 	inline virtual void show(SDL_Surface* const destination) const;
 
 	//operator overloads

@@ -136,6 +136,46 @@ bool Statistics::setSprites() const
 }
 
 //*****************************************************
+bool Statistics::load(const string& currentPlayer)
+{
+	//declaring local variables
+	fstream statsFile;
+	string playerName;
+
+	//opening stats file
+	statsFile.open("statistics.txt", ios::in);
+
+	//reading through data
+	while(statsFile >> playerName)
+	{
+		//loading data if stored data exists
+		if(playerName == currentPlayer)
+		{
+			statsFile >> gamesPlayed_;
+			statsFile >> gamesWon_;
+			statsFile >> gamesLost_;
+			statsFile >> flagsCaptured_;
+			statsFile >> capturedFlags_;
+			statsFile >> timesExtinct_;
+			statsFile >> genocide_;
+		}
+	}
+	
+	//closing input stream
+	statsFile.close();
+
+	//relaying if player had stored data
+	if(gamesPlayed_ == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}	
+}
+
+//*****************************************************
 bool Statistics::save(const string& currentPlayer) const
 {
 	//declaring local variables
@@ -199,46 +239,6 @@ bool Statistics::save(const string& currentPlayer) const
 	{
 		return true;
 	}
-}
-
-//*****************************************************
-bool Statistics::load(const string& currentPlayer)
-{
-	//declaring local variables
-	fstream statsFile;
-	string playerName;
-
-	//opening stats file
-	statsFile.open("statistics.txt", ios::in);
-
-	//reading through data
-	while(statsFile >> playerName)
-	{
-		//loading data if stored data exists
-		if(playerName == currentPlayer)
-		{
-			statsFile >> gamesPlayed_;
-			statsFile >> gamesWon_;
-			statsFile >> gamesLost_;
-			statsFile >> flagsCaptured_;
-			statsFile >> capturedFlags_;
-			statsFile >> timesExtinct_;
-			statsFile >> genocide_;
-		}
-	}
-	
-	//closing input stream
-	statsFile.close();
-
-	//relaying if player had stored data
-	if(gamesPlayed_ == 0)
-	{
-		return 0;
-	}
-	else
-	{
-		return 1;
-	}	
 }
 
 //*****************************************************

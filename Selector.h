@@ -18,10 +18,12 @@ public:
 	Selector();
 	~Selector();
 
-	//selection functions
+	//getters and setters
 	inline int getChoice() const;
 	void setChoice(const int choice);
 	inline void setMoved(const bool moved);
+
+	//reset
 	void reset();
 
 	//input, logic, and rendering
