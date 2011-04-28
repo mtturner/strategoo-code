@@ -21,7 +21,7 @@ General::General(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 }
 
 //****************************************
-Piece* General::move(Piece* destination)
+Piece* General::move(Piece* const destination)
 {
 	//if the piece is an emptyspace
 	if(destination->getRank() == 0)

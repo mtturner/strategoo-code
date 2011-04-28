@@ -21,7 +21,7 @@ Bomb::Bomb(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 }
 
 //****************************************
-Piece* Bomb::move(Piece* destination)
+Piece* Bomb::move(Piece* const destination)
 {
 	//bombs can't move!!!!!111111oneoneone
 	return 0;

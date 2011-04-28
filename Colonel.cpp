@@ -21,7 +21,7 @@ Colonel::Colonel(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 }
 
 //****************************************
-Piece* Colonel::move(Piece* destination)
+Piece* Colonel::move(Piece* const destination)
 {
 	//if the piece is an emptyspace
 	if(destination->getRank() == 0)

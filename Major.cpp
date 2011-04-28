@@ -21,7 +21,7 @@ Major::Major(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 }
 
 //****************************************
-Piece* Major::move(Piece* destination)
+Piece* Major::move(Piece* const destination)
 {
 	//if the piece is an emptyspace
 	if(destination->getRank() == 0)

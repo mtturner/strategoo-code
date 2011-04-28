@@ -18,7 +18,7 @@ PieceButton::PieceButton()
 	setIsSelected(false);
 }
 
-//******************************************
+//*****************************************************
 PieceButton::PieceButton(const int x, const int y, const int rank,
 						 const std::string& button)
 {
@@ -34,7 +34,7 @@ PieceButton::PieceButton(const int x, const int y, const int rank,
 	setIsAvailable(true);
 }
 
-//******************************************
+//*****************************************************
 PieceButton::~PieceButton()
 {
 	//delete sprites
@@ -42,20 +42,8 @@ PieceButton::~PieceButton()
 	delete buttonUnavailable;
 }
 
-//******************************************
-void PieceButton::setIsSelected(const bool selected)
-{
-	isSelected = selected;
-}
-
-//******************************************
-void PieceButton::setIsAvailable(const bool available)
-{
-	isAvailable = available;
-}
-
-//******************************************
-void PieceButton::setRank(int rank)
+//*****************************************************
+void PieceButton::setRank(const int rank)
 {
 	if(rank > 0 && rank < 13)
 	{
@@ -63,8 +51,8 @@ void PieceButton::setRank(int rank)
 	}
 }
 
-//******************************************
-void PieceButton::setXPos(int xPos)
+//*****************************************************
+void PieceButton::setXPos(const int xPos)
 {
 	if(xPos > -1 && xPos < 800)
 	{
@@ -73,8 +61,8 @@ void PieceButton::setXPos(int xPos)
 	}
 }
 
-//******************************************
-void PieceButton::setYPos(int yPos)
+//*****************************************************
+void PieceButton::setYPos(const int yPos)
 {
 	if(yPos > -1 && yPos < 600)
 	{
@@ -83,7 +71,7 @@ void PieceButton::setYPos(int yPos)
 	}
 }
 
-//******************************************
+//*****************************************************
 void PieceButton::handleInput(SDL_Event& gEvent)
 {
 	//mouse offsets
@@ -115,7 +103,7 @@ void PieceButton::handleInput(SDL_Event& gEvent)
 	}
 }
 
-//******************************************
+//*****************************************************
 void PieceButton::show(SDL_Surface* screen) const
 {
 	//if the button is available

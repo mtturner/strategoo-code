@@ -21,7 +21,7 @@ Lieutenant::Lieutenant(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 }
 
 //****************************************
-Piece* Lieutenant::move(Piece* destination)
+Piece* Lieutenant::move(Piece* const destination)
 {
 	//if the piece is an emptyspace
 	if(destination->getRank() == 0)

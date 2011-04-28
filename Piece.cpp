@@ -7,7 +7,7 @@
 
 #include "Piece.h"
 
-Piece::Piece(int x, int y, int owner)
+Piece::Piece(const int x, const int y, const int owner)
 {
 	pieceImage = new Sprite(x, y);
 
@@ -16,8 +16,9 @@ Piece::Piece(int x, int y, int owner)
 	name_ = "john doe";
 }
 
-//*********************************
-Piece::Piece(int x, int y, std::string filename, int owner)
+//*****************************************************
+Piece::Piece(const int x, const int y, const std::string& filename, 
+	         const int owner)
 {
 	pieceImage = new Sprite(x, y, filename.c_str());
 
@@ -25,25 +26,68 @@ Piece::Piece(int x, int y, std::string filename, int owner)
 	setIsSelected(false);
 }
 
-//*********************************
+//*****************************************************
 Piece::~Piece()
 {
 	delete pieceImage;
 }
 
-//*********************************
-void Piece::setXPos(int xPos)
+//*****************************************************
+void Piece::setRank(const int rank)
 {
-	pieceImage->setXPos(xPos);
+	if(rank > -1 && rank < 13)
+	{
+		rank_ = rank;
+	}
 }
 
-//*********************************
-void Piece::setYPos(int yPos)
+//*****************************************************
+void Piece::setBoardSpace(const int boardSpace)
 {
-	pieceImage->setYPos(yPos);
+	if(boardSpace > -2 && boardSpace < 100 &&
+	   boardSpace != 42 && boardSpace != 43 &&
+	   boardSpace != 46 && boardSpace != 47 &&
+	   boardSpace != 52 && boardSpace != 53 &&
+	   boardSpace != 56 && boardSpace != 57)
+	{
+		boardSpace_ = boardSpace;
+	}
 }
 
-//*********************************
+//*****************************************************
+void Piece::setOwner(const int owner)
+{
+	if(owner == 0 || owner == 1)
+	{
+		owner_ = owner;
+	}
+}
+
+//*****************************************************
+void Piece::swapLocation(Piece* const other)
+{
+	//x, y, and boardspace
+	int x = 0,
+		y = 0,
+		boardSpace = 0;
+
+	//hold first's position
+	x = getXPos();
+	y = getYPos();
+	boardSpace = getBoardSpace();
+
+	//set first's position to second's position
+	setXPos(other->getXPos());
+	setYPos(other->getYPos());
+	setBoardSpace(other->getBoardSpace());
+
+	//set second's position with first's position
+	other->setXPos(x);
+	other->setYPos(y);
+	other->setBoardSpace(boardSpace);
+}
+
+//*****************************************************
 void Piece::handleInput(SDL_Event& gEvent)
 {
 	//mouse offsets
@@ -69,71 +113,4 @@ void Piece::handleInput(SDL_Event& gEvent)
 			}
 		}
 	}
-}
-
-//*********************************
-void Piece::show(SDL_Surface* destination) const
-{
-	pieceImage->show(destination);
-}
-
-//*********************************
-void Piece::namePiece()
-{
-}
-
-//*********************************
-void Piece::setRank(int rank)
-{
-     rank_ = rank;
-}
-
-//*********************************
-void Piece::setBoardSpace(int boardSpace)
-{
-	boardSpace_ = boardSpace;
-}
-
-//*********************************
-void Piece::setIsSelected(const bool selected)
-{
-	isSelected = selected;
-}
-
-//*********************************
-void Piece::setOwner(const int owner)
-{
-	if(owner == 0 || owner == 1)
-	{
-		owner_ = owner;
-	}
-}
-
-void Piece::setName(const std::string& name)
-{
-    name_ = name;
-}
-
-//*********************************
-void Piece::swapLocation(Piece* other)
-{
-	//x, y, and boardspace
-	int x = 0,
-		y = 0,
-		boardSpace = 0;
-
-	//hold first's position
-	x = getXPos();
-	y = getYPos();
-	boardSpace = getBoardSpace();
-
-	//set first's position to second's position
-	setXPos(other->getXPos());
-	setYPos(other->getYPos());
-	setBoardSpace(other->getBoardSpace());
-
-	//set second's position with first's position
-	other->setXPos(x);
-	other->setYPos(y);
-	other->setBoardSpace(boardSpace);
 }

@@ -14,8 +14,8 @@ class EmptySpace : public Piece
 public:
     EmptySpace(int xPos = 0, int yPos = 0, int boardSpace = -1);
 
-    virtual Piece* move(Piece* destination);
-	virtual void show(SDL_Surface* destination) const;
+    virtual Piece* move(Piece* const destination);
+	virtual void show(SDL_Surface* const destination) const;
 };
 
 #endif

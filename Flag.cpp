@@ -21,7 +21,7 @@ Flag::Flag(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 }
 
 //****************************************
-Piece* Flag::move(Piece* destination)
+Piece* Flag::move(Piece* const destination)
 {
 	//can't move!!!!!!!!
 	return 0;

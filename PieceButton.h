@@ -16,6 +16,7 @@
 class PieceButton
 {
 public:
+	//constructors and destructor
 	PieceButton();
 	PieceButton(const int x, const int y, const int rank,
 		        const std::string& button);
@@ -23,15 +24,15 @@ public:
 
 	//getters and setters
 	inline bool getIsSelected() const;
-	void setIsSelected(const bool selected);
+	inline void setIsSelected(const bool selected);
 	inline bool getIsAvailable() const;
-	void setIsAvailable(const bool available);
+	inline void setIsAvailable(const bool available);
 	inline int getRank() const;
-	void setRank(int rank);
+	void setRank(const int rank);
 	inline int getXPos() const;
-	void setXPos(int xPos);
+	void setXPos(const int xPos);
 	inline int getYPos() const;
-	void setYPos(int yPos);
+	void setYPos(const int yPos);
 
 	//input and rendering
 	void handleInput(SDL_Event& gEvent);
@@ -42,36 +43,51 @@ private:
 	Sprite* buttonImage;
 	Sprite* buttonUnavailable;
 
+	//rank of pieces button represents
 	int rank_;
 
+	//isSelected and isAvailable booleans
 	bool isSelected,
 		 isAvailable;
 };
 
+//*****************************************************
 inline bool PieceButton::getIsSelected() const
 {
 	return isSelected;
 }
 
-//******************************************
+//*****************************************************
+inline void PieceButton::setIsSelected(const bool selected)
+{
+	isSelected = selected;
+}
+
+//*****************************************************
 inline bool PieceButton::getIsAvailable() const
 {
 	return isAvailable;
 }
 
-//******************************************
+//*****************************************************
+inline void PieceButton::setIsAvailable(const bool available)
+{
+	isAvailable = available;
+}
+
+//*****************************************************
 inline int PieceButton::getRank() const
 {
 	return rank_;
 }
 
-//******************************************
+//*****************************************************
 inline int PieceButton::getXPos() const
 {
 	return buttonImage->getXPos();
 }
 
-//******************************************
+//*****************************************************
 inline int PieceButton::getYPos() const
 {
 	return buttonImage->getYPos();
