@@ -227,7 +227,10 @@ bool Game::initialize()
 	buttonOverlay = new Sprite(0, 0, "buttonoverlay.png", 100);
 
 	//create set piece finish image
-	finishedSetPiece = new Sprite(260, 50, "gamestart.png");
+	finishedSetPiece = new Sprite(260, 50);
+	finishedSetPiece->load("gamestart.png", 255, 255, 255);
+
+	//create name piece image
 	namePieceBG = new Sprite(260, 50, "namingpiece.png");
 
 	//create game result images
@@ -1941,7 +1944,7 @@ void Game::moveComputerPiece()
 }
 
 //*****************************************************
-void Game::updatePlayByPlay(const int firstRank, const int secondRank, 
+void Game::updatePlayByPlay(const int firstRank, const int secondRank,
 					        const int mover, const int winner) const
 {
 	//play-by-play stringstream
