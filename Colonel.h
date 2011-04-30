@@ -12,9 +12,11 @@
 class Colonel : public Piece
 {
 public:
+	//constructors
     Colonel(int xPos = 0, int yPos = 0, int boardSpace = -1);
 	Colonel(std::string filename);
 
+	//move
 	virtual Piece* move(Piece* const destination);
 };
 

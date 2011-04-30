@@ -12,9 +12,11 @@
 class Scout: public Piece
 {
 public:
+	//constructors
 	Scout(int xPos = 0, int yPos = 0, int boardSpace = -1);
 	Scout(std::string filename);
 
+	//move
     virtual Piece* move(Piece* const destination);
 };
 

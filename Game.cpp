@@ -493,17 +493,20 @@ bool Game::doSetPiece()
 				}
 			}
 
-			//handle piece button input
-			for(int i = 0; i < 12; i++)
+			//if the player is not naming a piece
+			if(!namingPiece)
 			{
-				buttons[i]->handleInput(gEvent);
+				//handle piece button input
+				for(int i = 0; i < 12; i++)
+				{
+					buttons[i]->handleInput(gEvent);
+				}
+
+				//handle board piece input
+				gBoard->handlePieceInput(gEvent);
 			}
-
-			//handle board piece input
-			gBoard->handlePieceInput(gEvent);
-
 			//if the player is naming a piece
-			if(namingPiece)
+			else
 			{
                 //handle string input for naming of pieces
                 name->handleInput(gEvent, 6);
@@ -772,7 +775,7 @@ bool Game::doPlayGame()
 						if(winner == 0)
 						{
 							shiftPlayByPlayDown();
-							updatePlayByPlay(selected->getRank(), destination->getRank(), 0, -1);
+							updatePlayByPlay(selected, destination, 0, -1);
 
 							temp = findEmptySpacePiece();
 
@@ -813,12 +816,12 @@ bool Game::doPlayGame()
 						else if(winner->getRank() == 0)
 						{
 							shiftPlayByPlayDown();
-							updatePlayByPlay(selected->getRank(), 0);
+							updatePlayByPlay(selected, destination, 0);
 						}
 						else if(winner->getBoardSpace() == destination->getBoardSpace())
 						{
 							shiftPlayByPlayDown();
-							updatePlayByPlay(selected->getRank(), destination->getRank(), 0, 1);
+							updatePlayByPlay(selected, destination, 0, 1);
 
 							temp = findEmptySpacePiece();
 
@@ -843,7 +846,7 @@ bool Game::doPlayGame()
 						else
 						{
 							shiftPlayByPlayDown();
-							updatePlayByPlay(selected->getRank(), destination->getRank(), 0, 0);
+							updatePlayByPlay(selected, destination, 0, 0);
 
 							temp = findEmptySpacePiece();
 
@@ -942,22 +945,22 @@ bool Game::doPlayGame()
 			moveComputerPiece();
 
 			//check to see if the game has been won by player
-						if(checkPlayerWins())
-						{
-							//set winner to player
-							winningTeam = 0;
+			if(checkPlayerWins())
+			{
+				//set winner to player
+				winningTeam = 0;
 
-							//set game result sprite to player wins
-							gameResult = playerWinsImage;
-						}
-						else if(checkComputerWins())
-						{
-							//set winner to computer
-							winningTeam = 1;
+				//set game result sprite to player wins
+				gameResult = playerWinsImage;
+			}
+			else if(checkComputerWins())
+			{
+				//set winner to computer
+				winningTeam = 1;
 
-							//set game result sprite to computer wins
-							gameResult = computerWinsImage;
-						}
+				//set game result sprite to computer wins
+				gameResult = computerWinsImage;
+			}
 
 			//set turn to player's
 			if(winningTeam == -1)
@@ -1027,7 +1030,7 @@ bool Game::doPlayGame()
 
 		if(man != 0)
 		{
-            		man->show(getScreen());
+            man->show(getScreen());
 		}
 
 		//render to the screen
@@ -1742,6 +1745,12 @@ bool Game::isValidMove(Piece* const selected, Piece* const destination) const
 		if((destination->getBoardSpace() % 10) == (selected->getBoardSpace() % 10) ||
 		   (destination->getBoardSpace() / 10) == (selected->getBoardSpace() / 10))
 		{
+			//check to see if owners are different
+			if(selected->getOwner() == destination->getOwner())
+			{
+				return false;
+			}
+
 			//check to see if it is a valid scout move
 			if(gBoard->isValidScoutMove(selected, destination))
 			{
@@ -1851,7 +1860,7 @@ void Game::moveComputerPiece()
 	//if needed and add emptyspace's where necessary
 	if(winner == 0)
 	{
-		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, -1);
+		updatePlayByPlay(selected, destination, 1, -1);
 
 		temp = findEmptySpacePiece();
 
@@ -1891,11 +1900,11 @@ void Game::moveComputerPiece()
 	}
 	else if(winner->getRank() == 0)
 	{
-		updatePlayByPlay(selected->getRank(), 1);
+		updatePlayByPlay(selected, destination, 1);
 	}
 	else if(winner->getBoardSpace() == destination->getBoardSpace())
 	{
-		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, 0);
+		updatePlayByPlay(selected, destination, 1, 0);
 
 		temp = findEmptySpacePiece();
 
@@ -1919,7 +1928,7 @@ void Game::moveComputerPiece()
 	}
 	else
 	{
-		updatePlayByPlay(selected->getRank(), destination->getRank(), 1, 1);
+		updatePlayByPlay(selected, destination, 1, 1);
 
 		temp = findEmptySpacePiece();
 
@@ -1928,7 +1937,7 @@ void Game::moveComputerPiece()
 		gBoard->clearPiece(destination->getBoardSpace());
 
 		//remove pieces from player and computer collections
-		if(selected->getOwner() == 0)
+		if(destination->getOwner() == 0)
 		{
 			gPlayer->clearPiece(destination->getBoardSpace());
 		}
@@ -1944,8 +1953,9 @@ void Game::moveComputerPiece()
 }
 
 //*****************************************************
-void Game::updatePlayByPlay(const int firstRank, const int secondRank,
-					        const int mover, const int winner) const
+<<<<<<< .minevoid Game::updatePlayByPlay(Piece* const first, Piece* const second, 
+=======void Game::updatePlayByPlay(const int firstRank, const int secondRank,
+>>>>>>> .theirs					        const int mover, const int winner) const
 {
 	//play-by-play stringstream
 	std::stringstream ss;
@@ -1964,48 +1974,57 @@ void Game::updatePlayByPlay(const int firstRank, const int secondRank,
 	{
 		ss << "Player's ";
 
-		switch(firstRank)
+		switch(first->getRank())
 		{
 		//marshal
 		case 10:
-			ss << "Marshal";
+			ss << "Marshal(";
 			break;
 		//general
 		case 9:
-			ss << "General";
+			ss << "General(";
 			break;
 		//colonel
 		case 8:
-			ss << "Colonel";
+			ss << "Colonel(";
 			break;
 		//major
 		case 7:
-			ss << "Major";
+			ss << "Major(";
 			break;
 		//captain
 		case 6:
-			ss << "Captain";
+			ss << "Captain(";
 			break;
 		//lieutenant
 		case 5:
-			ss << "Lieutenant";
+			ss << "Lieutenant(";
 			break;
 		//sergeant
 		case 4:
-			ss << "Sergeant";
+			ss << "Sergeant(";
 			break;
 		//miner
 		case 3:
-			ss << "Miner";
+			ss << "Miner(";
 			break;
 		//scout
 		case 2:
-			ss << "Scout";
+			ss << "Scout(";
 			break;
 		//spy
 		case 1:
-			ss << "Spy";
+			ss << "Spy(";
 			break;
+		}
+
+		if(winner == 0)
+		{
+			ss << second->getBoardSpace() << ")";
+		}
+		else
+		{
+			ss << first->getBoardSpace() << ")";
 		}
 
 		//update play-by-play and clear stringstream
@@ -2025,11 +2044,11 @@ void Game::updatePlayByPlay(const int firstRank, const int secondRank,
 		//if player won
 		else if(winner == 0)
 		{
-			if(secondRank == 12)
+			if(second->getRank() == 12)
 			{
 				ss << "captures";
 			}
-			else if(secondRank == 11)
+			else if(second->getRank() == 11)
 			{
 				ss << "defuses";
 			}
@@ -2041,7 +2060,7 @@ void Game::updatePlayByPlay(const int firstRank, const int secondRank,
 		//if computer won
 		else
 		{
-			if(secondRank == 11)
+			if(second->getRank() == 11)
 			{
 				ss << "is blown up by";
 			}
@@ -2060,56 +2079,67 @@ void Game::updatePlayByPlay(const int firstRank, const int secondRank,
 
 		ss.str("");
 
-		switch(secondRank)
+		ss << "Gary's ";
+
+		switch(second->getRank())
 		{
 		//flag
 		case 12:
-			ss << "Computer's Flag.";
+			ss << "Flag(";
 			break;
 		//bomb
 		case 11:
-			ss << "Computer's Bomb.";
+			ss << "Bomb(";
 			break;
 		//marshal
 		case 10:
-			ss << "Computer's Marshal.";
+			ss << "Marshal(";
 			break;
 		//general
 		case 9:
-			ss << "Computer's General.";
+			ss << "General(";
 			break;
 		//colonel
 		case 8:
-			ss << "Computer's Colonel.";
+			ss << "Colonel(";
 			break;
 		//major
 		case 7:
-			ss << "Computer's Major.";
+			ss << "Major(";
 			break;
 		//captain
 		case 6:
-			ss << "Computer's Captain.";
+			ss << "Captain(";
 			break;
 		//lieutenant
 		case 5:
-			ss << "Computer's Lieutenant.";
+			ss << "Lieutenant(";
 			break;
 		//sergeant
 		case 4:
-			ss << "Computer's Sergeant.";
+			ss << "Sergeant(";
 			break;
 		//miner
 		case 3:
-			ss << "Computer's Miner.";
+			ss << "Miner(";
 			break;
 		//scout
 		case 2:
-			ss << "Computer's Scout.";
+			ss << "Scout(";
 			break;
 		//spy
 		case 1:
-			ss << "Computer's Spy.";
+			ss << "Spy(";
 			break;
+		}
+
+		if(winner == 0)
+		{
+			ss << first->getBoardSpace() << ").";
+		}
+		else
+		{
+			ss << second->getBoardSpace() << ").";
 		}
 
 		//update play-by-play and clear stringstream
@@ -2122,50 +2152,59 @@ void Game::updatePlayByPlay(const int firstRank, const int secondRank,
 	//if computer moved
 	else
 	{
-		ss << "Computer's ";
+		ss << "Gary's ";
 
-		switch(firstRank)
+		switch(first->getRank())
 		{
 		//marshal
 		case 10:
-			ss << "Marshal";
+			ss << "Marshal(";
 			break;
 		//general
 		case 9:
-			ss << "General";
+			ss << "General(";
 			break;
 		//colonel
 		case 8:
-			ss << "Colonel";
+			ss << "Colonel(";
 			break;
 		//major
 		case 7:
-			ss << "Major";
+			ss << "Major(";
 			break;
 		//captain
 		case 6:
-			ss << "Captain";
+			ss << "Captain(";
 			break;
 		//lieutenant
 		case 5:
-			ss << "Lieutenant";
+			ss << "Lieutenant(";
 			break;
 		//sergeant
 		case 4:
-			ss << "Sergeant";
+			ss << "Sergeant(";
 			break;
 		//miner
 		case 3:
-			ss << "Miner";
+			ss << "Miner(";
 			break;
 		//scout
 		case 2:
-			ss << "Scout";
+			ss << "Scout(";
 			break;
 		//spy
 		case 1:
-			ss << "Spy";
+			ss << "Spy(";
 			break;
+		}
+
+		if(winner == 1)
+		{
+			ss << second->getBoardSpace() << ")";
+		}
+		else
+		{
+			ss << first->getBoardSpace() << ")";
 		}
 
 		//update play-by-play and clear stringstream
@@ -2185,11 +2224,11 @@ void Game::updatePlayByPlay(const int firstRank, const int secondRank,
 		//if computer won
 		else if(winner == 1)
 		{
-			if(secondRank == 12)
+			if(second->getRank() == 12)
 			{
 				ss << "captures";
 			}
-			else if(secondRank == 11)
+			else if(second->getRank() == 11)
 			{
 				ss << "defuses";
 			}
@@ -2201,7 +2240,7 @@ void Game::updatePlayByPlay(const int firstRank, const int secondRank,
 		//if player won
 		else
 		{
-			if(secondRank == 11)
+			if(second->getRank() == 11)
 			{
 				ss << "is blown up by";
 			}
@@ -2220,56 +2259,67 @@ void Game::updatePlayByPlay(const int firstRank, const int secondRank,
 
 		ss.str("");
 
-		switch(secondRank)
+		ss << "Player's ";
+
+		switch(second->getRank())
 		{
 		//flag
 		case 12:
-			ss << "Player's Flag.";
+			ss << "Flag(";
 			break;
 		//bomb
 		case 11:
-			ss << "Player's Bomb.";
+			ss << "Bomb(";
 			break;
 		//marshal
 		case 10:
-			ss << "Player's Marshal.";
+			ss << "Marshal(";
 			break;
 		//general
 		case 9:
-			ss << "Player's General.";
+			ss << "General(";
 			break;
 		//colonel
 		case 8:
-			ss << "Player's Colonel.";
+			ss << "Colonel(";
 			break;
 		//major
 		case 7:
-			ss << "Player's Major.";
+			ss << "Major(";
 			break;
 		//captain
 		case 6:
-			ss << "Player's Captain.";
+			ss << "Captain(";
 			break;
 		//lieutenant
 		case 5:
-			ss << "Player's Lieutenant.";
+			ss << "Lieutenant(";
 			break;
 		//sergeant
 		case 4:
-			ss << "Player's Sergeant.";
+			ss << "Sergeant(";
 			break;
 		//miner
 		case 3:
-			ss << "Player's Miner.";
+			ss << "Miner(";
 			break;
 		//scout
 		case 2:
-			ss << "Player's Scout.";
+			ss << "Scout(";
 			break;
 		//spy
 		case 1:
-			ss << "Player's Spy.";
+			ss << "Spy(";
 			break;
+		}
+
+		if(winner == 1)
+		{
+			ss << first->getBoardSpace() << ").";
+		}
+		else
+		{
+			ss << second->getBoardSpace() << ").";
 		}
 
 		//update play-by-play and clear stringstream
@@ -2282,7 +2332,7 @@ void Game::updatePlayByPlay(const int firstRank, const int secondRank,
 }
 
 //*****************************************************
-void Game::updatePlayByPlay(const int firstRank, const int mover) const
+void Game::updatePlayByPlay(Piece* const moved, Piece* const destination, const int mover) const
 {
 	//play-by-play stringstream
 	std::stringstream ss;
@@ -2302,7 +2352,7 @@ void Game::updatePlayByPlay(const int firstRank, const int mover) const
 	}
 	else
 	{
-		ss << "Computer moves a ";
+		ss << "Gary moves a ";
 	}
 
 	//update play-by-play and clear stringstream
@@ -2316,47 +2366,47 @@ void Game::updatePlayByPlay(const int firstRank, const int mover) const
 
 	if(mover == 0 || mover == 1)
 	{
-		switch(firstRank)
+		switch(moved->getRank())
 		{
 		//marshal
 		case 10:
-			ss << "Marshal.";
+			ss << "Marshal(" << destination->getBoardSpace() << ")";
 			break;
 		//general
 		case 9:
-			ss << "General.";
+			ss << "General(" << destination->getBoardSpace() << ")";
 			break;
 		//colonel
 		case 8:
-			ss << "Colonel.";
+			ss << "Colonel(" << destination->getBoardSpace() << ")";
 			break;
 		//major
 		case 7:
-			ss << "Major.";
+			ss << "Major(" << destination->getBoardSpace() << ")";
 			break;
 		//captain
 		case 6:
-			ss << "Captain.";
+			ss << "Captain(" << destination->getBoardSpace() << ")";
 			break;
 		//lieutenant
 		case 5:
-			ss << "Lieutenant.";
+			ss << "Lieutenant(" << destination->getBoardSpace() << ")";
 			break;
 		//sergeant
 		case 4:
-			ss << "Sergeant.";
+			ss << "Sergeant(" << destination->getBoardSpace() << ")";
 			break;
 		//miner
 		case 3:
-			ss << "Miner.";
+			ss << "Miner(" << destination->getBoardSpace() << ")";
 			break;
 		//scout
 		case 2:
-			ss << "Scout.";
+			ss << "Scout(" << destination->getBoardSpace() << ")";
 			break;
 		//spy
 		case 1:
-			ss << "Spy.";
+			ss << "Spy(" << destination->getBoardSpace() << ")";
 			break;
 		}
 	}
@@ -2374,7 +2424,7 @@ void Game::updatePlayByPlay(const int firstRank, const int mover) const
 
 	ss.str("");
 
-	ss << " ";
+	ss << "to board space " << moved->getBoardSpace() << ".";
 
 	//update play-by-play and clear stringstream
 	//create new playByPlay image
@@ -2385,7 +2435,7 @@ void Game::updatePlayByPlay(const int firstRank, const int mover) const
 }
 
 //*****************************************************
-void Game::updateComputerPlayByPlay() const
+void Game::updateComputerPlayByPlay(Piece* const moved, Piece* const destination) const
 {
 	//play-by-play stringstream
 	std::stringstream ss;
@@ -2399,7 +2449,7 @@ void Game::updateComputerPlayByPlay() const
 	//text color
 	SDL_Color textColor = {0, 0, 0};
 
-	ss << "Computer moves.";
+	ss << "Gary moves a";
 
 	//update play-by-play and clear stringstream
 	//create new playByPlay image
@@ -2410,7 +2460,7 @@ void Game::updateComputerPlayByPlay() const
 
 	ss.str("");
 
-	ss << " ";
+	ss << "piece(" << moved->getBoardSpace() << ")";
 
 	//update play-by-play and clear stringstream
 	//create new playByPlay image
@@ -2421,7 +2471,7 @@ void Game::updateComputerPlayByPlay() const
 
 	ss.str("");
 
-	ss << " ";
+	ss << "to board space " << destination->getBoardSpace() << ".";
 
 	//update play-by-play and clear stringstream
 	//create new playByPlay image

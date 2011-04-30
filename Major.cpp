@@ -13,14 +13,14 @@ Major::Major(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "major.png"
 	setRank(7);
 }
 
-//****************************************
+//*****************************************************
 Major::Major(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 {
 	setBoardSpace(-1);
 	setRank(7);
 }
 
-//****************************************
+//*****************************************************
 Piece* Major::move(Piece* const destination)
 {
 	//if the piece is an emptyspace

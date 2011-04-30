@@ -13,15 +13,10 @@ EmptySpace::EmptySpace(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, -
 	setRank(0);
 }
 
-//****************************************
+//*****************************************************
 Piece* EmptySpace::move(Piece* const destination)
 {
 	//can't move!!!!111oneone
-	return 0;
-}
 
-//****************************************
-void EmptySpace::show(SDL_Surface* const destination) const
-{
-	//do nothing
+	return 0;
 }

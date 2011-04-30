@@ -13,14 +13,14 @@ Colonel::Colonel(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "colone
 	setRank(8);
 }
 
-//****************************************
+//*****************************************************
 Colonel::Colonel(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 {
 	setBoardSpace(-1);
 	setRank(8);
 }
 
-//****************************************
+//*****************************************************
 Piece* Colonel::move(Piece* const destination)
 {
 	//if the piece is an emptyspace

@@ -90,10 +90,12 @@ public:
 	void moveComputerPiece();
 
 	//play-by-play
-	void updatePlayByPlay(const int firstRank, const int secondRank, 
+	void updatePlayByPlay(Piece* const first, Piece* const sencond, 
 						  const int mover, const int winner) const;
-	void updatePlayByPlay(const int firstRank, const int mover) const;
-	void updateComputerPlayByPlay() const;
+	void updatePlayByPlay(Piece* const moved, Piece* const destination, 
+		                  const int mover) const;
+	void updateComputerPlayByPlay(Piece* const moved, 
+		                          Piece* const destination) const;
 	void shiftPlayByPlayDown() const;
 	void resetPlayByPlay() const;
 

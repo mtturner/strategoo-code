@@ -13,14 +13,14 @@ General::General(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "genera
 	setRank(9);
 }
 
-//****************************************
+//*****************************************************
 General::General(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 {
 	setBoardSpace(-1);
 	setRank(9);
 }
 
-//****************************************
+//*****************************************************
 Piece* General::move(Piece* const destination)
 {
 	//if the piece is an emptyspace

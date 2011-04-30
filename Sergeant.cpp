@@ -13,14 +13,14 @@ Sergeant::Sergeant(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "serg
 	setRank(4);
 }
 
-//****************************************
+//*****************************************************
 Sergeant::Sergeant(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 {
 	setBoardSpace(-1);
 	setRank(4);
 }
 
-//****************************************
+//*****************************************************
 Piece* Sergeant::move(Piece* const destination)
 {
 	//if the piece is an emptyspace

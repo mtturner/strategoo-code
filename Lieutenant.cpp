@@ -13,14 +13,14 @@ Lieutenant::Lieutenant(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "
 	setRank(5);
 }
 
-//****************************************
+//*****************************************************
 Lieutenant::Lieutenant(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 {
 	setBoardSpace(-1);
 	setRank(5);
 }
 
-//****************************************
+//*****************************************************
 Piece* Lieutenant::move(Piece* const destination)
 {
 	//if the piece is an emptyspace

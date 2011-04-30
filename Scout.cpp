@@ -13,14 +13,14 @@ Scout::Scout(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "scout.png"
 	setRank(2);
 }
 
-//****************************************
+//*****************************************************
 Scout::Scout(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 {
 	setBoardSpace(-1);
 	setRank(2);
 }
 
-//****************************************
+//*****************************************************
 Piece* Scout::move(Piece* const destination)
 {
 	//if the piece is an emptyspace

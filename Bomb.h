@@ -12,9 +12,11 @@
 class Bomb : public Piece
 {
 public:
+	//constructors
     Bomb(int xPos = 0, int yPos = 0, int boardSpace = -1);
 	Bomb(std::string filename);
 
+	//move
     virtual Piece* move(Piece* const destination);
 };
 

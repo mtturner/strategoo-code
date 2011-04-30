@@ -12,9 +12,11 @@
 class General : public Piece
 {
 public:
+	//constructors
 	General(int xPos = 0, int yPos = 0, int boardSpace = -1);
 	General(std::string filename);
 
+	//move
 	virtual Piece* move(Piece* const destination);
 };
 

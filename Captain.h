@@ -12,9 +12,11 @@
 class Captain : public Piece
 {
 public:
+	//constructors
     Captain(int xPos = 0, int yPos = 0, int boardSpace = -1);
 	Captain(std::string filename);
 
+	//move
 	virtual Piece* move(Piece* const destination);
 };
 

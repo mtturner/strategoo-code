@@ -12,9 +12,11 @@
 class Flag : public Piece
 {
 public:
+	//constructors
 	Flag(int xPos = 0, int yPos = 0, int boardSpace = -1);
 	Flag(std::string filename);
 
+	//move
 	virtual Piece* move(Piece* const destination); 
 };
 

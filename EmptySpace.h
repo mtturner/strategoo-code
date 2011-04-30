@@ -12,10 +12,18 @@
 class EmptySpace : public Piece
 {
 public:
+	//constructor
     EmptySpace(int xPos = 0, int yPos = 0, int boardSpace = -1);
 
+	//move and show
     virtual Piece* move(Piece* const destination);
-	virtual void show(SDL_Surface* const destination) const;
+	inline virtual void show(SDL_Surface* const destination) const;
 };
+
+//*****************************************************
+inline void EmptySpace::show(SDL_Surface* const destination) const
+{
+	//do nothing
+}
 
 #endif

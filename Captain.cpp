@@ -13,14 +13,14 @@ Captain::Captain(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "captai
 	setRank(6);
 }
 
-//****************************************
+//*****************************************************
 Captain::Captain(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 {
 	setBoardSpace(-1);
 	setRank(6);
 }
 
-//****************************************
+//*****************************************************
 Piece* Captain::move(Piece* const destination)
 {
 	//if the piece is an emptyspace

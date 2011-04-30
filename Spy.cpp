@@ -13,14 +13,14 @@ Spy::Spy(int xPos, int yPos, int boardSpace) : Piece(xPos, yPos, "spy.png", 0)
 	setRank(1);
 }
 
-//****************************************
+//*****************************************************
 Spy::Spy(std::string filename) : Piece(0, 0, filename.c_str(), 1)
 {
 	setBoardSpace(-1);
 	setRank(1);
 }
 
-//****************************************
+//*****************************************************
 Piece* Spy::move(Piece* const destination)
 {
 	//if the piece is an emptyspace
