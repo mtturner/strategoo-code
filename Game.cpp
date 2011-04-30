@@ -1953,9 +1953,8 @@ void Game::moveComputerPiece()
 }
 
 //*****************************************************
-<<<<<<< .minevoid Game::updatePlayByPlay(Piece* const first, Piece* const second, 
-=======void Game::updatePlayByPlay(const int firstRank, const int secondRank,
->>>>>>> .theirs					        const int mover, const int winner) const
+void Game::updatePlayByPlay(Piece* const first, Piece* const second, 
+							const int mover, const int winner) const
 {
 	//play-by-play stringstream
 	std::stringstream ss;
