@@ -161,6 +161,12 @@ bool Game::initialize()
 		return false;
 	}
 
+	//initialize SDL_mixer
+	if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+	{
+		return false;
+	}
+
 	//set up screen
 	setScreen(SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE));
 
@@ -264,6 +270,9 @@ void Game::cleanUp() const
 	//quit SDL_ttf
 	TTF_Quit();
 
+	//quit SDL_mixer
+	Mix_CloseAudio();
+
 	//quit SDL
 	SDL_Quit();
 }
@@ -299,6 +308,10 @@ bool Game::doIntro()
 			}
 		}
 	}
+
+	//start menu background music and stop any previously playing music
+	gameSound->stopMusic();
+	gameSound->playMenuTheme();
 
 	//apply the intro image to the screen
 	introBG->show(getScreen());
@@ -367,8 +380,6 @@ bool Game::login()
 	//create new player with name that was input
 	gPlayer = new Player(inputtedName);
 
-	gPlayer->loadStatistics();
-
 	return true;
 }
 
@@ -410,7 +421,11 @@ bool Game::doStartMenu()
 	}
 
 	//move the selector
-	gSelector->move();
+	if(gSelector->move())
+	{
+		//play sound effect if selector was moved
+		gameSound->playMoveSelector();
+	}
 
 	//apply the start menu image and selector image to the screen
 	startMenuBG->show(getScreen());
@@ -532,6 +547,9 @@ bool Game::doSetPiece()
 
 				//set isButtonSelected to true
 				setIsButtonSelected(true);
+
+				//play button press sound effect
+				gameSound->playButtonPress();
 			}
 		}
 
@@ -556,6 +574,9 @@ bool Game::doSetPiece()
 
 			//reset clickedPiece
 			clickedPiece = 0;
+
+			//play place piece sound effect
+			gameSound->playPlacePiece();
 		}
 
 		//check to see if a piece was set
@@ -743,6 +764,9 @@ bool Game::doPlayGame()
 						y = selected->getYPos() + 1;
 
 						pieceName.setMessageSurface(selected->getName());
+
+						//play selected piece sound effect
+						gameSound->playSelectPiece();
 					}
 					else
 					{
@@ -768,6 +792,9 @@ bool Game::doPlayGame()
 					{
 						//move the piece
 						winner = selected->move(destination);
+
+						//play place-piece sound effect
+						gameSound->playPlacePiece();
 
 						//depending on the move outcome, remove defeated
 						//pieces from board's collection if needed and
@@ -812,6 +839,9 @@ bool Game::doPlayGame()
 							swapLocation(temp, destination);
 
 							temp = 0;
+
+							//play battle sound effect
+							gameSound->playBattleSound();
 						}
 						else if(winner->getRank() == 0)
 						{
@@ -842,6 +872,17 @@ bool Game::doPlayGame()
 							swapLocation(temp, selected);
 
 							temp = 0;
+
+							//play battle sound effect or explosion if winner
+							//is a bomb
+							if(winner->getRank() == 11)
+							{
+								gameSound->playBombExplosion();
+							}
+							else
+							{
+								gameSound->playBattleSound();
+							}
 						}
 						else
 						{
@@ -877,6 +918,9 @@ bool Game::doPlayGame()
 
 							//set game result sprite to player wins
 							gameResult = playerWinsImage;
+
+							//play win theme music
+							gameSound->playWinTheme();
 						}
 						else if(checkComputerWins())
 						{
@@ -885,6 +929,9 @@ bool Game::doPlayGame()
 
 							//set game result sprite to computer wins
 							gameResult = computerWinsImage;
+
+							//play lose theme music
+							gameSound->playLoseTheme();
 						}
 
 						//if the game has not been won, set turn to computer's
@@ -952,6 +999,9 @@ bool Game::doPlayGame()
 
 				//set game result sprite to player wins
 				gameResult = playerWinsImage;
+
+				//play win theme music
+				gameSound->playWinTheme();
 			}
 			else if(checkComputerWins())
 			{
@@ -960,6 +1010,9 @@ bool Game::doPlayGame()
 
 				//set game result sprite to computer wins
 				gameResult = computerWinsImage;
+
+				//play lose theme music
+				gameSound->playLoseTheme();
 			}
 
 			//set turn to player's
@@ -998,6 +1051,10 @@ bool Game::doPlayGame()
 
 		//apply the start menu image to the screen
 		playGameBG->show(getScreen());
+
+		//play in-game music after stopping any current playing music
+		gameSound->stopMusic();
+		gameSound->playGameTheme();
 
 		//show board
 		gBoard->show(getScreen());
@@ -1096,7 +1153,11 @@ bool Game::doInGameMenu()
 	}
 
 	//move the selector
-	gSelector->move();
+	if(gSelector->move())
+	{
+		//play sound effect if the selector was moved
+		gameSound->playMoveSelector();
+	}
 
 	//apply the start menu image and selector image to the screen
 	menuBG->show(getScreen());
@@ -1521,6 +1582,9 @@ void Game::resetGame()
 
 	//reset play-by-play
 	resetPlayByPlay();
+
+	//stop any possibly playing music
+	gameSound->stopMusic();
 }
 
 //*****************************************************
@@ -1819,6 +1883,9 @@ void Game::moveComputerPiece()
 		if(isMoveablePiece(selected, 1))
 		{
 			isFindingPiece = false;
+
+			//play select-piece sound effect
+			gameSound->playSelectPiece();
 		}
 
 		if(isFindingPiece)
@@ -1854,6 +1921,9 @@ void Game::moveComputerPiece()
 
 	//move piece
 	winner = selected->move(destination);
+
+	//play place-piece sound effect
+	gameSound->playPlacePiece();
 
 	//depending on the move outcome, remove defeated
 	//pieces from board's collection and owner's collection
@@ -1897,6 +1967,9 @@ void Game::moveComputerPiece()
 		swapLocation(temp, destination);
 
 		temp = 0;
+
+		//play battle sound effect
+		gameSound->playBattleSound();
 	}
 	else if(winner->getRank() == 0)
 	{
@@ -1925,6 +1998,17 @@ void Game::moveComputerPiece()
 		swapLocation(temp, selected);
 
 		temp = 0;
+
+		//play battle sound effect or explosion if winner
+		//is a bomb
+		if(winner->getRank() == 11)
+		{
+			gameSound->playBombExplosion();
+		}
+		else
+		{
+			gameSound->playBattleSound();
+		}
 	}
 	else
 	{

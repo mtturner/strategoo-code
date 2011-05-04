@@ -7,8 +7,9 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "SDL.h"
-#include "SDL_ttf.h"
+#include "SDL/SDL.h"
+#include "SDL/SDL_ttf.h"
+#include "SDL/SDL_mixer.h"
 #include <cstdlib>
 #include <ctime>
 #include <string>
@@ -36,6 +37,7 @@
 #include "Selector.h"
 #include "StringInput.h"
 #include "PieceButton.h"
+#include "Sound.h"
 
 class Game
 {
@@ -155,6 +157,9 @@ private:
 
 	//string input class for login
 	StringInput* name;
+
+	//sound player
+	Sound* gameSound;
 
 	//current and previous game states
 	int gameState_,

@@ -7,7 +7,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "SDL.h"
+#include "SDL/SDL.h"
 #include <string>
 #include <vector>
 #include "Statistics.h"

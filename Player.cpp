@@ -20,6 +20,8 @@ Player::Player(std::string& currentPlayer)
 	setName(currentPlayer);
 
 	stats = new Statistics();
+
+	stats->load(currentPlayer);
 }
 
 //*****************************************************

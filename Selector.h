@@ -7,7 +7,7 @@
 #ifndef SELECTOR_H
 #define SELECTOR_H
 
-#include "SDL.h"
+#include "SDL/SDL.h"
 #include <string>
 #include "Sprite.h"
 
@@ -28,7 +28,7 @@ public:
 
 	//input, logic, and rendering
 	void handleInput(SDL_Event& gEvent);
-	void move();
+	bool move();
 	void show(SDL_Surface* const destination) const;
 
 private:

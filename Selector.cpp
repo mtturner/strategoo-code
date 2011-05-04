@@ -61,7 +61,7 @@ void Selector::handleInput(SDL_Event& gEvent)
 }
 
 //*****************************************************
-void Selector::move()
+bool Selector::move()
 {
 	//if the selector was moved
 	if(isMoved)
@@ -82,5 +82,9 @@ void Selector::move()
 
 			setMoved(false);
 		}
+
+		return true;
 	}
+
+	return false;
 }
