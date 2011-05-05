@@ -1,7 +1,7 @@
 /******************************************************
 	Sound.h
 
- 	This is the header file for the sound class.
+ 	This is the header file for the Sound class.
 ******************************************************/
 
 #ifndef SOUND_H
@@ -20,21 +20,21 @@ public:
 	bool loadSounds();
 
 	//sound call-functions
-	bool playMenuTheme();
-	bool playGameTheme();
-	bool playWinTheme();
-	bool playLoseTheme();
-	bool playBattleSound();
-	bool playBombExplosion();
-	bool playButtonPress();
-	bool playMoveSelector();
-	bool playSelectPiece();
-	bool playPlacePiece();
+	bool playMenuTheme() const;
+	bool playGameTheme() const;
+	bool playWinTheme() const;
+	bool playLoseTheme() const;
+	bool playBattleSound() const;
+	bool playBombExplosion() const;
+	bool playButtonPress() const;
+	bool playMoveSelector() const;
+	bool playSelectPiece() const;
+	bool playPlacePiece() const;
 
 	//music manipulation functions
-	void stopMusic();
-	void pauseMusic();
-	void resumeMusic();
+	inline void stopMusic() const;
+	void pauseMusic() const;
+	void resumeMusic() const;
 
 private:
 	//SDL music datatypes
@@ -54,5 +54,10 @@ private:
 };
 
 //*****************************************************
+inline void Sound::stopMusic() const
+{
+	//stop the currently playing music
+	Mix_HaltMusic();
+}
 
 #endif	

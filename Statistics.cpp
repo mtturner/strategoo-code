@@ -30,8 +30,8 @@ Statistics::Statistics()
 	gamesLostLine = new Sprite(550, 300);
 	flagsCapturedLine = new Sprite(550, 350);
 	capturedFlagsLine = new Sprite(550, 400);
-	timesExtinctLine = new Sprite(550, 450);
-	genocideLine = new Sprite(550, 500);
+	timesExtinctLine = new Sprite(550, 500);
+	genocideLine = new Sprite(550, 450);
 }
 
 //*****************************************************

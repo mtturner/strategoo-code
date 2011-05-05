@@ -435,8 +435,11 @@ bool Game::doStartMenu()
 	//move the selector
 	if(gSelector->move())
 	{
-		//play sound effect if selector was moved
-		gameSound->playMoveSelector();
+		if(getState() == STATE_STARTMENU)
+		{
+			//play sound effect if selector was moved
+			gameSound->playMoveSelector();
+		}
 	}
 
 	//apply the start menu image and selector image to the screen
@@ -957,6 +960,17 @@ bool Game::doPlayGame()
 							swapLocation(temp, destination);
 
 							temp = 0;
+
+							//play battle sound effect or explosion if winner
+							//is a bomb
+							if(winner->getRank() == 11)
+							{
+								gameSound->playBombExplosion();
+							}
+							else
+							{
+								gameSound->playBattleSound();
+							}
 						}
 
 						//check to see if the game has been won by player
@@ -1213,8 +1227,11 @@ bool Game::doInGameMenu()
 	//move the selector
 	if(gSelector->move())
 	{
-		//play sound effect if the selector was moved
-		gameSound->playMoveSelector();
+		if(getState() == STATE_MENU)
+		{
+			//play sound effect if the selector was moved
+			gameSound->playMoveSelector();
+		}
 	}
 
 	//apply the start menu image and selector image to the screen
@@ -1846,16 +1863,30 @@ bool Game::isMoveablePiece(Piece* const selected, const int mover) const
 //*****************************************************
 bool Game::isValidMove(Piece* const selected, Piece* const destination) const
 {
+	bool left = false,
+		 right = false;
+
 	//if the selected piece is not a scout
 	if(selected->getRank() != 2)
 	{
 		//make sure destination is one space away above,
 		//below, to the left of, or to the right of the
 		//selected piece
+		if(selected->getBoardSpace() == (destination->getBoardSpace() - 1) &&
+		  (selected->getBoardSpace() / 10) == (destination->getBoardSpace() / 10))
+		{
+			right = true;
+		}
+
+		if(selected->getBoardSpace() == (destination->getBoardSpace() + 1) &&
+		  (selected->getBoardSpace() / 10) == (destination->getBoardSpace() / 10))
+		{
+			left = true;
+		}
+
 		if(selected->getBoardSpace() != (destination->getBoardSpace() - 10) &&
 		   selected->getBoardSpace() != (destination->getBoardSpace() + 10) &&
-		   selected->getBoardSpace() != (destination->getBoardSpace() - 1) &&
-		   selected->getBoardSpace() != (destination->getBoardSpace() + 1))
+		   !left && !right)
 		{
 			return false;
 		}
@@ -2113,6 +2144,17 @@ void Game::moveComputerPiece()
 		swapLocation(temp, destination);
 
 		temp = 0;
+
+		//play battle sound effect or explosion if winner
+		//is a bomb
+		if(winner->getRank() == 11)
+		{
+			gameSound->playBombExplosion();
+		}
+		else
+		{
+			gameSound->playBattleSound();
+		}
 	}
 }
 

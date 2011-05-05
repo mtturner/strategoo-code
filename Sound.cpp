@@ -1,12 +1,11 @@
 /*****************************************************
  	Sound.cpp
 
- 	This is the implementation file for the sound 
+ 	This is the implementation file for the Sound 
  	class.
 *****************************************************/
 
 #include "Sound.h"
-#include <iostream>
 
 Sound::Sound()
 {
@@ -22,7 +21,7 @@ Sound::Sound()
 	placePiece = 0;
 }
 
-//******************************************************************************
+//*****************************************************
 Sound::~Sound()
 {
 	//Free the theme tracks
@@ -40,7 +39,7 @@ Sound::~Sound()
 	Mix_FreeChunk(placePiece);
 }
 
-//******************************************************************************
+//*****************************************************
 bool Sound::loadSounds()
 {
 	//loading the theme tracks
@@ -73,8 +72,8 @@ bool Sound::loadSounds()
 	return true;
 }
 
-//******************************************************************************
-bool Sound::playMenuTheme()
+//*****************************************************
+bool Sound::playMenuTheme() const
 {
 	//if there is no music playing
 	if(Mix_PlayingMusic() == 0)
@@ -90,8 +89,8 @@ bool Sound::playMenuTheme()
 	return 0;
 }
 
-//******************************************************************************
-bool Sound::playGameTheme()
+//*****************************************************
+bool Sound::playGameTheme() const
 {
 	//if there is no music playing
 	if(Mix_PlayingMusic() == 0)
@@ -107,8 +106,8 @@ bool Sound::playGameTheme()
 	return 0;
 }
 
-//******************************************************************************
-bool Sound::playWinTheme()
+//*****************************************************
+bool Sound::playWinTheme() const
 {
 	//if there is no music playing
 	if(Mix_PlayingMusic() == 0)
@@ -124,8 +123,8 @@ bool Sound::playWinTheme()
 	return 0;
 }
 
-//******************************************************************************
-bool Sound::playLoseTheme()
+//*****************************************************
+bool Sound::playLoseTheme() const
 {
 	//if there is no music playing
 	if(Mix_PlayingMusic() == 0)
@@ -140,8 +139,8 @@ bool Sound::playLoseTheme()
 	return 0;
 }
 
-//******************************************************************************
-bool Sound::playBattleSound()
+//*****************************************************
+bool Sound::playBattleSound() const
 {
 	//play the battle sound
 	if(Mix_PlayChannel(-1, battleSound, 0) == -1)
@@ -153,8 +152,8 @@ bool Sound::playBattleSound()
 	return 0;
 }
 
-//******************************************************************************
-bool Sound::playBombExplosion()
+//*****************************************************
+bool Sound::playBombExplosion() const
 {
 	//play the explosion sound
 	if(Mix_PlayChannel(-1, bombExplosion, 0) == -1)
@@ -166,8 +165,8 @@ bool Sound::playBombExplosion()
 	return 0;
 }
 
-//******************************************************************************
-bool Sound::playButtonPress()
+//*****************************************************
+bool Sound::playButtonPress() const
 {
 	//play the button press sound
 	if(Mix_PlayChannel(-1, buttonPress, 0) == -1)
@@ -179,8 +178,8 @@ bool Sound::playButtonPress()
 	return 0;
 }
 
-//******************************************************************************
-bool Sound::playMoveSelector()
+//*****************************************************
+bool Sound::playMoveSelector() const
 {
 	//play the selector move sound
 	if(Mix_PlayChannel(-1, moveSelector, 0) == -1)
@@ -192,8 +191,8 @@ bool Sound::playMoveSelector()
 	return 0;	
 }
 
-//******************************************************************************
-bool Sound::playSelectPiece()
+//*****************************************************
+bool Sound::playSelectPiece() const
 {
 	//play the select piece sound
 	if(Mix_PlayChannel(-1, selectPiece, 0) == -1)
@@ -205,8 +204,8 @@ bool Sound::playSelectPiece()
 	return 0;
 }
 
-//******************************************************************************
-bool Sound::playPlacePiece()
+//*****************************************************
+bool Sound::playPlacePiece() const
 {
 	//play the place piece sound
 	if(Mix_PlayChannel(-1, placePiece, 0) == -1)
@@ -218,15 +217,8 @@ bool Sound::playPlacePiece()
 	return 0;
 }
 
-//******************************************************************************
-void Sound::stopMusic()
-{
-	//stop the currently playing music
-	Mix_HaltMusic();
-}
-
-//******************************************************************************
-void Sound::pauseMusic()
+//*****************************************************
+void Sound::pauseMusic() const
 {
 	//pause the currently playing music
 	if(Mix_PausedMusic() == 0)
@@ -235,8 +227,8 @@ void Sound::pauseMusic()
 	}
 }
 
-//******************************************************************************
-void Sound::resumeMusic()
+//*****************************************************
+void Sound::resumeMusic() const
 {
 	//resume current music
 	if(Mix_PausedMusic() == 1)
