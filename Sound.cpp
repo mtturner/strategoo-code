@@ -6,22 +6,30 @@
 *****************************************************/
 
 #include "Sound.h"
+#include <iostream>
 
 Sound::Sound()
 {
-	menuTheme = NULL;
-	gameTheme = NULL;
-	winTheme = NULL;
-	loseTheme = NULL;
-	battleSound = NULL;
-	bombExplosion = NULL;
-	buttonPress = NULL;
-	moveSelector = NULL;
-	selectPiece = NULL;
-	placePiece = NULL;
+	menuTheme = 0;
+	gameTheme = 0;
+	winTheme = 0;
+	loseTheme = 0;
+	battleSound = 0;
+	bombExplosion = 0;
+	buttonPress = 0;
+	moveSelector = 0;
+	selectPiece = 0;
+	placePiece = 0;
 
 	//load all sounds
-	loadSounds();
+	if(loadSounds())
+	{
+		std::cout << "Files have been loaded!";
+	}
+	else
+	{
+		std::cout << "You fucked up!";
+	}
 }
 
 //******************************************************************************
@@ -46,15 +54,14 @@ Sound::~Sound()
 bool Sound::loadSounds()
 {
 	//loading the theme tracks
-	menuTheme = Mix_LoadMUS("strategOO_Menu_Theme.wav");
+	menuTheme = Mix_LoadMUS("drums.wav");
 	gameTheme = Mix_LoadMUS("strategOO_Game_Theme.wav");
 	winTheme = Mix_LoadMUS("winMusic.wav");
 	loseTheme = Mix_LoadMUS("loseMusic.wav");
 
-	if((menuTheme == NULL) || (gameTheme == NULL) || (winTheme == NULL) || 
-	   (loseTheme == NULL))
+	if((menuTheme == 0))
 	{
-		return false;
+		//return false;
 	}
 
 	//loading the sound effects
@@ -65,8 +72,8 @@ bool Sound::loadSounds()
 	selectPiece = Mix_LoadWAV("pieceSelect.wav");
 	placePiece = Mix_LoadWAV("piecePlace.wav");
 
-	if((battleSound == NULL) || (buttonPress == NULL) || (moveSelector == NULL) 
-	   || (selectPiece == NULL) || (placePiece == NULL))
+	if((battleSound == 0) || (buttonPress == 0) || (moveSelector == 0) 
+	   || (selectPiece == 0) || (placePiece == 0))
 	{
 		return false;
 	}
@@ -191,7 +198,7 @@ bool Sound::playMoveSelector()
 	}
 
 	//if everything executed OK
-	return 0;
+	return 0;	
 }
 
 //******************************************************************************

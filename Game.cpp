@@ -34,6 +34,8 @@ Game::Game() : screen(0)
 	playGameBG = new Sprite();
 	menuBG = new Sprite();
 	statisticsBG = new Sprite();
+
+	gameSound = new Sound();
 }
 
 //*****************************************************
@@ -94,6 +96,9 @@ Game::~Game()
 	delete playByPlaySeven;
 	delete playByPlayEight;
 	delete playByPlayNine;
+
+	//delete sound class
+	delete gameSound;
 }
 
 //*****************************************************
