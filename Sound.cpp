@@ -43,7 +43,7 @@ Sound::~Sound()
 bool Sound::loadSounds()
 {
 	//loading the theme tracks
-	menuTheme = Mix_LoadMUS("strategOO_Menu_Theme.wav");
+	menuTheme = Mix_LoadMUS("strategOO_Game_Theme.wav");
 	gameTheme = Mix_LoadMUS("strategOO_Game_Theme.wav");
 	winTheme = Mix_LoadMUS("winMusic.wav");
 	loseTheme = Mix_LoadMUS("loseMusic.wav");
