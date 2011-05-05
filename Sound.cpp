@@ -46,8 +46,8 @@ Sound::~Sound()
 bool Sound::loadSounds()
 {
 	//loading the theme tracks
-	menuTheme = Mix_LoadMUS("strategOO(menu_Theme).wav");
-	gameTheme = Mix_LoadMUS("strategOO(in_Game).wav");
+	menuTheme = Mix_LoadMUS("strategOO_Menu_Theme.wav");
+	gameTheme = Mix_LoadMUS("strategOO_Game_Theme.wav");
 	winTheme = Mix_LoadMUS("winMusic.wav");
 	loseTheme = Mix_LoadMUS("loseMusic.wav");
 
@@ -150,6 +150,9 @@ bool Sound::playBattleSound()
 	{
 		return 1;
 	}
+
+	//if everything executed OK
+	return 0;
 }
 
 //******************************************************************************
@@ -160,6 +163,9 @@ bool Sound::playBombExplosion()
 	{
 		return 1;
 	}
+
+	//if everything executed OK
+	return 0;
 }
 
 //******************************************************************************
@@ -170,6 +176,9 @@ bool Sound::playButtonPress()
 	{
 		return 1;
 	}
+
+	//if everything executed OK
+	return 0;
 }
 
 //******************************************************************************
@@ -180,6 +189,9 @@ bool Sound::playMoveSelector()
 	{
 		return 1;
 	}
+
+	//if everything executed OK
+	return 0;
 }
 
 //******************************************************************************
@@ -190,6 +202,9 @@ bool Sound::playSelectPiece()
 	{
 		return 1;
 	}
+
+	//if everything executed OK
+	return 0;
 }
 
 //******************************************************************************
@@ -200,6 +215,9 @@ bool Sound::playPlacePiece()
 	{
 		return 1;
 	}
+
+	//if everything executed OK
+	return 0;
 }
 
 //******************************************************************************
