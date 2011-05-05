@@ -707,9 +707,10 @@ bool Game::doPlayGame()
     //object to display the piece name
     StringInput pieceName;
 
-	//loop and overlay booleans
+	//loop, overlay, and firstFrame booleans
 	bool playingGame = true,
-		 showOverlay = false;
+		 showOverlay = false,
+		 firstFrame = true;
 
 	//coordinates for displaying piece name
 	int x,
@@ -753,6 +754,36 @@ bool Game::doPlayGame()
 
 				//handle board piece input
 				gBoard->handlePieceInput(gEvent);
+			}
+
+			//check for winning conditions in the first frame
+			if(firstFrame)
+			{
+				//check to see if the game has been won by player
+				if(checkPlayerWins())
+				{
+					//set winner to player
+					winningTeam = 0;
+
+					//set game result sprite to player wins
+					gameResult = playerWinsImage;
+
+					//play win theme music
+					gameSound->playWinTheme();
+				}
+				else if(checkComputerWins())
+				{
+					//set winner to computer
+					winningTeam = 1;
+
+					//set game result sprite to computer wins
+					gameResult = computerWinsImage;
+
+					//play lose theme music
+					gameSound->playLoseTheme();
+				}
+
+				firstFrame = false;
 			}
 
 			//if no piece has been selected
@@ -1649,15 +1680,15 @@ bool Game::checkPlayerWins()
 
 	if(!flagExists || !moveablePieceExists)
 	{
-		gPlayer->setGamesLost(1);
+		gPlayer->setGamesWon(1);
 		
 		if(!flagExists)
 		{
-			gPlayer->setCapturedFlags(1);
+			gPlayer->setFlagsCaptured(1);
 		}
 		else
 		{
-			gPlayer->setTimesExtinct(1);
+			gPlayer->setGenocide(1);
 		}
 		
 		return true;
@@ -1713,15 +1744,15 @@ bool Game::checkComputerWins()
 
 	if(!flagExists || !moveablePieceExists)
 	{
-		gPlayer->setGamesWon(1);
+		gPlayer->setGamesLost(1);
 
 		if(!flagExists)
 		{
-			gPlayer->setFlagsCaptured(1);
+			gPlayer->setCapturedFlags(1);
 		}
 		else
 		{
-			gPlayer->setGenocide(1);
+			gPlayer->setTimesExtinct(1);
 		}
 		
 		return true;
@@ -2012,7 +2043,7 @@ void Game::moveComputerPiece()
 	}
 	else if(winner->getRank() == 0)
 	{
-		updatePlayByPlay(selected, destination, 1);
+		updateComputerPlayByPlay(destination, selected);
 	}
 	else if(winner->getBoardSpace() == destination->getBoardSpace())
 	{

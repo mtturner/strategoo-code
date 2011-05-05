@@ -7,7 +7,7 @@
 #ifndef SELECTOR_H
 #define SELECTOR_H
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 #include <string>
 #include "Sprite.h"
 
