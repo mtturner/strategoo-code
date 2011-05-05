@@ -1034,6 +1034,9 @@ bool Game::doPlayGame()
 						y = selected->getYPos() + 1;
 
 						pieceName.setMessageSurface(selected->getName());
+
+						//play selected piece sound effect
+						gameSound->playSelectPiece();
 					}
 					else
 					{
