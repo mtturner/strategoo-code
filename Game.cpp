@@ -395,6 +395,7 @@ bool Game::login()
 bool Game::doStartMenu()
 {
 	//play menu music if not already playing
+	//gameSound->stopMusic();
 	gameSound->playMenuTheme();
 	
 	while(SDL_PollEvent(&gEvent))
@@ -585,9 +586,6 @@ bool Game::doSetPiece()
 
 			//reset clickedPiece
 			clickedPiece = 0;
-
-			//play place piece sound effect
-			gameSound->playPlacePiece();
 		}
 
 		//check to see if a piece was set
@@ -618,6 +616,9 @@ bool Game::doSetPiece()
 
 				//reset isPieceSelected
 				setIsPieceSelected(false);
+
+				//play place piece sound effect
+				gameSound->playPlacePiece();
 			}
 
 			//find an unplaced piece of the correct type
@@ -768,7 +769,8 @@ bool Game::doPlayGame()
 					//set game result sprite to player wins
 					gameResult = playerWinsImage;
 
-					//play win theme music
+					//play win theme music after stopping current music
+					gameSound->stopMusic();
 					gameSound->playWinTheme();
 				}
 				else if(checkComputerWins())
@@ -779,7 +781,8 @@ bool Game::doPlayGame()
 					//set game result sprite to computer wins
 					gameResult = computerWinsImage;
 
-					//play lose theme music
+					//play lose theme music after stopping current music
+					gameSound->stopMusic();
 					gameSound->playLoseTheme();
 				}
 
@@ -965,7 +968,8 @@ bool Game::doPlayGame()
 							//set game result sprite to player wins
 							gameResult = playerWinsImage;
 
-							//play win theme music
+							//play win theme music after stopping current music
+							gameSound->stopMusic();
 							gameSound->playWinTheme();
 						}
 						else if(checkComputerWins())
@@ -976,7 +980,8 @@ bool Game::doPlayGame()
 							//set game result sprite to computer wins
 							gameResult = computerWinsImage;
 
-							//play lose theme music
+							//play lose theme music after stopping current music
+							gameSound->stopMusic();
 							gameSound->playLoseTheme();
 						}
 
@@ -1046,11 +1051,9 @@ bool Game::doPlayGame()
 				//set game result sprite to player wins
 				gameResult = playerWinsImage;
 
-				//play win theme music
+				//play win theme music after stopping current music
+				gameSound->stopMusic();
 				gameSound->playWinTheme();
-
-				//update player stats
-				gPlayer->setGamesPlayed(1);
 			}
 			else if(checkComputerWins())
 			{
@@ -1060,11 +1063,9 @@ bool Game::doPlayGame()
 				//set game result sprite to computer wins
 				gameResult = computerWinsImage;
 
-				//play lose theme music
+				//play lose theme music after stopping current music
+				gameSound->stopMusic();
 				gameSound->playLoseTheme();
-
-				//update player stats
-				gPlayer->setGamesPlayed(1);
 			}
 
 			//set turn to player's
@@ -1076,7 +1077,7 @@ bool Game::doPlayGame()
 
 		//if the game has been won
 		if(winningTeam != -1)
-		{
+		{			
 			while(SDL_PollEvent(&gEvent))
 			{
 				//if the user has exited the window
@@ -1091,9 +1092,18 @@ bool Game::doPlayGame()
 				else if(gEvent.type == SDL_KEYDOWN)
 				{
 					if(gEvent.key.keysym.sym == SDLK_RETURN)
-					{
+					{						
 						setState(STATE_MENU);
 						setPreviousState(STATE_PLAYGAME);
+
+						//update player stats
+						gPlayer->setGamesPlayed(1);
+
+						//save stats to file
+						gPlayer->saveStatistics();
+
+						//stop current music
+						gameSound->stopMusic();
 
 						playingGame = false;
 					}

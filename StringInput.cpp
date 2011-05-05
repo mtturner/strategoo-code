@@ -13,7 +13,7 @@ StringInput::StringInput() : text(0), font(0), textColor(0)
     setInput("");
 
 	//set font
-	TTF_Font* temp = TTF_OpenFont("nuschoolmunitions.ttf", 28);
+	TTF_Font* temp = TTF_OpenFont("Therfont.ttf", 44);
 
     setFont(temp);
 
