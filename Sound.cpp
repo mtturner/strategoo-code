@@ -20,16 +20,6 @@ Sound::Sound()
 	moveSelector = 0;
 	selectPiece = 0;
 	placePiece = 0;
-
-	//load all sounds
-	if(loadSounds())
-	{
-		std::cout << "Files have been loaded!";
-	}
-	else
-	{
-		std::cout << "You fucked up!";
-	}
 }
 
 //******************************************************************************
@@ -54,14 +44,15 @@ Sound::~Sound()
 bool Sound::loadSounds()
 {
 	//loading the theme tracks
-	menuTheme = Mix_LoadMUS("drums.wav");
+	menuTheme = Mix_LoadMUS("strategOO_Menu_Theme.wav");
 	gameTheme = Mix_LoadMUS("strategOO_Game_Theme.wav");
 	winTheme = Mix_LoadMUS("winMusic.wav");
 	loseTheme = Mix_LoadMUS("loseMusic.wav");
 
-	if((menuTheme == 0))
+	if((menuTheme == 0) || (gameTheme == 0) || (winTheme == 0) ||
+	   (loseTheme == 0))
 	{
-		//return false;
+		return false;
 	}
 
 	//loading the sound effects

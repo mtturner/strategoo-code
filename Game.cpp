@@ -172,6 +172,9 @@ bool Game::initialize()
 		return false;
 	}
 
+	//load all sound files into sound class
+	gameSound->loadSounds();
+
 	//set up screen
 	setScreen(SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE));
 
@@ -315,7 +318,7 @@ bool Game::doIntro()
 	}
 
 	//start menu background music and stop any previously playing music
-	gameSound->stopMusic();
+	//gameSound->stopMusic();
 	gameSound->playMenuTheme();
 
 	//apply the intro image to the screen
@@ -391,6 +394,9 @@ bool Game::login()
 //*****************************************************
 bool Game::doStartMenu()
 {
+	//play menu music if not already playing
+	gameSound->playMenuTheme();
+	
 	while(SDL_PollEvent(&gEvent))
 	{
 		//if the user has exited the window
@@ -714,6 +720,10 @@ bool Game::doPlayGame()
 
 	pieceName.setFont("Therfont.ttf", 18);
 
+	//play in-game music after stopping any current playing music
+	gameSound->stopMusic();
+	gameSound->playGameTheme();
+
 	while(playingGame)
 	{
 		//if it's player's turn and the game hasn't been won
@@ -1007,6 +1017,9 @@ bool Game::doPlayGame()
 
 				//play win theme music
 				gameSound->playWinTheme();
+
+				//update player stats
+				gPlayer->setGamesPlayed(1);
 			}
 			else if(checkComputerWins())
 			{
@@ -1018,6 +1031,9 @@ bool Game::doPlayGame()
 
 				//play lose theme music
 				gameSound->playLoseTheme();
+
+				//update player stats
+				gPlayer->setGamesPlayed(1);
 			}
 
 			//set turn to player's
@@ -1055,11 +1071,7 @@ bool Game::doPlayGame()
 		}
 
 		//apply the start menu image to the screen
-		playGameBG->show(getScreen());
-
-		//play in-game music after stopping any current playing music
-		gameSound->stopMusic();
-		gameSound->playGameTheme();
+		playGameBG->show(getScreen());		
 
 		//show board
 		gBoard->show(getScreen());
@@ -1637,6 +1649,17 @@ bool Game::checkPlayerWins()
 
 	if(!flagExists || !moveablePieceExists)
 	{
+		gPlayer->setGamesLost(1);
+		
+		if(!flagExists)
+		{
+			gPlayer->setCapturedFlags(1);
+		}
+		else
+		{
+			gPlayer->setTimesExtinct(1);
+		}
+		
 		return true;
 	}
 	else
@@ -1690,6 +1713,17 @@ bool Game::checkComputerWins()
 
 	if(!flagExists || !moveablePieceExists)
 	{
+		gPlayer->setGamesWon(1);
+
+		if(!flagExists)
+		{
+			gPlayer->setFlagsCaptured(1);
+		}
+		else
+		{
+			gPlayer->setGenocide(1);
+		}
+		
 		return true;
 	}
 	else
