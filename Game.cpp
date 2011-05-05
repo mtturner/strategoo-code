@@ -727,7 +727,7 @@ bool Game::doPlayGame()
 
 	//play in-game music after stopping any current playing music
 	gameSound->stopMusic();
-	gameSound->playGameTheme();
+	//gameSound->playGameTheme();
 
 	while(playingGame)
 	{
