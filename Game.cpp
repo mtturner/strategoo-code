@@ -1866,30 +1866,16 @@ bool Game::isMoveablePiece(Piece* const selected, const int mover) const
 //*****************************************************
 bool Game::isValidMove(Piece* const selected, Piece* const destination) const
 {
-	bool left = false,
-		 right = false;
-
 	//if the selected piece is not a scout
 	if(selected->getRank() != 2)
 	{
 		//make sure destination is one space away above,
 		//below, to the left of, or to the right of the
 		//selected piece
-		if(selected->getBoardSpace() == (destination->getBoardSpace() - 1) &&
-		  (selected->getBoardSpace() / 10) == (destination->getBoardSpace() / 10))
-		{
-			right = true;
-		}
-
-		if(selected->getBoardSpace() == (destination->getBoardSpace() + 1) &&
-		  (selected->getBoardSpace() / 10) == (destination->getBoardSpace() / 10))
-		{
-			left = true;
-		}
-
-		if(selected->getBoardSpace() != (destination->getBoardSpace() - 10) &&
-		   selected->getBoardSpace() != (destination->getBoardSpace() + 10) &&
-		   !left && !right)
+		if(selected->getBoardSpace() != (destination->getBoardSpace() - 1) &&
+		   selected->getBoardSpace() != (destination->getBoardSpace() + 1) &&
+		   selected->getBoardSpace() != (destination->getBoardSpace() - 10) &&
+		   selected->getBoardSpace() != (destination->getBoardSpace() + 10))
 		{
 			return false;
 		}
